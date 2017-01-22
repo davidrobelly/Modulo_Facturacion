@@ -1,0 +1,120 @@
+package MonroyRobelly.Modelo.Campeonato;
+
+
+import java.util.Vector;
+
+
+public class Campeonato {
+	private String nombreCampeonato;
+	private String año;
+	private Vector<Partida> campeonato = new Vector<Partida>();
+	
+	//******************************************************************
+	//**********************CONSTRUCTORES*******************************
+	//******************************************************************
+	public Campeonato(String nombre , String año ) {
+		this.setAño(año);
+		this.setNombreCampeonato(nombre);
+		
+	}
+
+	public Campeonato() {
+		
+	}
+	
+	//************************************************************************
+	//**********************GETTERS AND SETTERS*******************************
+	//************************************************************************
+
+	
+	
+	public void registrarPartida(Partida partida){
+		if (partida != null) {
+			this.campeonato.add(partida);
+		}
+	}
+	
+	public String getNombreCampeonato() {
+		return nombreCampeonato;
+	}
+
+	public void setNombreCampeonato(String nombreCampeonato) {
+		if(nombreCampeonato != null){
+			this.nombreCampeonato = nombreCampeonato;
+		}
+	}
+
+	public String getAño() {
+		return año;
+	}
+
+	public void setAño(String año) {
+		if(año != null){
+			this.año = año;
+		}
+	}
+
+	public void eliminarPartida(Partida partida){
+		boolean existe = false;
+		for (int i = 0; i < campeonato.size(); i++) {
+			if (campeonato.get(i) == partida) {
+				campeonato.remove(i);
+				existe = true;
+				break;
+			}
+		}
+		if (existe == false) {
+			System.out.println("Es partida no existe");
+		}
+	}
+	
+	public void eliminarPartida(String nombreJuego){
+		boolean existe = false;
+		for (int i = 0; i < campeonato.size(); i++) {
+			if (campeonato.get(i).getJuego().getNombre() == nombreJuego) {
+				campeonato.remove(i);
+				existe = true;
+			}
+		}
+		if (existe == false) {
+			System.out.println("Es partida no existe");
+		}
+	}
+	
+	public void mostrarPartidas(){
+		
+		for (int i = 0; i < campeonato.size(); i++) {
+			System.out.println("\nPartida # " +(i+1));
+			int indGanador = campeonato.get(i).getJuego().obtenerGanador(campeonato.get(i).getJugadores());
+			
+			System.out.println("\nJugador Ganador N.- " +(indGanador+1));
+			System.out.println("Juego Jugado: "+campeonato.get(i).getJuego().getNombre());
+			System.out.println("Ganador de la partida "+campeonato.get(i).getJugadores().get(indGanador).getNombre() +"\nGanadas:"+
+								campeonato.get(i).getJugadores().get(indGanador).getPartidasGanadas());
+				
+			
+			
+		}
+	}
+	
+	public void mostrarCampeon(){
+		int max = 0 , indGanador = 0;
+		for (int i = 0; i < campeonato.size(); i++) {
+			if (campeonato.get((campeonato.size()-1)).getJugadores().get(i).getPartidasGanadas() > max) {
+				max = campeonato.get((campeonato.size()-1)).getJugadores().get(i).getPartidasGanadas();
+				indGanador = i;
+			}
+			
+		}
+		
+		System.out.println("El campeon del campeonato "+nombreCampeonato+ 
+					" es: "+campeonato.get((campeonato.size()-1)).getJugadores().get(indGanador).getNombre());
+		
+	}
+	
+	
+
+	
+	
+
+}

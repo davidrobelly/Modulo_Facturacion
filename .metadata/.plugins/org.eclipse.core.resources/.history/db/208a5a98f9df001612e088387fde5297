@@ -1,0 +1,74 @@
+package MonroyRobelly.Control;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+
+import MonroyRobelly.Threads.Threads_MostrarMano;
+import MonroyRobelly.Vista.Botones;
+import MonroyRobelly.Vista.Ventana_MesaDeJuego;
+import MonroyRobelly.Vista.Ventana_Op_Juego;
+import MonroyRobelly.Vista.Ventana_Principal;
+
+public class Control_VentanaMesaDeJuego implements ActionListener {
+
+	Ventana_MesaDeJuego mesajuego;
+	Ventana_Principal principal;
+	Ventana_Op_Juego juego;
+	
+	public Control_VentanaMesaDeJuego(Ventana_MesaDeJuego mesajuego) {
+		this.mesajuego=mesajuego;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		Object boton = e.getSource();
+		
+		if (boton == mesajuego.panelS.Atras)
+		{	
+			juego = new Ventana_Op_Juego ();
+			mesajuego.dispose();
+			principal.dispose();
+			juego.setVisible(true);
+		}
+		if (boton == mesajuego.panelS.Go)
+		{
+			JOptionPane.showMessageDialog(null, "Falta Programar :)");
+		}
+		
+		if (boton == mesajuego.panelS.Repartir)
+		{
+			if (mesajuego.panelS.jugadoresP.get(0).isVisible())
+			{
+				mesajuego.panelS.CambioDeMano(mesajuego.panelS.cartasMano1);
+				Threads_MostrarMano threads = new Threads_MostrarMano(mesajuego);
+				Thread t1= new Thread(threads);
+				t1.start();
+				mesajuego.repaint();
+				mesajuego.pack();
+			}
+			
+			if (mesajuego.panelS.jugadoresP.get(1).isVisible())
+			{
+				//JOptionPane.showMessageDialog(null, "entra");
+			}
+			
+			if (mesajuego.panelS.jugadoresP.get(2).isVisible())
+			{
+				//JOptionPane.showMessageDialog(null, "entra");
+			}
+			
+			if (mesajuego.panelS.jugadoresP.get(3).isVisible())
+			{
+				//JOptionPane.showMessageDialog(null, "entra");
+			}
+		}
+	}
+	
+	
+
+}

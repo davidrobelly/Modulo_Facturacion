@@ -1,0 +1,113 @@
+package Archivos;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import MonroyRobelly.Modelo.Barajas.Carta;
+
+
+public class ArchivosCartas {
+	
+	private DataOutputStream datosSalida;
+	private DataInputStream datosEntrada;
+	private boolean fin = false;
+	private char valid;
+
+
+	public ArchivosCartas(String nombre, char validacion) {
+		if(validacion=='c'){
+			try {
+				datosSalida = new DataOutputStream (new FileOutputStream(nombre));//ahorramos codigo , en el ejemplo 01 usamos dos cod de lineaºº
+			}
+			catch (IOException e) {
+				System.out.println("Error al abrir el archivo " + e.toString());
+				System.exit(1);
+			}}
+		else if(validacion=='l'){
+			try {
+				datosEntrada = new DataInputStream(new FileInputStream(nombre));
+			}
+			catch (IOException e) {
+				System.out.println("Error al abrir el archivo " + e.toString());
+				System.exit(1);
+			}
+		
+		}
+	}
+
+	public boolean eof() { 
+		return fin;
+	}
+
+
+	//Dos constructores
+	//Uno para crear un archivo de salida
+	//y otro para crear un archivo de entrada
+	
+	
+	//Metodo para guardar datos de articulo en archivo
+	public void insertarCarta (Carta carta) {
+		try {
+			datosSalida.writeInt(carta.getNumero());
+			datosSalida.writeUTF(carta.getColor());
+			datosSalida.writeUTF(carta.getFigura());
+			datosSalida.writeInt(carta.getPosition());
+		}
+		catch(IOException e) {
+			System.out.println ("Error al escribir en el archivo " + e.toString());
+			System.exit(1);
+		}
+	}
+	
+	//Metodo para leer los datos
+	public Carta leerCartas () {
+		Carta carta = null;
+		try {
+			carta = new Carta (datosEntrada.readInt(),datosEntrada.readUTF(),datosEntrada.readUTF(),datosEntrada.readInt());//lee los datos y los guarda
+			return carta;
+		}
+		catch (EOFException eof) {//si se llega al fin del archivo
+			fin = true;
+		}
+		catch (IOException e) {
+			System.out.println("Error al leer en el archivo "+e.toString());
+			System.exit(1);
+		}
+		return carta;
+	}
+
+	//Metodo para cerrar
+	public void cerrar() { 
+		if(valid=='c'){
+			try {
+				datosSalida.flush();
+				datosSalida.close();
+			}
+			catch(IOException e) {
+				System.out.println ("Error al cerrar el archivo " + e.toString());
+				System.exit(1);
+			}
+		}
+		
+		else if(valid=='l'){
+			try {
+		         datosEntrada.close();
+			}
+			catch (IOException e) {
+				System.out.println("Error al cerrar el archivo "+e.toString());
+				System.exit(1);
+			}
+		}
+		
+		
+	}
+	
+	
+	
+	
+	
+}

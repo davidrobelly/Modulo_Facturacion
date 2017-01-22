@@ -1,0 +1,35 @@
+package MonroyRobelly.DBClases;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class ConexionDB {
+	
+	Connection conexion;
+	public Statement stmtSQL;
+	
+	public void conectar () {
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		} catch (Exception ex) {
+			System.err.print("ClassNotFoundException: ");
+			System.err.println(ex.getMessage());
+		}
+		try {
+			conexion = DriverManager.getConnection (
+					"jdbc:mysql://localhost/proyecto_2015_2?" +
+					"user=root&password=");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		try {
+			stmtSQL = conexion.createStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+}

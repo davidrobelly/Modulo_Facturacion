@@ -1,0 +1,78 @@
+package MonroyRobelly.Vista;
+
+import java.awt.Font;
+import java.util.Vector;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
+
+public class PanelOpJuegos extends JPanel{
+	
+	public ComboBox cmbjuegos, cmbjugadores, cmbcantJugadores; 
+	Labels lbl, lbljuegos, lblcantJugadores, lbljugadores;
+	public Vector <JLabel> Numjugadores = new Vector <JLabel> ();
+	public Vector <JButton> jugadores = new Vector <JButton> ();
+	public JButton btnjugador;
+	
+	Imagenes_V img = new Imagenes_V();
+	
+	public PanelOpJuegos () {
+		
+		for (int i=0; i< Numjugadores.capacity(); i++)
+        {
+			int num = i+1;
+        	Numjugadores.add(new JLabel());
+        	Numjugadores.get(i).setHorizontalAlignment(SwingConstants.CENTER);
+        	Numjugadores.get(i).setVisible(false);
+        }
+		
+		Numjugadores.get(0).setText("Jacinto");
+		Numjugadores.get(1).setText("David");
+		Numjugadores.get(2).setText("Miguel");
+		Numjugadores.get(3).setText("Cristina");
+		
+		
+		for (int i=0; i< jugadores.capacity(); i++)
+        {
+        	jugadores.add(new JButton());
+        	jugadores.get(i).setContentAreaFilled(false);
+        	jugadores.get(i).setBorderPainted(true);
+        	jugadores.get(i).setVisible(false);
+        }
+		
+		jugadores.get(0).setIcon(img.getJacinto());
+		jugadores.get(1).setIcon(img.getDavid());
+		jugadores.get(2).setIcon(img.getMiguel());
+		jugadores.get(3).setIcon(img.getCristina());
+	
+		lbl = new Labels();
+		lbl.buildLabel(lblcantJugadores = new Labels(), "Escoja la cantidad de Jugadores");
+		lbl.buildLabel(lbljuegos = new Labels(), "Escoja un juego");
+		lbl.buildLabelSH(lbljugadores = new Labels(), "Seleccione a los Jugadores", new Font("Times New Roman", Font.BOLD, 20));
+		
+		cmbjuegos = new ComboBox();
+		cmbjuegos.agregarCmb(cmbjuegos.Juegos);
+        cmbjugadores = new ComboBox();
+        cmbjugadores.agregarCmb(cmbjugadores.Jugadores);
+        cmbcantJugadores = new ComboBox();
+        cmbcantJugadores.agregarCmb(cmbcantJugadores.CantJugadores);
+        
+        btnjugador = new JButton ("Seleccionar");
+        
+        this.add(lbljuegos);
+        this.add(cmbjuegos);
+        this.add(lblcantJugadores);
+        this.add(cmbcantJugadores);
+        this.add(lbljugadores);
+        this.add(btnjugador);
+       
+        Border bordejpanel = new TitledBorder(new EtchedBorder(), " ");
+		this.setBorder(bordejpanel);
+	}
+
+}

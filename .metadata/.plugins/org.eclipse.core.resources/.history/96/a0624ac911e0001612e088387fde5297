@@ -1,0 +1,28 @@
+package MonroyRobelly.Vista;
+
+import java.awt.Font;
+
+
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+
+public class Labels extends JLabel{
+	
+	public void buildLabelF (JLabel label, String texto, Font fuente) {
+		
+		label.setFont(fuente);
+		label.setText(texto);
+	}
+
+	public void buildLabel (JLabel label, String texto) {
+		
+		label.setText(texto);
+	}
+
+	public void buildLabelSH (JLabel label, String texto, Font fuente) {
+	
+	label.setFont(fuente);
+	label.setText(texto);
+	label.setHorizontalAlignment(SwingConstants.CENTER);
+}
+}

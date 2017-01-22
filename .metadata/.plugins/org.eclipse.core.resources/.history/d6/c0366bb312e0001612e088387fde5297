@@ -1,0 +1,52 @@
+package Control;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import MonroyRobelly.Threads.Threads_MostrarCartas;
+import MonroyRobelly.Vista.Ventana_Principal;
+
+public class Control_Ventana_Principal implements ActionListener {
+
+	Ventana_Principal vista;
+
+	public Control_Ventana_Principal(Ventana_Principal vista) {
+		this.vista=vista;
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object boton = e.getSource();
+		
+		if (boton == vista.panelO.btnBarajar)
+			
+		{
+			System.out.println("barajando la baraja");
+			vista.panelC.removeAll();
+			vista.panelC.repaint();
+			vista.barajarBotones();
+			if (vista.panelC.cartas.get(0).isVisible()==false) {
+				Threads_MostrarCartas threads = new Threads_MostrarCartas(vista);
+				Thread t1= new Thread(threads);
+				t1.start();
+			}
+			vista.repaint();
+			vista.pack();
+		}
+		
+		if (boton == vista.panelO.btnOrdenar)
+		{
+			System.out.println("Odenando la baraja");
+			vista.OrdenarBaraja();
+			if (vista.panelC.cartas.get(0).isVisible()==false) {
+				Threads_MostrarCartas threads = new Threads_MostrarCartas(vista);
+				Thread t1= new Thread(threads);
+				t1.start();
+			}
+			vista.repaint();
+			vista.pack();
+		}
+	}
+
+}

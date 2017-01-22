@@ -1,0 +1,220 @@
+package MonroyRobelly.Control;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
+import javax.swing.JOptionPane;
+
+import MonroyRobelly.Threads.Threads_MostrarMano;
+import MonroyRobelly.Threads.Threads_VoltearCartas;
+import MonroyRobelly.Vista.Imagenes_V;
+import MonroyRobelly.Vista.Ventana_Inicio;
+import MonroyRobelly.Vista.Ventana_MesaDeJuego;
+import MonroyRobelly.Vista.Ventana_Nuevo_Jugador;
+import MonroyRobelly.Vista.Ventana_Op_Juego;
+import MonroyRobelly.Vista.Ventana_Principal;
+
+public class Control_Ventana_OPJuego implements ActionListener {
+
+	Ventana_Inicio inicio;
+	Ventana_Principal principal;
+	Ventana_Op_Juego juego;
+	Ventana_MesaDeJuego mesajuego;
+	Ventana_Nuevo_Jugador njugador;
+	Imagenes_V img = new Imagenes_V();;
+	
+	int click = 0;
+	int jugadores = 0;
+	int j =3;
+	
+	public Control_Ventana_OPJuego(Ventana_Op_Juego juego) {
+		this.juego=juego;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		Object boton = e.getSource();
+		
+		if (boton == juego.btnRegJug)
+		{
+			System.out.println("Registro de jugador nuevo");
+			njugador = new Ventana_Nuevo_Jugador ();
+			juego.dispose();
+			njugador.setVisible(true);
+		}
+		
+		if (boton == juego.btnRegresar)
+		{
+			System.out.println("Ventana de Inicio");
+			inicio = new Ventana_Inicio ();
+			juego.dispose();
+			inicio.setVisible(true);
+		}
+		
+		if (boton == juego.btnJugar)
+		{
+			String cantidad = (String) juego.panelOp.cmbcantJugadores.getSelectedItem();
+			String juegoname = (String) juego.panelOp.cmbjuegos.getSelectedItem();
+			
+			if (jugadores == Integer.parseInt((String) juego.panelOp.cmbcantJugadores.getSelectedItem()))
+			{
+				System.out.println("Ventana Principal");
+				principal = new Ventana_Principal ();
+				mesajuego = new Ventana_MesaDeJuego ();
+				juego.dispose();
+				//principal.setVisible(true);
+				mesajuego.setVisible(true);
+				mesajuego.panelS.txtCantJugadores.setText(cantidad);
+				mesajuego.panelS.txtJuego.setText(juegoname);
+				
+				for (int i =0; i<4; i++)
+				{
+					if (juego.panelOp.jugadores.get(i).isVisible())
+					{
+						mesajuego.panelS.jugadoresP.get(i).setVisible(true);
+						mesajuego.panelS.Njugadores.get(i).setVisible(true);
+						
+						Threads_MostrarMano threads = new Threads_MostrarMano(mesajuego);
+						Thread t1= new Thread(threads);
+						t1.start();
+					}
+					mesajuego.pack();
+				}
+				
+				if (principal.panelC.cartas.get(0).isVisible()==false) {
+					Threads_VoltearCartas threads = new Threads_VoltearCartas(principal);
+					Thread t1= new Thread(threads);
+					t1.start();
+				}
+				
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Faltan Jugadores");
+			}
+		}
+		
+		if (boton == juego.btnBorrar)
+		{
+			System.out.println("Datos Borrados");
+			juego.dispose();
+			juego.repaint();
+			juego.pack();
+			juego = new Ventana_Op_Juego ();
+			juego.setVisible(true);
+			JOptionPane.showMessageDialog(null, "Datos Borrados" );
+		}
+		if (boton == juego.panelOp.btnjugador)
+		{
+			juego.btnJugar.setEnabled(true);
+			juego.btnBorrar.setEnabled(true);
+			juego.panelOp.cmbcantJugadores.setEnabled(false);
+			juego.panelOp.cmbjuegos.setEnabled(false);
+			click++;
+			int cantidad = Integer.parseInt((String) juego.panelOp.cmbcantJugadores.getSelectedItem());
+			System.out.println("Jugador Seleccionado");
+			
+			if (click <= cantidad)
+			{
+				if (juego.panelOp.cmbjugadores.getSelectedItem().equals(" "))
+				{
+					click = 0;
+					JOptionPane.showMessageDialog(null, "Escoja un Jugador" );
+				}
+				
+				else if (juego.panelOp.cmbjugadores.getSelectedItem().equals("Jacinto"))
+				{
+					juego.panelOp.Numjugadores.get(0).setVisible(true);
+					juego.panelOp.jugadores.get(0).setVisible(true);
+					juego.panelOp.cmbjugadores.removeItem("Jacinto");
+					jugadores++;
+				}
+				
+				else if (juego.panelOp.cmbjugadores.getSelectedItem().equals("David"))
+				{
+					juego.panelOp.Numjugadores.get(1).setVisible(true);
+					juego.panelOp.jugadores.get(1).setVisible(true);
+					juego.panelOp.repaint();
+					juego.panelOp.cmbjugadores.removeItem("David");
+					jugadores++;
+				}
+				
+				else if (juego.panelOp.cmbjugadores.getSelectedItem().equals("Miguel"))
+				{
+					juego.panelOp.Numjugadores.get(2).setVisible(true);
+					juego.panelOp.jugadores.get(2).setVisible(true);
+					juego.panelOp.repaint();
+					juego.panelOp.cmbjugadores.removeItem("Miguel");
+					jugadores++;
+				}
+				
+				else if (juego.panelOp.cmbjugadores.getSelectedItem().equals("Cristina"))
+				{
+					juego.panelOp.Numjugadores.get(3).setVisible(true);
+					juego.panelOp.jugadores.get(3).setVisible(true);
+					juego.panelOp.repaint();
+					juego.panelOp.cmbjugadores.removeItem("Cristina");
+					jugadores++;
+				}
+				else 
+				{
+					njugador = new Ventana_Nuevo_Jugador();
+					String njug = njugador.PanelNJ.txtNombre.getText();
+					
+					if (juego.panelOp.cmbjugadores.getSelectedItem().equals(njug))
+					{
+						for (int a =0; a<juego.panelOp.Numjugadores.capacity();a++)
+						{
+							if (juego.panelOp.Numjugadores.get(a).isVisible())
+							{
+								//no hacemos nada en caso de que sea verdadero
+							}
+							else
+							{
+								//en caso de que sea falso colocamos en esa posicion 
+								//el nuevo jugador
+								juego.panelOp.Numjugadores.get(a).setText(njug);
+								juego.panelOp.Numjugadores.get(a).setVisible(true);
+								juego.panelOp.jugadores.get(a).setVisible(true);
+								//asignamos la imagen del nuvo jugador 
+								if (njugador.PanelNJ.txtg.getSelectedText() == "masculino")
+								{
+									juego.panelOp.jugadores.get(a).setIcon(img.getImgmasculino());
+								}
+								else
+								{
+									juego.panelOp.jugadores.get(a).setIcon(img.getImgfemenino());
+								}
+							}
+						}
+						juego.panelOp.repaint();
+						juego.panelOp.cmbjugadores.removeItem(njug);
+						jugadores++;
+						}
+					}
+				juego.pack();
+				}
+				else 
+				{
+					JOptionPane.showMessageDialog( null, "No se puede agregar mas Jugadores" );
+					juego.panelOp.cmbjugadores.setEnabled(false);
+					juego.panelOp.btnjugador.setEnabled(false);
+				}
+				}
+				
+		}
+	}
+
+class Control_ComboBox implements ItemListener {
+
+	
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		Object boton = e.getSource();
+		
+	}
+	
+}

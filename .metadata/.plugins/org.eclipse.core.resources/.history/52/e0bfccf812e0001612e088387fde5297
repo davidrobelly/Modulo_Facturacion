@@ -1,0 +1,232 @@
+package Vista;
+
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+
+import javax.swing.JFrame;
+
+import MonroyRobelly.Control.Control_VentanaMesaDeJuego;
+
+public class Ventana_MesaDeJuego extends JFrame{
+	
+	public PanelSup panelN = new PanelSup ();
+	public PanelDeMesaJuego panelS = new PanelDeMesaJuego (); 
+	Control_VentanaMesaDeJuego control;
+	
+	void buildConstraints(GridBagConstraints gbc, int gx, 
+			int gy, int gw, int gh) 
+	{
+		gbc.gridx = gx;
+		gbc.gridy = gy;
+		gbc.gridwidth = gw;
+		gbc.gridheight = gh;
+	}
+	
+	
+	public Ventana_MesaDeJuego () {
+		 ventana();
+		 ManoDeCartasJ1();
+		 
+		 control = new Control_VentanaMesaDeJuego(this);
+		 
+		//panel norte
+			panelN.setLayout(new GridLayout(4,0));
+		 
+		//panel Sur
+			GridBagLayout MesaJuego = new GridBagLayout();
+			panelS.setLayout(MesaJuego);
+					
+			GridBagConstraints formato = new GridBagConstraints();
+			formato.fill = GridBagConstraints.BOTH ;
+			formato.weightx = 0;
+			formato.weighty = 0;
+			
+			//complementos
+			
+			buildConstraints(formato, 0, 0, 1, 1);
+			panelS.add(panelS.lbljuego);
+			MesaJuego.setConstraints(panelS.lbljuego, formato);
+			
+			buildConstraints(formato, 1, 0, 1, 1);
+			panelS.add(panelS.txtJuego);
+			MesaJuego.setConstraints(panelS.txtJuego, formato);
+			
+			buildConstraints(formato, 3, 0, 1, 1);
+			panelS.add(panelS.lblcantidad);
+			MesaJuego.setConstraints(panelS.lblcantidad, formato);
+			
+			buildConstraints(formato, 4, 0, 1, 1);
+			panelS.add(panelS.txtCantJugadores);
+			MesaJuego.setConstraints(panelS.txtCantJugadores, formato);
+			
+			buildConstraints(formato, 10, 0, 2, 1);
+			panelS.add(panelS.lbltiempoJuego);
+			MesaJuego.setConstraints(panelS.lbltiempoJuego, formato);
+			
+			buildConstraints(formato, 0, 2, 2, 1);
+			panelS.add(panelS.Atras);
+			MesaJuego.setConstraints(panelS.Atras, formato);
+			
+			buildConstraints(formato, 3, 2, 2, 1);
+			panelS.add(panelS.Repartir);
+			MesaJuego.setConstraints(panelS.Repartir, formato);
+			
+			buildConstraints(formato, 10, 2, 2, 1);
+			panelS.add(panelS.Go);
+			MesaJuego.setConstraints(panelS.Go, formato);
+			
+			//jugador 1
+			buildConstraints(formato, 7, 0, 1, 2);
+			panelS.add(panelS.jugadoresP.get(0));
+			MesaJuego.setConstraints(panelS.jugadoresP.get(0), formato);
+			
+			buildConstraints(formato, 5, 2, 5, 2);
+			panelS.add(panelS.Njugadores.get(0));
+			MesaJuego.setConstraints(panelS.Njugadores.get(0), formato);
+			
+			buildConstraints(formato, 5, 4, 1, 1);
+			panelS.add(panelS.cartasMano1.get(0));
+			MesaJuego.setConstraints(panelS.cartasMano1.get(0), formato);
+			
+			buildConstraints(formato, 6, 4, 1, 1);
+			panelS.add(panelS.cartasMano1.get(1));
+			MesaJuego.setConstraints(panelS.cartasMano1.get(1), formato);
+			
+			buildConstraints(formato, 7, 4, 1, 1);
+			panelS.add(panelS.cartasMano1.get(2));
+			MesaJuego.setConstraints(panelS.cartasMano1.get(2), formato);
+			
+			buildConstraints(formato, 8, 4, 1, 1);
+			panelS.add(panelS.cartasMano1.get(3));
+			MesaJuego.setConstraints(panelS.cartasMano1.get(3), formato);
+			
+			buildConstraints(formato, 9, 4, 1, 1);
+			panelS.add(panelS.cartasMano1.get(4));
+			MesaJuego.setConstraints(panelS.cartasMano1.get(4), formato);
+			
+			//centro de mesa
+			buildConstraints(formato, 5, 5, 5, 5);
+			panelS.add(panelS.Animacion);
+			MesaJuego.setConstraints(panelS.Animacion, formato);
+			
+			//jugador 4
+			buildConstraints(formato, 5, 10, 1, 1);
+			panelS.add(panelS.cartasMano4.get(0));
+			MesaJuego.setConstraints(panelS.cartasMano4.get(0), formato);
+			
+			buildConstraints(formato, 6, 10, 1, 1);
+			panelS.add(panelS.cartasMano4.get(1));
+			MesaJuego.setConstraints(panelS.cartasMano4.get(1), formato);
+			
+			buildConstraints(formato, 7, 10, 1, 1);
+			panelS.add(panelS.cartasMano4.get(2));
+			MesaJuego.setConstraints(panelS.cartasMano4.get(2), formato);
+			
+			buildConstraints(formato, 8, 10, 1, 1);
+			panelS.add(panelS.cartasMano4.get(3));
+			MesaJuego.setConstraints(panelS.cartasMano4.get(3), formato);
+			
+			buildConstraints(formato, 9, 10, 1, 1);
+			panelS.add(panelS.cartasMano4.get(4));
+			MesaJuego.setConstraints(panelS.cartasMano4.get(4), formato);
+			
+			buildConstraints(formato, 5, 11, 5, 1);
+			panelS.add(panelS.Njugadores.get(3));
+			MesaJuego.setConstraints(panelS.Njugadores.get(3), formato);
+			
+			buildConstraints(formato, 7, 13, 1, 3);
+			panelS.add(panelS.jugadoresP.get(3));
+			MesaJuego.setConstraints(panelS.jugadoresP.get(3), formato);
+			
+			//jugador 3
+			buildConstraints(formato, 2, 3, 1, 3);
+			panelS.add(panelS.jugadoresP.get(2));
+			MesaJuego.setConstraints(panelS.jugadoresP.get(2), formato);
+			
+			buildConstraints(formato, 0, 6, 5, 1);
+			panelS.add(panelS.Njugadores.get(2));
+			MesaJuego.setConstraints(panelS.Njugadores.get(2), formato);
+			
+			buildConstraints(formato, 0, 7, 1, 1);
+			panelS.add(panelS.cartasMano3.get(0));
+			MesaJuego.setConstraints(panelS.cartasMano3.get(0), formato);
+			
+			buildConstraints(formato, 1, 7, 1, 1);
+			panelS.add(panelS.cartasMano3.get(1));
+			MesaJuego.setConstraints(panelS.cartasMano3.get(1), formato);
+			
+			buildConstraints(formato, 2, 7, 1, 1);
+			panelS.add(panelS.cartasMano3.get(2));
+			MesaJuego.setConstraints(panelS.cartasMano3.get(2), formato);
+			
+			buildConstraints(formato, 3, 7, 1, 1);
+			panelS.add(panelS.cartasMano3.get(3));
+			MesaJuego.setConstraints(panelS.cartasMano3.get(3), formato);
+			
+			buildConstraints(formato, 4, 7, 1, 1);
+			panelS.add(panelS.cartasMano3.get(4));
+			MesaJuego.setConstraints(panelS.cartasMano3.get(4), formato);
+			
+			//jugador 2
+			buildConstraints(formato, 12, 3, 1, 3);
+			panelS.add(panelS.jugadoresP.get(1));
+			MesaJuego.setConstraints(panelS.jugadoresP.get(1), formato);
+			
+			buildConstraints(formato, 10, 6, 5, 1);
+			panelS.add(panelS.Njugadores.get(1));
+			MesaJuego.setConstraints(panelS.Njugadores.get(1), formato);
+			
+			buildConstraints(formato, 10, 7, 1, 1);
+			panelS.add(panelS.cartasMano2.get(0));
+			MesaJuego.setConstraints(panelS.cartasMano2.get(0), formato);
+			
+			buildConstraints(formato, 11, 7, 1, 1);
+			panelS.add(panelS.cartasMano2.get(1));
+			MesaJuego.setConstraints(panelS.cartasMano2.get(1), formato);
+			
+			buildConstraints(formato, 12, 7, 1, 1);
+			panelS.add(panelS.cartasMano2.get(2));
+			MesaJuego.setConstraints(panelS.cartasMano2.get(2), formato);
+			
+			buildConstraints(formato, 13, 7, 1, 1);
+			panelS.add(panelS.cartasMano2.get(3));
+			MesaJuego.setConstraints(panelS.cartasMano2.get(3), formato);
+			
+			buildConstraints(formato, 14, 7, 1, 1);
+			panelS.add(panelS.cartasMano2.get(4));
+			MesaJuego.setConstraints(panelS.cartasMano2.get(4), formato);
+			
+			this.getContentPane().add(panelN, "North");
+			this.getContentPane().add(panelS, "South");
+			
+			//eventos
+			
+			panelS.Atras.addActionListener(control);
+			panelS.Go.addActionListener(control);
+			panelS.Repartir.addActionListener(control);
+			
+			
+			pack();
+			
+	}
+	
+	private void ManoDeCartasJ1() {
+		
+		
+	}
+
+
+	private void ventana() {
+		
+		this.pack();
+		this.setLocationRelativeTo(null);
+		this.setTitle("Mesa de Juego");
+		this.setVisible(true);
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.setLocation(10, 0);
+		this.setResizable(false);
+	}
+	
+
+}

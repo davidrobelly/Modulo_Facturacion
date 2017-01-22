@@ -1,0 +1,112 @@
+package MonroyRobelly.Vista;
+
+import javax.swing.ImageIcon;
+
+public class Imagenes_V {
+	
+	//imagenes Botones
+	String dir = "src/MonroyRobelly/imagenes/";	 
+	ImageIcon mostrar = new ImageIcon(dir+"mostrar.png");
+	ImageIcon barajar = new ImageIcon(dir+"barajar.png");
+	ImageIcon ordenar = new ImageIcon(dir+"ordenar.png");
+	ImageIcon iniciar = new ImageIcon(dir+"iniciar.png");
+	ImageIcon carta1 = new ImageIcon(dir+"carta1.gif");
+	ImageIcon carta2 = new ImageIcon(dir+"carta2.gif");
+	ImageIcon carta3 = new ImageIcon(dir+"carta3.gif");
+	ImageIcon carta4 = new ImageIcon(dir+"carta4.gif");
+	ImageIcon guardar = new ImageIcon(dir+"guardar.gif");
+	ImageIcon animacion1 = new ImageIcon(dir+"ordenar.gif");
+	ImageIcon cartanegra1 = new ImageIcon(dir+"cartanegra1.gif");
+	ImageIcon cartanegra2 = new ImageIcon(dir+"cartanegra2.gif");
+	ImageIcon animacionMesa = new ImageIcon(dir+"animacion1.gif");
+	ImageIcon Miguel = new ImageIcon(dir+"miguel.jpg");
+	ImageIcon David = new ImageIcon(dir+"david.jpg");
+	ImageIcon Cristina = new ImageIcon(dir+"cristina.jpg");
+	ImageIcon Jacinto= new ImageIcon(dir+"jacinto.jpg");
+	ImageIcon imgInicio = new ImageIcon(dir+"inicio.gif");
+	ImageIcon imgmasculino = new ImageIcon (dir+"masculino.jpg");
+	ImageIcon imgfemenino = new ImageIcon (dir+"femenino.jpg");
+	ImageIcon imgregistrar = new ImageIcon (dir+"registrar.png");
+	ImageIcon imgatras = new ImageIcon (dir+"atras.jpg");
+	ImageIcon imgborrar = new ImageIcon (dir+"borrar.jpg");
+	
+	//getters and setters
+	
+	public String getDir() {
+		return dir;
+	}
+	public ImageIcon getMostrar() {
+		return mostrar;
+	}
+	public ImageIcon getBarajar() {
+		return barajar;
+	}
+	public ImageIcon getOrdenar() {
+		return ordenar;
+	}
+	public ImageIcon getIniciar() {
+		return iniciar;
+	}
+	public ImageIcon getCarta1() {
+		return carta1;
+	}
+	public ImageIcon getCarta2() {
+		return carta2;
+	}
+	public ImageIcon getCarta3() {
+		return carta3;
+	}
+	public ImageIcon getCarta4() {
+		return carta4;
+	}
+	public ImageIcon getGuardar() {
+		return guardar;
+	}
+	public ImageIcon getAnimacion1() {
+		return animacion1;
+	}
+	public ImageIcon getCartanegra1() {
+		return cartanegra1;
+	}
+	public ImageIcon getCartanegra2() {
+		return cartanegra2;
+	}
+	public ImageIcon getAnimacionMesa() {
+		return animacionMesa;
+	}
+	public ImageIcon getMiguel() {
+		return Miguel;
+	}
+	public ImageIcon getDavid() {
+		return David;
+	}
+	public ImageIcon getCristina() {
+		return Cristina;
+	}
+	public ImageIcon getJacinto() {
+		return Jacinto;
+	}
+	public ImageIcon getImgInicio() {
+		return imgInicio;
+	}
+	public ImageIcon getImgmasculino() {
+		return imgmasculino;
+	}
+	public ImageIcon getImgfemenino() {
+		return imgfemenino;
+	}
+	public ImageIcon getImgregistrar() {
+		return imgregistrar;
+	}
+	public ImageIcon getImgatras() {
+		return imgatras;
+	}
+	public ImageIcon getImgborrar() {
+		return imgborrar;
+	}
+	
+	
+	
+	
+	
+}

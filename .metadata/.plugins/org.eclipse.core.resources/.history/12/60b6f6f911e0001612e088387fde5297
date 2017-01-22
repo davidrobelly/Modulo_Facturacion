@@ -1,0 +1,66 @@
+package MonroyRobelly.Vista;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
+
+import javax.sql.rowset.CachedRowSet;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import MonroyRobelly.DBClases.JugadorDB;
+import MonroyRobelly.Modelo.Campeonato.Jugador;
+ 
+public class Ventana_Puntajes extends JFrame{
+ 
+	JTable tabla;
+	Jugador jugador = new Jugador();
+	Vector <String> columna  = new Vector<String>();
+	Vector <Vector> data  = new Vector<Vector>();
+	
+	public Ventana_Puntajes () {	
+		setTitle("Datos Jugadores");
+		iniDatos();
+		
+		tabla = new JTable(data,columna);
+		tabla.setPreferredScrollableViewportSize(new Dimension(500,180));
+	
+        //Crea un scroll pane y adiciona la tabla. 
+        JScrollPane scrollPane = new JScrollPane(tabla);
+        
+        // Adiciona el scroll pane a la ventana.
+        getContentPane().add(scrollPane, BorderLayout.NORTH);
+        
+		setVisible(true);
+		pack();
+	}
+	
+	void iniDatos(){
+		
+		columna.addElement("Jugador");
+		columna.addElement("PartidasJugadas");
+		columna.addElement("PartidasGanadas");
+		columna.addElement("PartidasPerdidas");
+		
+		System.out.println(jugador.jugadores.size());
+		
+		for (int i=0; i<jugador.jugadores.size(); i++)
+		{
+			System.out.println("entra");
+			
+			Vector<Object> jug = new Vector<Object>();
+			String pj = Integer.toString(jugador.jugadores.get(i).getPartidasJugadas());
+			String pg = Integer.toString(jugador.jugadores.get(i).getPartidasGanadas());
+			String pp = Integer.toString(jugador.jugadores.get(i).getPartidasPerdidas());
+			jug.add(jugador.jugadores.get(i).getNombre());
+			jug.add(pj);
+			jug.add(pg);
+			jug.add(pp);
+			data.add(jug);
+		}
+	
+}}

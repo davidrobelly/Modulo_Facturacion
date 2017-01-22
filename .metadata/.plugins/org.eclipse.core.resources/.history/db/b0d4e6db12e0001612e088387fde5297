@@ -1,0 +1,135 @@
+package MonroyRobelly.Vista;
+
+import java.awt.Font;
+import java.util.Vector;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
+
+public class PanelDeMesaJuego extends JPanel {
+	
+	public static final String dirImagenes = "src/MonroyRobelly/imagenes/";
+	Botones btn = new Botones ();
+	Imagenes_V img = new Imagenes_V ();
+	public JButton Repartir, Go, Atras, Animacion;
+	
+	public Vector <JButton> jugadoresP = new Vector <JButton> (4);
+	public Vector <JButton> cartasMano1 = new Vector <JButton> (5);
+	public Vector <JButton> cartasMano2 = new Vector <JButton> (5);
+	public Vector <JButton> cartasMano3 = new Vector <JButton> (5);
+	public Vector <JButton> cartasMano4 = new Vector <JButton> (5);
+	public Vector <JLabel> Njugadores = new Vector <JLabel> (4);
+	public TextBox txtJuego, txtCantJugadores, txt;
+	public JLabel lbljuego, lblcantidad, lbltiempoJuego;
+	
+	public PanelDeMesaJuego () {
+		
+		for (int i=0; i< jugadoresP.capacity(); i++)
+        {
+        	jugadoresP.add(new JButton());
+      		jugadoresP.get(i).setContentAreaFilled(false);
+        	jugadoresP.get(i).setBorderPainted(false);
+        	jugadoresP.get(i).setVisible(false);
+        	
+        }
+		
+		jugadoresP.get(0).setIcon(img.getJacinto());
+		jugadoresP.get(1).setIcon(img.getDavid());
+		jugadoresP.get(2).setIcon(img.getMiguel());
+		jugadoresP.get(3).setIcon(img.getCristina());
+		
+		for (int i=0; i<Njugadores.capacity();i++)
+		{
+			int num = i+1;
+			Njugadores.add(new JLabel("Jugador: "+num));
+			Njugadores.get(i).setHorizontalAlignment(SwingConstants.CENTER);
+			Njugadores.get(i).setFont(new Font("Times New Roman", Font.BOLD, 14));
+			Njugadores.get(i).setVisible(false);
+		}
+		
+		for (int i=0; i<cartasMano1.capacity(); i++)
+		{
+			
+			cartasMano1.addElement(new JButton(""));
+			cartasMano1.get(i).setIcon(new ImageIcon(dirImagenes+"reverso.jpg"));
+			cartasMano1.get(i).setVisible(false);
+			cartasMano1.get(i).setContentAreaFilled(false);
+			cartasMano1.get(i).setBorderPainted(false);
+		}
+		
+		for (int i=0; i<cartasMano2.capacity(); i++)
+		{
+			cartasMano2.addElement(new JButton(""));
+			cartasMano2.get(i).setIcon(new ImageIcon(dirImagenes+"reverso.jpg"));
+			cartasMano2.get(i).setVisible(false);
+			cartasMano2.get(i).setContentAreaFilled(false);
+			cartasMano2.get(i).setBorderPainted(false);
+		}
+		
+		for (int i=0; i<cartasMano3.capacity(); i++)
+		{
+			cartasMano3.addElement(new JButton(""));
+			cartasMano3.get(i).setIcon(new ImageIcon(dirImagenes+"reverso.jpg"));
+			cartasMano3.get(i).setVisible(false);
+			cartasMano3.get(i).setContentAreaFilled(false);
+			cartasMano3.get(i).setBorderPainted(false);
+		}
+		
+		for (int i=0; i<cartasMano4.capacity(); i++)
+		{
+			cartasMano4.addElement(new JButton(""));
+			cartasMano4.get(i).setIcon(new ImageIcon(dirImagenes+"reverso.jpg"));
+			cartasMano4.get(i).setVisible(false);
+			cartasMano4.get(i).setContentAreaFilled(false);
+			cartasMano4.get(i).setBorderPainted(false);
+		}
+		
+		lbljuego = new JLabel ("Juego");
+		lbljuego.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		lbljuego.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		lblcantidad = new JLabel ("Jugadores");
+		lblcantidad.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		lblcantidad.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		lbltiempoJuego = new JLabel ("Tiempo de Juego");
+		lbltiempoJuego.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		lbltiempoJuego.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		
+		Go = new JButton ("Go");
+		Repartir = new JButton ("Repartir Cartas");
+		Atras = new JButton ("<< Opciones");
+		
+		txt = new TextBox();
+		txt.buildTextField(txtJuego = new TextBox(), false, new Font("Times New Roman", Font.BOLD, 14));
+		txt.buildTextField(txtCantJugadores = new TextBox(), false, new Font("Times New Roman", Font.BOLD, 14));
+		
+		btn.buildButtonA(Animacion = new Botones(), img.getAnimacionMesa(), false, false, true);
+		
+		Border bordejpanel = new TitledBorder(new EtchedBorder(), " ");
+		this.setBorder(bordejpanel);
+		
+	}
+	
+	public void CambioDeMano (Vector vector) {
+		vector.removeAllElements();
+		Panel_Barajas panelb = new Panel_Barajas();
+		
+		System.out.println("hola");
+		for (int i=0; i<vector.capacity(); i++)
+		{
+			JButton boton;
+			boton = panelb.cartas.get(i);
+			vector.add(boton);
+			panelb.cartas.remove(i);
+		}
+	}
+
+}

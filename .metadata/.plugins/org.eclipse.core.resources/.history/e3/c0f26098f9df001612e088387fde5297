@@ -1,0 +1,89 @@
+package MonroyRobelly.Control;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JOptionPane;
+
+import MonroyRobelly.DBClases.JugadorDB;
+import MonroyRobelly.Modelo.Campeonato.Jugador;
+import MonroyRobelly.Vista.Ventana_Inicio;
+import MonroyRobelly.Vista.Ventana_Nuevo_Jugador;
+import MonroyRobelly.Vista.Ventana_Op_Juego;
+
+public class Control_Ventana_NJugadores implements ActionListener  {
+
+	Ventana_Nuevo_Jugador njugador;
+	Ventana_Op_Juego juego;
+	Jugador jugador_n;
+	JugadorDB jugadordb;
+	
+	public Control_Ventana_NJugadores(Ventana_Nuevo_Jugador njugador) {
+		this.njugador=njugador;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		Object boton = e.getSource();
+		
+		if (boton == njugador.btnRegistrar)
+		{
+			juego = new Ventana_Op_Juego();
+			juego.setVisible(false);
+			
+			if (njugador.PanelNJ.txtNombre.getText().equals("") || njugador.PanelNJ.txtpp.getText().equals("")
+				|| njugador.PanelNJ.txtpj.getText().equals("") || njugador.PanelNJ.txtpg.getText().equals(""))
+			{
+				
+				JOptionPane.showMessageDialog( null, "Falta Información de Registro");
+				System.out.println("prueba");
+			}
+			else
+			{
+				String nombre = njugador.PanelNJ.txtNombre.getText();
+				int pj = Integer.parseInt(njugador.PanelNJ.txtpj.getText());
+				int pg = Integer.parseInt(njugador.PanelNJ.txtpg.getText());
+				int pp = Integer.parseInt(njugador.PanelNJ.txtpp.getText());
+				
+				//DB
+				jugador_n = new Jugador (nombre, pj, pg, pp);
+				jugadordb = new JugadorDB();
+				jugadordb.insertarNuevo(jugador_n);
+				
+				//Vector
+				jugador_n.llenarVector(jugador_n);
+				System.out.println("tamaño de vector: "+jugador_n.jugadores.size());
+				
+				juego.panelOp.cmbjugadores.agregarElementoCmb(juego.panelOp.cmbjugadores.Jugadores, nombre);
+			
+				System.out.println("Registro exitoso");
+				juego.panelOp.cmbjugadores.MonstrarInfo();
+				JOptionPane.showMessageDialog( null, "Registro Exitoso");
+				juego.setVisible(true);
+				njugador.dispose();
+			}
+		}
+		
+		if (boton == njugador.btnBorrar)
+		{
+			System.out.println("Borrando datos");
+			njugador.dispose();
+			njugador.repaint();
+			njugador.pack();
+			njugador = new Ventana_Nuevo_Jugador ();
+			njugador.setVisible(true);
+			JOptionPane.showMessageDialog(null, "Datos Borrados" );
+		}
+		
+		if (boton == njugador.btnAtras)
+		{
+			System.out.println("regresando a las opciones");
+			juego = new Ventana_Op_Juego ();
+			juego.setVisible(true);
+			njugador.dispose();
+		}
+		
+	}
+
+}

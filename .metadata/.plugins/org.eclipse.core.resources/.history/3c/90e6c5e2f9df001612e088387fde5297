@@ -1,0 +1,44 @@
+package MonroyRobelly.Threads;
+
+
+import MonroyRobelly.Control.Control_Ventana_Principal;
+import MonroyRobelly.Vista.Ventana_Principal;
+
+public class Threads_MostrarCartas implements Runnable {
+
+	Ventana_Principal vista;
+	Control_Ventana_Principal control;
+	int MAX = 52;
+
+	public Threads_MostrarCartas(Ventana_Principal vista) {
+		this.vista=vista;
+	}
+	
+	public Threads_MostrarCartas() {
+		
+	}
+
+	@Override
+	public void run() {
+		
+		vista.panelO.btnOrdenar.setEnabled(false);
+		vista.panelO.btnBarajar.setEnabled(false);
+		
+		
+		for (int i = 0; i < MAX; i++) {
+			try{
+				Thread.sleep(80);
+				
+			} catch (InterruptedException ex) {
+				ex.printStackTrace();
+			}
+		
+			vista.panelC.cartas.get(i).setVisible(true);
+			vista.panelC.cartas.get(i).setFocusable(false);
+		}
+		
+		vista.panelO.btnBarajar.setEnabled(true);
+		vista.panelO.btnOrdenar.setEnabled(true);
+	}
+
+}

@@ -1,0 +1,18 @@
+package controles;
+
+import pantallas.ventana_ingreso_clientes;
+
+public class control_ventana_registro_cliente {
+	
+	ventana_ingreso_clientes vista;
+
+	public control_ventana_registro_cliente(ventana_ingreso_clientes vista) {
+		super();
+		this.vista = vista;
+	}
+	
+	
+	
+	
+
+}

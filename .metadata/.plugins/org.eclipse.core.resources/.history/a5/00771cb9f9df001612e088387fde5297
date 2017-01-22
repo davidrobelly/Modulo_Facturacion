@@ -1,0 +1,147 @@
+package MonroyRobelly.Modelo.Barajas;
+
+import java.util.Random;
+import java.util.Vector;
+
+import javax.swing.ImageIcon;
+
+import MonroyRobelly.Vista.Ventana_Principal;
+
+public class Baraja {
+	
+	Ventana_Principal vista;
+	
+	public static final String dirImagenes = "src/MonroyRobelly/imagenes/";
+	
+	//constante que indica el numero de cartas maximo que contiene una baraja
+	public static final int MAX=52;
+	
+	//atributo de tipo objeto para acceder a la clase carta y sus operaciones
+	private Carta carta;
+	
+	//vector donde se almacenaran objetos de tipo carta
+	private Vector<Carta> BarajaCartas= new Vector<Carta> (MAX);
+	
+	//******************************************************************
+	//**********************CONSTRUCTORES*******************************
+	//******************************************************************
+	
+	//este constructor crea las cartas con las especificaciones y las asigna a un vector de cartas 
+	//que se convierte en mi baraja de cartas
+	
+	public Baraja() {
+		for (int i = 0; i < 13; i++) 
+		{	
+			carta = new Carta((i+1),"Negro","Trebol",i);
+			BarajaCartas.add(i, carta);
+			BarajaCartas.get(i).setImage(new ImageIcon(dirImagenes +(i+1)+ "c.png"));
+		}
+		
+		for (int i = 0; i < 13; i++) 
+		{	
+			int a = i+13;
+			carta = new Carta((i+1),"Negro","Picas",a);
+			BarajaCartas.add(i, carta);
+			BarajaCartas.get(i).setImage(new ImageIcon(dirImagenes +(i+1)+ "s.png"));
+		}
+		
+		for (int i = 0; i < 13; i++) 
+		{	
+			int b= i+26;
+			carta = new Carta((i+1),"Rojo","Brillo",b);
+			BarajaCartas.add(b, carta);
+			BarajaCartas.get(b).setImage(new ImageIcon(dirImagenes +(i+1)+ "d.png"));
+		}
+		
+		for (int i = 0; i < 13; i++) 
+		{	
+			int c= i+39;
+			carta = new Carta((i+1),"Rojo","Corazon",c);
+			BarajaCartas.add(c, carta);
+			BarajaCartas.get(c).setImage(new ImageIcon(dirImagenes +(i+1)+ "h.png"));
+		}
+	}
+	
+	
+
+	//************************************************************************
+	//**********************GETTERS AND SETTERS*******************************
+	//************************************************************************
+	
+	public Vector<Carta> getBarajaCartas() {
+		return BarajaCartas;
+	}
+
+	
+	//****************************************************************
+	//**********************OPERACIONES*******************************
+	//****************************************************************
+	
+	//esta operación muestra las cartas dentro del vector
+	
+	public void mostrarBaraja(){
+		for (int i = 0; i < BarajaCartas.size(); i++) {
+			
+			if (BarajaCartas.get(i)!=null) 
+			{
+				BarajaCartas.get(i).mostrarCarta();
+			}else
+			{
+				System.out.println("No hay carta asignada");
+			}
+		}
+	}
+
+	//esta operaciòn permite modificar el roden de las cartas en el vector
+	public void barajar(){
+		
+		Vector <Carta> temporal = new Vector <Carta> (MAX);
+		Carta Cartatmp = new Carta();
+		
+		for (int i = 0; i < temporal.capacity(); i++) 
+		{
+			int k = new Random().nextInt(MAX-i);
+			Cartatmp = BarajaCartas.get(k);
+			temporal.add(Cartatmp);
+			BarajaCartas.remove(k);
+			
+		}
+		
+		for (int i = 0; i < temporal.capacity(); i++) 
+		{
+			Cartatmp = temporal.get(i);
+			BarajaCartas.add(Cartatmp);
+		}
+	}
+
+//esta operación me permite tomar cartas del vector de cartas y me devuelve la carta en la posiciòn
+	public Carta cogerCarta(int k) {
+		
+		Carta temporal = new Carta();
+		temporal = BarajaCartas.get(k);
+		BarajaCartas.remove(k);
+		return temporal;
+	}
+
+// esta operacion me permite retornar una carta de mi mano a la baraja de cartas
+	public void dejarCarta(Carta carta){
+		for (int i = 0; i < BarajaCartas.size(); i++) {
+			if (BarajaCartas.get(i) == null) 
+			{
+				BarajaCartas.set(i, carta);
+				break;
+			}
+		}
+	}
+
+
+
+	public void setBarajaCartas(Vector<Carta> barajaCartas) {
+		if (barajaCartas != null)
+		BarajaCartas = barajaCartas;
+	}
+
+	
+	
+	
+}

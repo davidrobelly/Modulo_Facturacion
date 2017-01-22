@@ -1,0 +1,47 @@
+package MonroyRobelly.Vista;
+
+import java.awt.Color;
+import java.awt.Font;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
+
+public class PanelSup  extends JPanel{
+
+	JLabel Universidad, Materia, NombreP, Integrantes;
+	
+	public PanelSup () {
+		
+		Universidad = new JLabel ("Escuela Superior Politécnica del Litoral");
+		Universidad.setHorizontalAlignment(SwingConstants.CENTER);
+		Universidad.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		
+		Materia = new JLabel ("PAOO");
+		Materia.setHorizontalAlignment(SwingConstants.CENTER);
+		Materia.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		
+		NombreP = new JLabel ("Proyecto II Término 2015 - 2016");
+		NombreP.setHorizontalAlignment(SwingConstants.CENTER);
+		NombreP.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		
+		Integrantes = new JLabel ("Carlos Monroy - David Robelly");
+		Integrantes.setHorizontalAlignment(SwingConstants.CENTER);
+		Integrantes.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		this.add(Universidad);
+		this.add(Materia);
+		this.add(NombreP);
+		this.add(Integrantes);
+		
+		Border bordejpanel = new TitledBorder(new EtchedBorder(), " ");
+		this.setBorder(bordejpanel);
+		
+		this.setBackground(Color.white);
+		
+	}
+	
+
+}

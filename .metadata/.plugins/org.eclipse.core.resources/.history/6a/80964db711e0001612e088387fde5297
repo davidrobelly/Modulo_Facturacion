@@ -1,0 +1,62 @@
+package MonroyRobelly.Vista;
+
+import java.util.Vector;
+
+import javax.swing.JComboBox;
+
+public class ComboBox extends JComboBox{
+	
+	int size = 6;
+	Vector <String> Juegos = new Vector <String> (3); 
+	public Vector <String> Jugadores = new Vector <String> (size); 
+	Vector <String> CantJugadores = new Vector <String> (3); 
+	Vector <String> Genero = new Vector <String> (2); 
+	
+	
+	public ComboBox () {
+		
+		for (int i=0 ; i< CantJugadores.capacity(); i++)
+		{
+			String num = Integer.toString(i+2);
+			CantJugadores.add(num);
+		}
+		
+		Juegos.addElement("El Color Mayor");
+		Juegos.addElement("Manitos Pares");
+		Juegos.addElement("Número Repetido");
+		
+		Jugadores.addElement(" ");
+		Jugadores.addElement("Jacinto");
+		Jugadores.addElement("David");
+		Jugadores.addElement("Miguel");
+		Jugadores.addElement("Cristina");
+		
+		Genero.addElement("Maculino");
+		Genero.addElement("Femenino");
+		
+	}
+	
+	public void agregarCmb (Vector vector) 
+	{
+		for (int i = 0; i< vector.size(); i++)
+		{
+			this.addItem(vector.get(i));
+		}
+	}
+	
+	public void MonstrarInfo () 
+	{
+		for (int i = 0; i< Jugadores.size(); i++)
+		{
+			String m = Jugadores.get(i);
+			System.out.println(m);
+		}
+	}
+	
+	public void agregarElementoCmb (Vector vector, String nombre) 
+	{
+		size++;
+		vector.addElement(nombre);
+	}
+	
+}

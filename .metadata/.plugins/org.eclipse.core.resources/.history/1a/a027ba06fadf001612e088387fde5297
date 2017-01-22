@@ -1,0 +1,79 @@
+package MonroyRobelly.Vista;
+
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
+
+import MonroyRobelly.Control.Control_Ventana_Inicio;
+
+public class Ventana_Inicio extends JFrame{
+
+	Control_Ventana_Inicio control;
+	
+	public JButton btnEmpezar, btnPuntuaciones, btnSalir;
+	Botones btn = new Botones ();
+	JButton btnImg;
+	JPanel panelSuperior, panelInferior;
+	String dir = "src/MonroyRobelly/imagenes/";	 
+	PanelSup panelInfo = new PanelSup(); 
+	Imagenes_V img = new Imagenes_V ();
+	
+	public Ventana_Inicio () {
+		
+		ventana();
+		initComponentes ();
+		control = new Control_Ventana_Inicio(this);
+		
+		panelInfo.setLayout(new GridLayout(4,0));
+		panelSuperior.setLayout(new GridLayout(0,1));
+		panelSuperior.add(btnImg);
+		
+		panelInferior.setLayout(new GridLayout(0,3));
+		panelInferior.add(btnEmpezar);
+		panelInferior.add(btnPuntuaciones);
+		panelInferior.add(btnSalir);
+		
+		this.getContentPane().add(panelInfo, "North");
+		this.getContentPane().add(panelSuperior, "Center");
+		this.getContentPane().add(panelInferior, "South");
+		
+		//eventos
+		btnEmpezar.addActionListener(control);
+		btnPuntuaciones.addActionListener(control);
+		btnSalir.addActionListener(control);
+		
+		pack();
+	}
+
+	private void initComponentes() {
+		
+		panelSuperior = new JPanel ();
+		panelInferior = new JPanel ();
+		
+		Border bordejpanel = new TitledBorder(new EtchedBorder(), " ");
+		panelSuperior.setBorder(bordejpanel);
+		panelInferior.setBorder(bordejpanel);
+	
+		btnEmpezar = new JButton ("Empezar"); 
+		btnPuntuaciones = new JButton ("Records");
+		btnSalir = new JButton ("Salir");
+		
+		btn.buildButton(btnImg = new Botones(), img.getImgInicio(), false, false);
+	}
+	
+	private void ventana() {
+		this.setLocationRelativeTo(null);
+		this.pack();
+		this.setTitle("Bienvenidos");
+		this.setVisible(true);
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.setSize(280, 420);
+		this.setResizable(false);
+		
+	}
+}

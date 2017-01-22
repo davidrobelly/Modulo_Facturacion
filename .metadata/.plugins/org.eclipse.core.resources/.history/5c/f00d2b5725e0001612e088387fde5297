@@ -1,0 +1,12 @@
+package pantallas;
+
+import javax.swing.JFrame;
+
+public class ventana_ingreso_clientes extends JFrame{
+	
+	
+	
+	
+	
+
+}

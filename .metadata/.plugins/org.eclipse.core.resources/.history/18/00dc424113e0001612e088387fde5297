@@ -1,0 +1,194 @@
+package DBClases;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import MonroyRobelly.Modelo.Campeonato.Partida;
+
+public class PartidaDB {
+
+	Statement stmtSQL;
+	
+	ConexionDB conexion = new ConexionDB();
+	
+	public void crearTabla () {
+		conexion.conectar();
+		this.conexion.conectar();
+		try {
+
+			stmtSQL.executeUpdate ("DROP TABLE IF EXISTS partida");
+			
+			stmtSQL.executeUpdate (	"CREATE TABLE partida " +
+									"(id 		TINYINT, " + 
+									" nombrePartida 	VARCHAR(32), " + 
+									" idJugador         TINYINT) " );
+		
+			conexion.conexion.close();
+         
+		} catch (SQLException ex) {
+			System.err.print("Problema en la conexion: " + ex);		
+		}
+	}
+	
+	public void insertarNuevo(Partida partida) {
+		
+		this.conexion.conectar();
+		try {
+			for (int i = 0; i < partida.getJugadores().size(); i++) {
+						stmtSQL.executeUpdate ("INSERT INTO partida VALUES (" +
+						partida.getId() + ", '" + partida.getNombrePartida() + "', " +
+						partida.getJugadores().get(i).getID() + ")");
+			}
+
+			
+			conexion.conexion.close();
+			
+         
+		} catch (SQLException ex) {
+			System.err.print("Problema: " + ex);		
+		}
+	}
+	
+	public void insertarNuevo(List<Partida> lista) {
+		
+		this.conexion.conectar();
+		try {
+			
+			for (int i = 0; i < lista.size(); i++) {
+				stmtSQL.executeUpdate ("INSERT INTO partida VALUES (" +
+										lista.get(i).getId() + ", '" + lista.get(i).getNombrePartida() + "', " +
+										lista.get(i).getJugadores().get(i).getID() + ")");
+				
+			}
+
+			conexion.conexion.close();
+			
+         
+		} catch (SQLException ex) {
+			System.err.print("Problema: " + ex);		
+		}
+	}
+
+	public void listar() {
+		try {
+			this.conexion.conectar();
+			ResultSet objRS = stmtSQL.executeQuery( "SELECT * FROM partida" );
+			while (objRS.next()) {
+				
+				System.out.println (objRS.getByte ("id") + " " + 
+				objRS.getString	("nombrePartida") 	+ " " + 
+				objRS.getByte ("idJugador")); 
+
+			}
+			
+			conexion.conexion.close();
+			
+		} catch (SQLException ex) {
+			System.err.print("Problema: " + ex);	
+		}
+		
+	}
+
+	
+	
+	
+	public List <Partida> getLista() {
+		List <Partida> listaPartidas = new ArrayList <Partida>();
+		try {
+			this.conexion.conectar();
+			ResultSet objRS = stmtSQL.executeQuery( "SELECT * FROM partida" );
+			while (objRS.next()) {
+				Partida partida = new Partida ((byte) objRS.getByte ("id"), 
+											objRS.getString	("nombrePartida"));
+				listaPartidas.add(partida);
+			}
+			conexion.conexion.close();
+		} catch (SQLException ex) {
+			System.err.print("Problema: " + ex);	
+		}
+		return listaPartidas;
+	}
+
+	public List <Partida> getLista(int id) {
+		List <Partida> listaPartida = new ArrayList <Partida>();
+		Partida partida;
+		try {
+			this.conexion.conectar();
+
+			ResultSet objRS = stmtSQL.executeQuery( "SELECT * FROM partida WHERE idPartida = " + id );
+			while (objRS.next()) {
+				partida = new Partida ((byte) objRS.getInt ("id"), objRS.getString	("nombrePartida"));
+													
+				listaPartida.add(partida);
+			}
+			
+			conexion.conexion.close();
+			
+		} catch (SQLException ex) {
+			System.err.print("Problema: " + ex);	
+		}
+		
+		return listaPartida;
+		
+	}
+	
+	public void eliminarRegistro (int id) {
+		try {
+			this.conexion.conectar();
+
+			stmtSQL.executeUpdate("DELETE FROM partida " +
+                    " WHERE id = '" + id + "'");
+			
+			conexion.conexion.close();
+			
+		} catch (SQLException ex) {
+			System.err.print("Problema: " + ex);	
+		}
+	}
+
+	public void actualizarRegistro (Partida partida) {
+		try {
+			this.conexion.conectar();
+			
+			for (int i = 0; i < partida.getJugadores().size(); i++) {
+				stmtSQL.executeUpdate("UPDATE partida "+
+	                    "SET id = " + partida.getId() + "," +
+	                    "nombrePartida = '" + partida.getNombrePartida() +"'," +
+	                    "idJugador = " + partida.getJugadores().get(i).getID() +
+	                    " WHERE id = " + partida.getId() );
+			}
+			
+
+			
+			conexion.conexion.close();
+			
+		} catch (SQLException ex) {
+			System.err.print("Problema: " + ex);	
+		}
+	}
+	
+	public Partida consultarPorID (int id) {
+		Partida partida = null;
+		try {
+			this.conexion.conectar();
+
+			ResultSet objRS = stmtSQL.executeQuery( 
+					"SELECT * FROM partida WHERE id =" + id );
+			if (objRS.next())
+				partida = new Partida ( objRS.getByte ("id"), 
+										objRS.getString	("nombrePartida"));	
+					
+			conexion.conexion.close();	
+		} catch (SQLException ex) {
+			System.err.print("Problema: " + ex);	
+		}
+		
+		return partida;
+	}
+	
+}

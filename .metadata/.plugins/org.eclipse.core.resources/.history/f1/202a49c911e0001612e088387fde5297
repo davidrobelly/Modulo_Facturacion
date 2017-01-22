@@ -1,0 +1,28 @@
+package MonroyRobelly.Vista;
+
+import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
+
+public class Panel_Animaciones extends JPanel {
+	
+	Botones btnc1, btnc2, btnc3, btn;
+	Imagenes_V img = new Imagenes_V ();
+	
+	public Panel_Animaciones () {
+		
+		btn = new Botones ();
+		btn.buildButton (btnc1 = new Botones(), img.getCartanegra1(), false, false );
+		btn.buildButton (btnc2 = new Botones(), img.getCartanegra2(), false, false );
+		btn.buildButton (btnc3 = new Botones(), img.getAnimacion1(), false, false );
+		
+		this.add(btnc1);
+		this.add(btnc3);
+		this.add(btnc2);
+		
+		Border bordejpanel = new TitledBorder(new EtchedBorder(), " ");
+		this.setBorder(bordejpanel);
+	}
+
+}

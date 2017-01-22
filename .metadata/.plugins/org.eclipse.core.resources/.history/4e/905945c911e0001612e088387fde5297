@@ -1,0 +1,58 @@
+package MonroyRobelly.Vista;
+
+import java.awt.Font;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
+
+public class Panel_NJ extends JPanel{
+	
+	public ComboBox cmbgenero;
+	public Labels lbl, lbltitulo, Nombres, pganadas, pjugadas, pperdidas, genero;
+	public TextBox txt, txtNombre, txtpg, txtpp, txtg, txtpj;
+	
+	Imagenes_V img = new Imagenes_V();
+	
+	public Panel_NJ () {
+		
+		lbl = new Labels ();
+		lbl.buildLabelF(Nombres = new Labels(),"Nombre: ", new Font("Times New Roman", Font.BOLD, 16));
+		lbl.buildLabelF(pganadas = new Labels(),"Partidas Ganadas: ", new Font("Times New Roman", Font.BOLD, 16));
+		lbl.buildLabelF(pperdidas = new Labels(),"Partidas Perdidas: ", new Font("Times New Roman", Font.BOLD, 16));
+		lbl.buildLabelF(pjugadas = new Labels(),"Partidas Jugadas: ", new Font("Times New Roman", Font.BOLD, 16));
+		lbl.buildLabelF(genero = new Labels(),"Género ", new Font("Times New Roman", Font.BOLD, 16));
+		lbl.buildLabelSH(lbltitulo = new Labels(), "Registre sus Datos", new Font("Times New Roman", Font.BOLD, 24));
+				
+		cmbgenero = new ComboBox();
+		cmbgenero.agregarCmb(cmbgenero.Genero);
+		
+		txt = new TextBox();
+		txt.buildETextField(txtNombre = new TextBox(),  new Font("Times New Roman", Font.BOLD, 14));
+		txt.buildETextField(txtpg = new TextBox(),  new Font("Times New Roman", Font.BOLD, 14));
+		txt.buildETextField(txtpp = new TextBox(),  new Font("Times New Roman", Font.BOLD, 14));
+		txt.buildETextField(txtpj = new TextBox(),  new Font("Times New Roman", Font.BOLD, 14));
+		txt.buildETextField(txtg = new TextBox(),  new Font("Times New Roman", Font.BOLD, 14));
+		
+		Border bordejpanel = new TitledBorder(new EtchedBorder(), " ");
+		this.setBorder(bordejpanel);
+		
+		this.add(Nombres);
+		this.add(pganadas);
+		this.add(pperdidas);
+		this.add(pjugadas);
+		this.add(genero);
+		this.add(cmbgenero);
+		this.add(txtpp);
+		this.add(txtNombre);
+		this.add(txtpj);
+		this.add(txtpp);
+		
+		
+
+	}
+
+}

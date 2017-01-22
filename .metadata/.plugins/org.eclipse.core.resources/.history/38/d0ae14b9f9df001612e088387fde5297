@@ -1,0 +1,307 @@
+package MonroyRobelly.Modelo.Campeonato;
+
+import java.util.Vector;
+
+import MonroyRobelly.Modelo.Barajas.Baraja;
+import MonroyRobelly.Modelo.Juegos.Juego;
+
+public class Partida {
+	
+	//private int Maxjugadores = 5;
+	private byte id;
+	private String nombrePartida;
+
+
+	//atributo que me permite acceder a la clase baraja y sus operaciones
+	private Baraja baraja;
+	
+	//vector que almacena objetos de tipo jugador
+	public Vector<Jugador> jugadores = new Vector<Jugador>();
+	
+	//atributo que me permite acceder a la clase juego y sus operaciones
+	private Juego juego;
+	
+	//******************************************************************
+	//**********************CONSTRUCTORES*******************************
+	//******************************************************************
+	
+	//creo una partida vacia
+	public Partida() {
+		super();
+	}
+	
+	//creo una partida y asigno una baraja a la misma
+	public Partida(Baraja baraja) {
+		super();
+		this.asignarBaraja(baraja);
+	}
+	
+	//creo una aprtida y asgno una baraj y un juego
+	public Partida(Baraja baraja, Juego juego) {
+		super();
+		this.asignarBaraja(baraja);
+		this.asignarJuego(juego);
+		
+	}
+
+	public Partida(byte id, String nombrePartida) {
+		super();
+		this.setId(id);
+		this.setNombrePartida(nombrePartida);
+	}
+
+	//************************************************************************
+	//**********************GETTERS AND SETTERS*******************************
+	//************************************************************************
+	public byte getId() {
+		return id;
+	}
+
+	public void setId(byte id) {
+		this.id = id;
+	}
+
+	public String getNombrePartida() {
+		return nombrePartida;
+	}
+
+	public void setNombrePartida(String nombrePartida) {
+		this.nombrePartida = nombrePartida;
+	}
+	
+	public Baraja getBaraja() {
+		return baraja;
+	}
+	
+	public Juego getJuego() {
+		return juego;
+	}
+	
+	public Vector<Jugador> getJugadores() {
+		return jugadores;
+	}
+	
+	public void setJugadores(Vector<Jugador> jugadores) {
+		this.jugadores = jugadores;
+	}
+	//****************************************************************
+	//**********************OPERACIONES*******************************
+	//****************************************************************
+	
+	//operación que me permite asignar una baraja
+	public void asignarBaraja(Baraja baraja){
+		boolean tieneNulos = false;
+		if (baraja != null) {
+			for (int i = 0; i < baraja.getBarajaCartas().size(); i++) {
+				if (baraja.getBarajaCartas().get(i) == null) {
+					tieneNulos = true;
+					break;
+				}
+			}
+			if (tieneNulos == false) {
+				this.baraja = baraja;
+			}else{
+				System.out.println("La baraja no esta completa");
+			}	
+		}
+	}
+	
+	public void inscribirJugador(Jugador j1) {
+		if (jugadores.size() < juego.getNroJugadores()) {
+			jugadores.add(j1);
+			// agrega un jugador a la partida si el numero de jugadores me lo permite
+		}else{
+			System.out.println("No se puede inscribir mas jugadores a la partida");
+		}
+		
+	}
+	
+	public void mostrarJugadores() {
+		for (int i = 0; i < jugadores.size(); i++) {
+			System.out.println("\n******** Jugador "+(i+1)+": "+jugadores.get(i).getNombre()+ " ********");
+			jugadores.get(i).mostrarJugador(); //Muestra todos los jugadores de la partida
+		}
+	}
+	
+	public void asignarCartasJugadores() {
+		System.out.println("\n************ Asignando Cartas a Jugadores *************\n");
+		for (int i = 0; i < jugadores.size(); i++) {
+			jugadores.get(i).setMano(new Mano());
+			for (int j = 0; j < juego.getNroCartas(); j++) {
+				jugadores.get(i).getMano().asignarCarta(baraja.cogerCarta(0)); 
+				//Se envia cero como posición porque por lo general 
+				//se toma la primera carta del tope de la baraja. 
+			}
+			
+		}
+	}
+	public void mostrarManosJugadores() {
+		//Muestra todas las manos de los jugadores inscritos
+		System.out.println("***** Mostrando la mano de todos los jugadores *****");
+		for (int i = 0; i < jugadores.size(); i++) {
+			System.out.println("\nLa mano del Jugador: " +jugadores.get(i).getNombre()+ " Tiene");
+			jugadores.get(i).getMano().mostrarMano();
+		}
+	}
+	
+	public void Jugar(){
+		int NumJuegosPerdidos = 0 , NumJuegosGanados = 0;
+		int indiceJugadorGanador = juego.obtenerGanador(jugadores);
+		System.out.println("");
+		System.out.println("JUEGO FINALIZADO CON EXITO");
+		//aquie realizamos esto en caso de que no exista ganador
+		if (indiceJugadorGanador == 5)
+		{
+			System.out.println("");
+		}
+		else
+			//Contamos las veces que ha ganado el jugador
+			//en el vector de jugadores, aumentamos la cantidad de veces que el jugador ha ganado
+			//reemplazando el valor existente. (le aumentamos "+1")
+			jugadores.get(indiceJugadorGanador).setPartidasGanadas(jugadores.get(indiceJugadorGanador).getPartidasGanadas()+1);
+		
+		
+		//Contamos las veces que ha perdido un jugador
+		//en el vector de jugadores, aumentamos la cantidad de veces que el jugador ha perdido
+		
+		for (int i = 0; i < jugadores.size(); i++) {
+			if(i != indiceJugadorGanador){
+				NumJuegosPerdidos = jugadores.get(i).getPartidasPerdidas()+1;
+				jugadores.get(i).setPartidasPerdidas(NumJuegosPerdidos);
+			}
+		}
+		
+		//Contamos las veces que ha participado un jugador
+		for (int i = 0; i < jugadores.size(); i++) {
+			NumJuegosGanados = jugadores.get(i).getPartidasJugadas()+1;
+			jugadores.get(i).setPartidasJugadas(NumJuegosGanados);
+		}
+		
+	}
+	
+	public void cartaMasAlta(Jugador jugador){
+		for (int i = 0; i < jugadores.size(); i++) {
+			boolean existe = false;
+			if (jugadores.get(i) == jugador) {
+				System.out.println("La carta mas alta del jugador "+jugador.getNombre()+ 
+						" es: "+jugador.getMano().cartaMasAlta());
+				existe = true;
+				break;
+			}else {
+				System.out.println("El jugador no existe en esta partida");
+			}
+		}
+		
+	}
+	
+	public void cartaMasAlta(String nombreJugador){
+		boolean existe = false;
+		for (int i = 0; i < jugadores.size(); i++) {
+			if (jugadores.get(i).getNombre() == nombreJugador) {
+				System.out.println("La carta mas alta del jugador "+nombreJugador+ 
+						" es: "+jugadores.get(i).getMano().cartaMasAlta());
+				existe = true;
+				break;
+			}
+		}
+		if (existe == false) {
+			System.out.println("Ese jugador no existe");
+		}
+	}
+	
+	public void mostrarManoJugador(Jugador jugador){
+		boolean existe = false;
+		for (int i = 0; i < jugadores.size(); i++) {
+			if (jugadores.get(i) == jugador) {
+				jugador.mostrarMano();
+				existe = true;
+				break;
+			}
+		}
+		if (existe == false) {
+			System.out.println("Ese jugador no esta en la partida");
+		}
+		
+	}
+	
+	public void mostrarManoJugador(String nombreJugador){
+		boolean existe = false;
+		for (int i = 0; i < jugadores.size(); i++) {
+			if (jugadores.get(i).getNombre() == nombreJugador) {
+				jugadores.get(i).mostrarMano();
+				existe = true;
+			}
+		}
+		if (existe == false) {
+			System.out.println("Ese jugador no existe");
+		}
+	}
+	
+	public void asignarJuego(Juego juego){
+		if (juego != null) {
+			this.juego = juego;
+			System.out.println("\nJuego " +juego.getNombre()+ " asignado a la partida");
+			this.juego.setPartida(this);
+		}
+	}
+	
+	public void eliminarJuego(Juego juego){
+		if (this.juego == juego) {
+			this.juego = null;
+			System.out.println("\nEl juego "+juego.getNombre() + " ha sido eliminado de la partida");
+		}
+	}
+	
+	public void cambiarJuego(Juego nuevo){
+		if (nuevo != null) {
+			this.juego = nuevo;
+			System.out.println("\nEl nuevo juego de la partida es "+juego.getNombre());
+		}
+	}
+	
+	
+	public void mostrarNombreGanador(){
+		int indGanador = juego.obtenerGanador(jugadores);
+		System.out.println("");
+		if (indGanador == 5)
+		{
+			System.out.println("No hubo ganador");
+		}
+		else
+		System.out.println("El ganador de la partida es: "+jugadores.get(indGanador).getNombre());
+	}
+	
+	public void mostrarNombrePerdedores(){
+		int indGanador = juego.obtenerGanador(jugadores);
+		System.out.println("**Perdedores**");
+		for (int i = 0; i < jugadores.size(); i++) {
+			if (i != indGanador) {
+				System.out.println(jugadores.get(i).getNombre());
+			}
+		}
+	}
+	
+//	public void mostrarDueñoCarta(int numero , String figura ,String color){
+//		boolean encontro = false;
+//		for (int i = 0; i < jugadores.size(); i++) {
+//			encontro = jugadores.get(i).getMano().buscarCarta(numero, figura, color);
+//			if (encontro == true) {
+//				System.out.println("La carta "+numero+ " de " +figura+ "  " 
+//									+color+ " le pertenece a:" +jugadores.get(i).getNombre());
+//				break;
+//			}
+//		}
+//		if (encontro == false) {
+//			System.out.println("Esa carta no le pertenece a ningun jugador");
+//		}
+//	}
+	
+	
+	
+	
+	
+	
+	
+	
+
+}

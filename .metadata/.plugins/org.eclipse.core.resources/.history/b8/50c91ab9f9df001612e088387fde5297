@@ -1,0 +1,109 @@
+package MonroyRobelly.Modelo.Barajas;
+
+import javax.swing.ImageIcon;
+
+public class Carta {
+
+	//atributos de la carta
+	private int numeroCarta;
+	private String colorCarta;
+	private String figuraCarta;
+	//MVC
+	private ImageIcon image;
+	private int position;
+	
+	
+// CONSTRUCTORES
+	//carta sin atributos
+	public Carta() {
+		super();
+	}
+	
+	//carta con atibutos
+	public Carta(int numero, String color, String figura) {
+		super();
+		this.setNumero(numero);
+		this.setColor(color);
+		this.setFigura(figura);
+	}
+	//MVC
+	
+	public Carta(int numero, String color, String figura, int posicion) {
+		this(numero,color,figura);
+		this.setPosition(posicion);
+	}
+	
+	public Carta(int numero, String color, String figura,ImageIcon Imagen) {
+		this(numero, color, figura);
+		setImage(Imagen);
+	}
+	
+	public Carta(int numero, String color, String figura, int posicion, ImageIcon Imagen) {
+		this(numero,color,figura);
+		this.setPosition(posicion);
+		setImage(Imagen);
+	}
+	
+//	GETTERS AND SETTERS
+	
+	public int getNumero() {
+		return numeroCarta;
+	}
+	public void setNumero(int numero) {
+		if ((numero>=1)&&(numero<=13)) {
+			this.numeroCarta = numero;
+		}
+	}
+	public String getColor() {
+		return colorCarta;
+	}
+	public void setColor(String color) {
+		if (color=="Negro"||color=="Rojo") {
+			this.colorCarta = color;
+		}
+	}
+	
+	public String getFigura() {
+		return figuraCarta;
+	}
+	
+	public void setFigura(String figura) {
+		if (figura=="Corazon"||figura=="Picas"||figura=="Trebol"||figura=="Brillo") {
+			this.figuraCarta = figura;	
+		}
+	}
+	
+	//MVC
+	public ImageIcon getImage() {
+		return image;
+	}
+
+	public void setImage(ImageIcon image) {
+		this.image = image;
+	}
+
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int position) {
+		this.position = position;
+	}
+	
+	
+	
+//	OPERACIONES
+	
+
+	//operación que muestra el contenido de las cartas
+	public void mostrarCarta(){ 
+		System.out.println("Numero: "+numeroCarta+" Color: "+colorCarta+" "
+		+ "Figura: "+figuraCarta+" Posición:" +position+" Imagen: "+image);
+		
+	}
+	
+
+	
+
+
+}

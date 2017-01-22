@@ -1,0 +1,150 @@
+package MonroyRobelly.Modelo.Campeonato;
+
+import java.util.Vector;
+
+public class Jugador {
+	
+	private int ID;
+	private String nombre;
+	private int partidasJugadas;
+	private int partidasGanadas;
+	private int partidasPerdidas;
+	private Mano mano;
+	
+	int size =5;
+	public Vector<Jugador> jugadores = new Vector<Jugador>(size);
+	
+	//******************************************************************
+	//**********************CONSTRUCTORES*******************************
+	//******************************************************************
+	
+	
+	
+	public Jugador() {
+		super();
+	}
+	
+	public Jugador(int iD, String nombre, int partidasJugadas, int partidasGanadas, int partidasPerdidas) {
+		super();
+		this.setID(iD);
+		this.setNombre(nombre);
+		this.setPartidasJugadas(partidasJugadas);
+		this.setPartidasGanadas(partidasGanadas);
+		this.setPartidasPerdidas(partidasPerdidas);
+	}
+
+	//constructor que recibe el nombre y los datos de las partidas
+	public Jugador(String nombre, int partidasJugadas, int partidasGanadas,
+			int partidasPerdidas) {
+		super();
+		this.setNombre(nombre);
+		this.setPartidasJugadas(partidasJugadas);
+		this.setPartidasGanadas(partidasGanadas);
+		this.setPartidasPerdidas(partidasPerdidas);
+	}
+	
+	//constructor que recibe solo el nombre del jugador
+	public Jugador(String j1) {
+		this(j1,0,0,0);
+	}
+	//************************************************************************
+	//**********************GETTERS AND SETTERS*******************************
+	//************************************************************************
+	
+	
+	public String getNombre() {
+		return nombre;
+	}
+	
+	public Mano getMano() {
+		if (mano == null) {
+			System.out.println("Vacio");
+		}
+		return mano;
+	}
+	
+	public void setMano(Mano mano) {
+		this.mano = mano;
+	}
+	
+	public void setNombre(String nombre) {
+		if (nombre!=null) {
+			this.nombre = nombre;
+		}
+	}
+	
+	public int getPartidasJugadas() {
+		return partidasJugadas;
+	}
+	
+	public void setPartidasJugadas(int partidasJugadas) {
+		if (partidasJugadas>=0) {
+			this.partidasJugadas = partidasJugadas;
+		}
+	}
+	
+	public int getPartidasGanadas() {
+		return partidasGanadas;
+	}
+	
+	public void setPartidasGanadas(int partidasGanadas) {
+		if (partidasGanadas>=0) {
+			this.partidasGanadas = partidasGanadas;
+		}
+	}
+	
+	public int getPartidasPerdidas() {
+		return partidasPerdidas;
+	}
+	
+	public void setPartidasPerdidas(int partidasPerdidas) {
+		if (partidasPerdidas>=0) {
+			this.partidasPerdidas = partidasPerdidas;
+		}
+	}
+	//****************************************************************
+	//**********************OPERACIONES*******************************
+	//****************************************************************
+	
+	public void mostrarJugador(){
+		System.out.println("Nombre de Jugador: "+nombre);
+		System.out.println("Partidas Jugadas: "+partidasJugadas);
+		System.out.println("Partidas Ganadas: "+partidasGanadas);
+		System.out.println("Partidas Perdidas: "+partidasPerdidas);
+	}
+	
+	public void mostrarMano() {
+		System.out.println("\n******Mostrando la Mano del jugador(a): " +getNombre()+"******");
+		mano.mostrarMano();
+	}
+	
+	public void eliminarMano(){
+		mano = null;
+	}
+
+	public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
+	}
+	
+	public void llenarVector (Jugador jugador) {
+		size++;
+		jugadores.addElement(jugador);
+	}
+	
+	public void leerVector (Vector vector)
+	{
+		for (int i=0; i<vector.capacity(); i++)
+		{
+			vector.get(i);
+		}
+	}
+		
+	
+	
+	
+
+}
