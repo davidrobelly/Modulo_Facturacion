@@ -11,7 +11,7 @@ public class Principal {
 		
 		//ventana_ingreso_clientes vingreso = new ventana_ingreso_clientes();
 		
-		//ventana_ingreso_empleado vingresoe = new ventana_ingreso_empleado();
+		ventana_ingreso_empleado vingresoe = new ventana_ingreso_empleado();
 		
 		//ventana_ingreso_sucursal vingresos = new ventana_ingreso_sucursal();
 		

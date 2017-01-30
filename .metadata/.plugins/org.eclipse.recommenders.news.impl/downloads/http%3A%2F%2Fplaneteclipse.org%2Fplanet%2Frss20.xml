@@ -8,6 +8,33 @@
 	<description>Planet Eclipse - http://planeteclipse.org/planet/</description>
 
 <item>
+	<title>Eclipse Announcements: Keynotes for Devoxx US Announced</title>
+	<guid isPermaLink="true">http://feedproxy.google.com/~r/eclipse/fnews/~3/49_scA5uE0w/20170130devoxxuskeynotes.php</guid>
+	<link>http://feedproxy.google.com/~r/eclipse/fnews/~3/49_scA5uE0w/20170130devoxxuskeynotes.php</link>
+	<description>Industry experts will present topics about identity, deep learning, and design at Devoxx US 2017.&lt;img alt=&quot;&quot; height=&quot;1&quot; src=&quot;http://feeds.feedburner.com/~r/eclipse/fnews/~4/49_scA5uE0w&quot; width=&quot;1&quot; /&gt;</description>
+	<pubDate>Mon, 30 Jan 2017 14:00:00 +0000</pubDate>
+</item>
+<item>
+	<title>itemis: Bewirb dich bei itemis und werde Teil unseres Xtext-Teams</title>
+	<guid isPermaLink="true">https://blogs.itemis.com/de/bewirb-dich-bei-itemis</guid>
+	<link>https://blogs.itemis.com/de/bewirb-dich-bei-itemis</link>
+	<description>&lt;p&gt;&lt;span&gt;&lt;a href=&quot;https://hosting.itemis.de/author/holger-schill&quot;&gt;Holger Schill&lt;/a&gt; und &lt;a href=&quot;https://hosting.itemis.de/author/Karsten-Thoms&quot;&gt;Karsten Thoms&lt;/a&gt; sind Softwarearchitekten und entwickeln neue Programmiersprachen. Beide sind Committer im &lt;a href=&quot;http://www.eclipse.org/Xtext/&quot;&gt;Eclipse Xtext-Projekt&lt;/a&gt; und suchen dringend gute Leute zur Verstärkung ihres Teams. Schau dir doch mal an, was die beiden in ihrem Video zu sagen haben. Vielleicht hast du ja Lust mit ihnen zusammenzuarbeiten.&lt;/span&gt;&lt;/p&gt; 
+&lt;p&gt;&lt;span&gt; &lt;/span&gt;&lt;/p&gt;
+&lt;div class=&quot;wistia_responsive_padding&quot; style=&quot;padding: 56.25% 0 0 0;&quot;&gt;
+ &lt;div class=&quot;wistia_responsive_wrapper&quot; style=&quot;height: 100%; width: 100%;&quot;&gt;
+  &lt;span class=&quot;wistia_embed wistia_async_44u1f1ayde  videoFoam=true&quot; style=&quot;display: inline-block; height: 100%; width: 100%;&quot;&gt;undefined&lt;/span&gt;
+ &lt;/div&gt;
+&lt;/div&gt; 
+&lt;p&gt;&lt;/p&gt; 
+&lt;p&gt;&lt;span&gt;Wenn wir dein Interesse geweckt haben, hinterlass uns einfach und unverbindlich eine Nachricht am Ende des Videos. Wir nehmen dann gerne Kontakt mit dir auf.&lt;/span&gt;&lt;/p&gt; 
+&lt;p&gt;&lt;span&gt;Natürlich kannst du dich auch gerne offziell bewerben. Besuch dazu einfach unsere &lt;a href=&quot;https://www.itemis.com/de/jobs/bewerben/&quot;&gt;Karriereseiten&lt;/a&gt;.&lt;/span&gt;&lt;/p&gt; 
+&lt;p&gt;&lt;span&gt;Liebe Grüße&lt;/span&gt;&lt;/p&gt; 
+&lt;p&gt;&lt;span&gt;Sandra&lt;/span&gt;&lt;/p&gt;  
+&lt;img alt=&quot;&quot; height=&quot;1&quot; src=&quot;http://track.hubspot.com/__ptq.gif?a=761475&amp;amp;k=14&amp;amp;r=https%3A%2F%2Fblogs.itemis.com%2Fde%2Fbewirb-dich-bei-itemis&amp;amp;bu=https%253A%252F%252Fblogs.itemis.com&amp;amp;bvt=rss&quot; style=&quot;width: 1px!important;&quot; width=&quot;1&quot; /&gt;</description>
+	<pubDate>Sat, 28 Jan 2017 11:54:26 +0000</pubDate>
+	<author>rennemann@itemis.de (Sandra Rennemann)</author>
+</item>
+<item>
 	<title>itemis: Bewirb dich bei itemis und werde Teil unseres Xtext Teams</title>
 	<guid isPermaLink="true">https://blogs.itemis.com/bewirb-dich-bei-itemis</guid>
 	<link>https://blogs.itemis.com/bewirb-dich-bei-itemis</link>
@@ -555,13 +582,6 @@ This is all much simpler now through &lt;a href=&quot;http://docs.openhab.org/in
 	<pubDate>Thu, 19 Jan 2017 14:30:07 +0000</pubDate>
 </item>
 <item>
-	<title>Eclipse Announcements: Eclipse Newsletter | Exploring New Technologies</title>
-	<guid isPermaLink="true">http://feedproxy.google.com/~r/eclipse/fnews/~3/9IZyR1WPD1M/</guid>
-	<link>http://feedproxy.google.com/~r/eclipse/fnews/~3/9IZyR1WPD1M/</link>
-	<description>Jumpstart an Angular project, develop microservices w/fabric8, build a blog app w/JHipster 4, and test Java microservices.&lt;img alt=&quot;&quot; height=&quot;1&quot; src=&quot;http://feeds.feedburner.com/~r/eclipse/fnews/~4/9IZyR1WPD1M&quot; width=&quot;1&quot; /&gt;</description>
-	<pubDate>Thu, 19 Jan 2017 10:42:00 +0000</pubDate>
-</item>
-<item>
 	<title>typefox.io: Xtext Summit @EclipseCon France – Call For Papers</title>
 	<guid isPermaLink="false">http://typefox.io/?p=14074</guid>
 	<link>http://typefox.io/xtext-summit-eclipsecon-france-call-for-papers</link>
@@ -573,46 +593,6 @@ This is all much simpler now through &lt;a href=&quot;http://docs.openhab.org/in
 			&lt;/div&gt;
 		&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</description>
 	<pubDate>Thu, 19 Jan 2017 06:59:24 +0000</pubDate>
-</item>
-<item>
-	<title>itemis: How to improve your GUI design with usability tests</title>
-	<guid isPermaLink="true">https://blogs.itemis.com/en/how-to-improve-your-gui-design-with-usability-tests</guid>
-	<link>https://blogs.itemis.com/en/how-to-improve-your-gui-design-with-usability-tests</link>
-	<description>&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Developing and actually using a graphical user interface (GUI) are two sides of a coin. As a software developer, have you ever wondered how users of your application are getting along with the GUI you created for them?&lt;/span&gt;&lt;/p&gt; 
-&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Someone knowing an application and its domain inside out has certainly a different view than someone else who is just trying to take his first steps. This article shows how to improve your GUI with the help of usability tests by an example.&lt;/span&gt;&lt;/p&gt; 
-&lt;h2&gt;&lt;strong&gt;The challenge: designing a supportive user interface&lt;/strong&gt;&lt;/h2&gt; 
-&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;If you are aware of how a suboptimally designed GUI might hamper the user: congratulations! However, how can you find out which of several possible user interface variants supports the user experience best? Your own experience in the field will not necessarily contribute a good piece of advice, because quite likely you are professionally blinkered – ironically due to your very experience.&lt;/span&gt;&lt;/p&gt; 
-&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;You need a method that offers a lot of insights and can help you make the right choices. Such a method is to sketch a few different GUI variants and have potential or actual users check them out. You don't need to implement these variants in your software. A wireframe tool to set up some mockups is sufficient, preferably with some scriptable interactivity.&lt;/span&gt;&lt;/p&gt; 
-&lt;h2&gt;&lt;strong&gt;A wizard page for Xtext&lt;/strong&gt;&lt;/h2&gt; 
-&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Our case deals with a wizard page for &lt;/span&gt;&lt;a href=&quot;http://www.eclipse.org/Xtext/&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Xtext&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;, a tool for creating domain-specific languages and associated language infrastructures. Don't worry, you do not need to understand &lt;/span&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;in detail&lt;/span&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt; what Xtext is and what it does to follow this use case and the basic principle behind usability tests. Suffice to know that Xtext is Eclipse-based, has a wizard to create a new Xtext project and that this wizard includes a particular page to configure some advanced options for a new Xtext project. Fig. 1 shows the implementation of this dialogue in the current Xtext release 2.10.&lt;/span&gt;&lt;/p&gt; 
-&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;&lt;img alt=&quot;implementation-dialog-xtext-2.10.-fig1.png&quot; src=&quot;https://blogs.itemis.com/hs-fs/hubfs/Blog/Usability/implementation-dialog-xtext-2.10.-fig1.png?t=1485600810106&amp;amp;width=640&amp;amp;name=implementation-dialog-xtext-2.10.-fig1.png&quot; style=&quot;width: 640px; display: block; margin-left: auto; margin-right: auto;&quot; width=&quot;640&quot; /&gt;&lt;/span&gt;&lt;span style=&quot;font-weight: 400; font-size: 12px;&quot;&gt;Fig.1: Original wizard page&lt;/span&gt;&lt;/p&gt; 
-&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;There has been &lt;/span&gt;&lt;a href=&quot;https://github.com/eclipse/xtext-eclipse/issues/119&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;some discussion&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt; going on among Xtext core developers on whether this wizard page's design really satisfies users' needs or not. There wasn't a clear conclusion, so &lt;a href=&quot;https://www.itemis.com/de/usability/team/&quot;&gt;itemis' usability experts&lt;/a&gt; were asked to investigate further and run a usability test on the current GUI and some alternatives.&lt;/span&gt;&lt;/p&gt; 
-&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;They used &lt;/span&gt;&lt;a href=&quot;https://balsamiq.com/products/mockups/&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Balsamiq Mockups&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt; to draw wireframe models of the original wizard page and two alternative versions. Balsamiq Mockups is able to mimic some dynamic behavior. You can configure it e.g. to toggle a certain option from disabled to enabled state if some checkbox has been checked. This is really nice, because this way users can play around with mockup interfaces and get a more realistic impression of how the real implementation would behave. Fig. 2 shows a wireframe version of the screenshot in fig. 1.&lt;/span&gt;&lt;/p&gt; 
-&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;&lt;img alt=&quot;wireframe-original-user-interface-xtext-2.10..png&quot; src=&quot;https://blogs.itemis.com/hs-fs/hubfs/Blog/Usability/wireframe-original-user-interface-xtext-2.10..png?t=1485600810106&amp;amp;width=640&amp;amp;name=wireframe-original-user-interface-xtext-2.10..png&quot; style=&quot;width: 640px; display: block; margin-left: auto; margin-right: auto;&quot; width=&quot;640&quot; /&gt;&lt;/span&gt;&lt;span style=&quot;font-weight: 400; font-size: 12px;&quot;&gt;Fig. 2: Wireframe of the original user interface (variant 1)&lt;/span&gt;&lt;/p&gt; 
-&lt;h2&gt;&lt;strong&gt;Running usability tests&lt;/strong&gt;&lt;/h2&gt; 
-&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;In the relaxed atmosphere of a &lt;/span&gt;&lt;a href=&quot;https://hosting.itemis.de/de/usability-dinner-im-speed-test-usability-feedback-sammeln&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;usability dinner&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;, five software developers were asked to perform a simple task with all three user interface variants: creating a new Xtext project with support for an Eclipse editor front-end. The participants had none to moderate Xtext experience and none to senior expert level Eclipse experience. The &quot;New Project&quot; wizard or at least the “Advanced Xtext Configuration” wizard page was new to all of them.&lt;/span&gt;&lt;/p&gt; 
-&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;While performing their task, they were asked to think aloud and comment on what they see, what they like, what they dislike, what irritates them etc.&lt;/span&gt;&lt;/p&gt; 
-&lt;h2&gt;&lt;strong&gt;Hidden option dependencies&lt;/strong&gt;&lt;/h2&gt; 
-&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;The most prominent test result: All users stumbled over an unexpected dependency between wizard options. The background: If you want to support a front-end in your Xtext project you have to check &quot;Generic IDE Support&quot; first, and then select the kind of front-end you want, i.e. Eclipse Plugin, IntelliJ IDEA Plugin or Web Integration. By default, &quot;Generic IDE Support&quot; is preselected in the wizard. However, the user could get into a situation where the option is disabled, because e.g. he unchecked it inadvertently.&lt;/span&gt;&lt;/p&gt; 
-&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;No user was able to spot this dependency by just looking at the wizard page. Everyone at first checked &quot;Eclipse Plugin&quot; – only to run into an error message shown at the bottom of the page, see fig. 1 or fig. 2. Not everyone noticed that message immediately and not everyone was immediately able to tell what to do next. Sure, sooner or later everyone managed to find out that he had to enable &quot;Generic IDE Support&quot; first in order to activate Eclipse support. However, this is a severe usability issue, because everyone got irritated by the unexpected dependency and by the &quot;unavoidable&quot; necessity of dealing with an error message.&lt;/span&gt;&lt;/p&gt; 
-&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;&lt;img alt=&quot;generic-ide-support-xtext-2.10.-variant2.png&quot; src=&quot;https://blogs.itemis.com/hs-fs/hubfs/Blog/Usability/generic-ide-support-xtext-2.10.-variant2.png?t=1485600810106&amp;amp;width=640&amp;amp;name=generic-ide-support-xtext-2.10.-variant2.png&quot; style=&quot;width: 640px; display: block; margin-left: auto; margin-right: auto;&quot; width=&quot;640&quot; /&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Fig. 3: Automatically setting the &quot;Generic IDE Support&quot; option (variant 2)&lt;/span&gt;&lt;/span&gt;&lt;/p&gt; 
-&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;A second wizard page variant (fig. 3) copes with this deficiency. It looks almost identical to the first version, but its dynamic behavior is different: If the user checks &quot;Eclipse Plugin&quot;, the &quot;Generic IDE Support&quot; option is automatically checked, too, i.e. the user interface essentially does by itself what the user would have to do otherwise. &quot;Generic IDE Support&quot; is also disabled so it cannot be unchecked as long as &quot;Eclipse Plugin&quot; or one of the other front-end options are checked. Users liked this behaviour very much and had no issues fulfilling their task. This holds even though the dependency was still not explicitly visible in the GUI.&lt;/span&gt;&lt;/p&gt; 
-&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;&lt;img alt=&quot;option-dependencies-xtext-2.10.-variant3.png&quot; src=&quot;https://blogs.itemis.com/hs-fs/hubfs/Blog/Usability/option-dependencies-xtext-2.10.-variant3.png?t=1485600810106&amp;amp;width=640&amp;amp;name=option-dependencies-xtext-2.10.-variant3.png&quot; style=&quot;width: 640px;&quot; width=&quot;640&quot; /&gt;&lt;br /&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Fig&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;. 4: Making option dependencies visible (variant 3)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt; 
-&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;A third variant of the wizard page visualized the options in a dependency hierarchy (fig 4). Users were now able to see that&lt;/span&gt;&lt;/p&gt; 
-&lt;ul&gt; 
- &lt;li style=&quot;font-weight: 400;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;&quot;Generic IDE Support&quot; is a requirement for &quot;Eclipse Plugin&quot;, &quot;IntelliJ IDEA Plugin&quot;, and &quot;Web Integration&quot;, and&lt;/span&gt;&lt;/li&gt; 
- &lt;li style=&quot;font-weight: 400;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;there is no dependency between IDE issues and the remaining options like e.g. testing support or source layout.&lt;/span&gt;&lt;/li&gt; 
-&lt;/ul&gt; 
-&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;On the other hand some users found it confusing that they could not select &quot;Eclipse Plugin&quot; right away, but instead had to check &quot;Generic IDE Support&quot; first.&lt;/span&gt;&lt;/p&gt; 
-&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Overall, users felt that variant 2 supported them best, followed by variant 3. Nobody preferred the original variant 1.&lt;/span&gt;&lt;/p&gt; 
-&lt;h2&gt;&lt;strong&gt;Explain your options!&lt;/strong&gt;&lt;/h2&gt; 
-&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;As an additional result it turned out that users don't necessarily understand what the options offered by the wizard actually mean. Our testers had quite different ideas – or no idea at all – on what &quot;Eclipse Plugin&quot;, &quot;IntelliJ IDEA Plugin&quot;, &quot;Web Integration&quot;, &quot;Generic IDE Support&quot;, &quot;Testing Support&quot;, &quot;Preferred Build System&quot; and &quot;Source layout&quot; might mean. The &quot;Source Layout&quot; option really took the cake: Not a single user explained it correctly without seeing the available options. As a consequence, the developers should add tooltips to the options. These tooltips could explain each option in some detail, link to the appropriate section of the documentation or even include it.&lt;/span&gt;&lt;/p&gt; 
-&lt;h2&gt;&lt;strong&gt;Bottom line&lt;/strong&gt;&lt;/h2&gt; 
-&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Consider drafting some alternative GUI variants or have usability experts do that for you and run usability tests! It will be a benefit to your users and might help propagate your software.&lt;/span&gt;&lt;/p&gt; 
-&lt;span style=&quot;font-weight: 400;&quot;&gt;And please don't take for granted that everyone knows the terms you are familiar with! Explain them to your users!&lt;/span&gt;  
-&lt;img alt=&quot;&quot; height=&quot;1&quot; src=&quot;http://track.hubspot.com/__ptq.gif?a=761475&amp;amp;k=14&amp;amp;r=https%3A%2F%2Fblogs.itemis.com%2Fen%2Fhow-to-improve-your-gui-design-with-usability-tests&amp;amp;bu=https%253A%252F%252Fblogs.itemis.com&amp;amp;bvt=rss&quot; style=&quot;width: 1px!important;&quot; width=&quot;1&quot; /&gt;</description>
-	<pubDate>Wed, 18 Jan 2017 09:45:00 +0000</pubDate>
-	<author>rainer.klute@itemis.de (Rainer Klute)</author>
 </item>
 <item>
 	<title>Wayne Beaton: Eclipse Infrastructure Support for IP Due Due Diligence Type</title>
