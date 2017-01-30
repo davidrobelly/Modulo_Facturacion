@@ -17,6 +17,31 @@ public class Producto {
 		super();
 	}
 	
+	
+
+
+	public Producto(String nombre, String marca, String modelo, int minimo) {
+		super();
+		this.nombre = nombre;
+		this.marca = marca;
+		this.modelo = modelo;
+		this.minimo = minimo;
+	}
+
+	
+
+
+	public Producto(String nombre, String marca, String modelo, String estado) {
+		super();
+		this.nombre = nombre;
+		this.marca = marca;
+		this.modelo = modelo;
+		this.estado = estado;
+	}
+
+
+
+
 	public Producto(int codigo, String nombre, String marca, String modelo, double valor, int minimo, int maximo,
 			int existencia, String estado) {
 		super();

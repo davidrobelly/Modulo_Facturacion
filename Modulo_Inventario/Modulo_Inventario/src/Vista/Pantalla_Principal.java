@@ -33,6 +33,8 @@ public class Pantalla_Principal extends JFrame implements ActionListener{
 		ico_aplicacion = new ImageIcon("src/Imagenes/icono.gif");
 		setIconImage(ico_aplicacion.getImage());
 		
+//		this.setSize(20, 20);
+		
 		crearMenu();
 		
 	}

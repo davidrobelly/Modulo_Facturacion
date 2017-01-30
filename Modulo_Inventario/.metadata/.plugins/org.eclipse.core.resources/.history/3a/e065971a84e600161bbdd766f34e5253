@@ -1,0 +1,121 @@
+package Persistencia;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class BDCategoria {
+		
+		Connection conexion = null;
+		Statement stmtSql;
+		ResultSet objRS;
+		
+		String ubicacion = "jdbc:mysql://localhost/secutel-erp?";
+		String usuario = "root";
+		String passwd = "1234";
+		
+		public void conectar() {
+			try {
+				Class.forName("com.mysql.jdbc.Driver").newInstance();
+			} catch (Exception ex) {
+				System.err.print("ClassNotFoundException: ");
+				System.err.println(ex.getMessage());
+			}
+
+			try {
+				conexion = DriverManager.getConnection(ubicacion+"user="+usuario+"&password="+passwd);
+				stmtSql = (Statement) conexion.createStatement();
+				
+			}
+			catch (SQLException ex) {
+				System.err.print("Problema en la conexion: " + ex);		
+			}
+			
+		}
+		
+		public void cerrarConexion() throws SQLException{
+			conexion.close();
+		}
+
+}
+
+//public class ConnectionMySQL{  
+//      
+//    public static Connection con_mysql;  
+//       
+//    public static Connection conectar(String host, String user, String password, String db) throws Exception  {  
+//            String databaseURL = "jdbc:mysql://" + host + "/" + db;  
+//            Class.forName("com.mysql.jdbc.Driver");  
+//            con_mysql = DriverManager.getConnection(databaseURL, user, password);  
+//        return con_mysql;  
+//    }  
+//  
+//}
+
+
+
+
+
+
+
+
+//public class EjemploProcAlmacenado {
+
+//    public static void main(String[] args) {
+//        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
+//        int id = -1;
+//        Connection cn = null;
+// 
+//        try {
+//            
+//            // Carga el driver de oracle
+//            DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+//            
+//            // Conecta con la base de datos XE con el usuario system y la contraseña password
+//            cn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "system", "password");
+//            
+//            // Llamada al procedimiento almacenado
+//            CallableStatement cst = cn.prepareCall("{call ObtenerDatosAlumno (?,?,?,?)}");
+// 
+//            do {
+//                System.out.println("\nIntroduce el ID del alumno:");
+//                try {
+//                    id = Integer.parseInt(entrada.readLine());
+//                } catch (IOException ex) {
+//                    System.out.println("Error...");
+//                }
+//                
+//                // Parametro 1 del procedimiento almacenado
+//                cst.setInt(1, id);
+//                
+//                // Definimos los tipos de los parametros de salida del procedimiento almacenado
+//                cst.registerOutParameter(2, java.sql.Types.VARCHAR);
+//                cst.registerOutParameter(3, java.sql.Types.VARCHAR);
+//                cst.registerOutParameter(4, java.sql.Types.VARCHAR);
+//                
+//                // Ejecuta el procedimiento almacenado
+//                cst.execute();
+//                
+//                // Se obtienen la salida del procedimineto almacenado
+//                String nombre = cst.getString(2);
+//                String sexo = cst.getString(3);
+//                String curso = cst.getString(4);
+//                System.out.println("Nombre: " + nombre);
+//                System.out.println("Sexo: " + sexo);
+//                System.out.println("Curso: " + curso);
+//            } while (id > 0);
+// 
+//        } catch (SQLException ex) {
+//            System.out.println("Error: " + ex.getMessage());
+//        } finally {
+//            try {
+//                cn.close();
+//            } catch (SQLException ex) {
+//                System.out.println("Error: " + ex.getMessage());
+//            }
+//        }
+//    }
+// 
+//}
