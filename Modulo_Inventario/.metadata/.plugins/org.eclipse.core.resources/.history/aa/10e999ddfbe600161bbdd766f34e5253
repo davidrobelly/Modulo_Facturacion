@@ -29,9 +29,9 @@ public class Pantalla_Ingreso extends JFrame implements ActionListener{
 		
 		super("Ingreso");
 		setVisible(true);
-		setSize(400, 155);
+		setSize(400, 165);
 		setLocation(500, 200);
-		setResizable(false);
+//		getContentPane().setBackground(Color.WHITE);
 		
 		//Icono de la Aplicacion
 		ico_aplicacion = new ImageIcon("src/Imagenes/icono.gif");
@@ -53,7 +53,6 @@ public class Pantalla_Ingreso extends JFrame implements ActionListener{
 		btn_ingresar.addActionListener(this);
 		
 		btn_cancelar = new JButton("Cancelar");
-		btn_cancelar.addActionListener(this);
 		
 		pnl_logo.add(lbl_logo);
 		
@@ -82,14 +81,10 @@ public class Pantalla_Ingreso extends JFrame implements ActionListener{
 			
 			Pantalla_Principal nuevaVentana;
 			nuevaVentana = new Pantalla_Principal();
-			nuevaVentana.setVisible(true);			
-			this.setVisible(false);				
-		}
-		
-		if(evento.getSource() == btn_cancelar){
-
-			this.setVisible(false);
+			nuevaVentana.setVisible(true);
+//			nuevaVentana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			
+			this.setVisible(false);				
 		}
 		
 		

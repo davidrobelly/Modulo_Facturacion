@@ -29,7 +29,7 @@ public class Pantalla_Ingreso extends JFrame implements ActionListener{
 		
 		super("Ingreso");
 		setVisible(true);
-		setSize(400, 155);
+		setSize(400, 165);
 		setLocation(500, 200);
 		setResizable(false);
 		
@@ -87,7 +87,8 @@ public class Pantalla_Ingreso extends JFrame implements ActionListener{
 		}
 		
 		if(evento.getSource() == btn_cancelar){
-
+			
+//			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			this.setVisible(false);
 			
 		}

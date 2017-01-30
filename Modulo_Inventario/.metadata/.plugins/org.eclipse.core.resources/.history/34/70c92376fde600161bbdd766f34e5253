@@ -87,7 +87,8 @@ public class Pantalla_Ingreso extends JFrame implements ActionListener{
 		}
 		
 		if(evento.getSource() == btn_cancelar){
-
+			
+//			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			this.setVisible(false);
 			
 		}
