@@ -1,0 +1,16 @@
+package Principal;
+import pantallas.ventana_ingreso_clientes;
+import pantallas.ventana_ingreso_empleado;
+
+public class Principal {
+
+	public static void main(String[] args) {
+
+		
+		//ventana_ingreso_clientes vingreso = new ventana_ingreso_clientes();
+		
+		ventana_ingreso_empleado vingresoe = new ventana_ingreso_empleado();
+		
+	}
+
+}

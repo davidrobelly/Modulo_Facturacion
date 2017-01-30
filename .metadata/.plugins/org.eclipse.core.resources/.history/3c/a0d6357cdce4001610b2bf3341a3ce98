@@ -1,0 +1,18 @@
+package modelo_clases;
+
+import java.sql.Date;
+
+import DBClases.ConexionDB;
+
+public class empleado {
+
+	private String nombre;
+	private String cedula;
+	private String telefono;
+	private String direccion;
+	private Date fecha_nacimiento;
+	private String tipo;
+	private String estado; 
+	ConexionDB conexion;
+
+}

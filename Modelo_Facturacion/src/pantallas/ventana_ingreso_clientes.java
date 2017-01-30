@@ -103,6 +103,7 @@ public class ventana_ingreso_clientes extends JFrame{
 		cmbestado = new JComboBox ();
 		cmbestado.addItem("Activo");
 		cmbestado.addItem("Inactivo");
+		cmbestado.setEditable(false);;
 		
 		cmbtipo = new JComboBox ();
 		cmbtipo.addItem("minorista");

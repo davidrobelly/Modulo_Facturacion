@@ -1,0 +1,77 @@
+package controles;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Date;
+
+import javax.swing.JOptionPane;
+
+import pantallas.ventana_ingreso_empleado;
+import modelo_clases.cliente;
+import modelo_clases.empleado;
+
+public class control_ventana_registro_empleado implements ActionListener {
+
+	ventana_ingreso_empleado vista;
+	empleado empleado;
+
+	public control_ventana_registro_empleado(ventana_ingreso_empleado vista) {
+		super();
+		this.vista = vista;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object boton = e.getSource();
+		
+		
+		
+		if (boton == vista.btncancelar )
+			{
+				vista.dispose();
+			}
+		
+		if (boton == vista.btnborrar)
+		{
+			vista.txtnombre.setText(""); 
+			vista.txttelefono.setText(""); 
+			vista.txtdireccion.setText(""); 
+			vista.txtcedula.setText(""); 
+			vista.txtfecha.setText("yyyy-mm-dd");
+		}
+		
+		if (boton == vista.btnregistrar)
+		{
+			
+			
+			if (vista.txtnombre.getText().equals("") || vista.txtdireccion.getText().equals("")
+					|| vista.txttelefono.getText().equals("") || vista.txtcedula.getText().equals("")
+					|| vista.txtfecha.getText().equals("")) 
+			{
+				
+				JOptionPane.showMessageDialog(null, "faltan campos de llenar");
+			}
+			
+			empleado = new empleado (vista.txtnombre.getText(), vista.txtcedula.getText(), 
+					vista.txttelefono.getText(), vista.txtdireccion.getText(), Integer.parseInt(vista.txtfecha.getText()),
+					(String) vista.cmbtipo.getSelectedItem());
+			
+			
+			
+			
+			
+			JOptionPane.showMessageDialog(null, "Registro Exitoso");
+			
+			vista.txtnombre.setText(""); 
+			vista.txttelefono.setText(""); 
+			vista.txtdireccion.setText(""); 
+			vista.txtcedula.setText(""); 
+			vista.txtfecha.setText(""); 
+			
+		}
+		
+	}
+
+	
+	
+}

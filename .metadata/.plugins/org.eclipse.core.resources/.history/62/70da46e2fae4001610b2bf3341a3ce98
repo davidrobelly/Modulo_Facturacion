@@ -1,0 +1,47 @@
+package modelo_clases;
+
+public class sucursal {
+	
+	private String nombre;
+	private String direccion;
+	public String estado;
+	
+	
+	public sucursal(String nombre, String direccion) {
+		super();
+		this.setNombre(nombre);
+		this.setDireccion(direccion);
+	}
+
+
+	public String getNombre() {
+		return nombre;
+	}
+
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+
+	public String getEstado() {
+		return estado;
+	}
+
+
+	public void setEstado(String estado) {
+		this.estado = "a";
+	}
+	
+	
+}

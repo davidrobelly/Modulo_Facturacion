@@ -1,0 +1,43 @@
+package controles;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import pantallas.ventana_ingreso_empleado;
+import modelo_clases.empleado;
+
+public class control_ventana_registro_empleado implements ActionListener {
+
+	ventana_ingreso_empleado vista;
+	empleado empleado;
+
+	public control_ventana_registro_empleado(ventana_ingreso_empleado vista) {
+		super();
+		this.vista = vista;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object boton = e.getSource();
+		
+		
+		
+		if (boton == vista.btncancelar )
+			{
+				vista.dispose();
+			}
+		
+		if (boton == vista.btnborrar)
+		{
+			vista.txtnombre.setText(""); 
+			vista.txttelefono.setText(""); 
+			vista.txtdireccion.setText(""); 
+			vista.txtcedula.setText(""); 
+			
+		}
+		
+	}
+
+	
+	
+}

@@ -1,5 +1,10 @@
 package modelo_clases;
 
+import java.sql.CallableStatement;
+import java.sql.SQLException;
+
+import DBClases.ConexionDB;
+
 public class cliente {
 	
 	private String nombre;
@@ -8,11 +13,11 @@ public class cliente {
 	private String correo;
 	private String direccion;
 	private String tipo;
-	private String estado;
+	public String estado;
+	ConexionDB conexion;
 	
 	
-	public cliente(String nombre, String cedula, String telefono, String correo, String direccion, String tipo,
-			String estado) {
+	public cliente(String nombre, String cedula, String telefono, String correo, String direccion, String tipo) {
 		super();
 		this.setNombre(nombre);
 		this.setCedula(cedula);
@@ -20,7 +25,6 @@ public class cliente {
 		this.setCorreo(correo);
 		this.setDireccion(direccion);
 		this.setTipo(tipo);
-		this.setEstado(estado);
 	}
 	
 	
@@ -76,9 +80,37 @@ public class cliente {
 	public String getEstado() {
 		return estado;
 	}
-	
+
 	public void setEstado(String estado) {
-		this.estado = estado;
+		this.estado = "a";
 	}
+	
+	//Metodos de cliente 
+	
+	
+
+
+
+	public void ingresarCliente(cliente cliente){
+		conexion = new ConexionDB();
+		conexion.conectar();
+		try {
+			String sentencia = "call ingresarcliente(?,?,?,?,?,?)";
+			CallableStatement procedure = conexion.conn.prepareCall(sentencia);
+			procedure.setString(1, cliente.getNombre());
+			procedure.setString(2, cliente.getCedula());
+			procedure.setString(3, cliente.getTelefono());
+			procedure.setString(4, cliente.getCorreo());
+			procedure.setString(5, cliente.getDireccion());
+			procedure.setString(6, cliente.getTipo());
+			procedure.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		conexion.cerrarConexion();
+	}
+	
+	
 
 }

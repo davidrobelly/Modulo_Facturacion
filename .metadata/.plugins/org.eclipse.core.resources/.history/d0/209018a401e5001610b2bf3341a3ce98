@@ -1,0 +1,9 @@
+package modelo_clases;
+
+public class credenciales {
+	
+	public String empleado;
+	public String user;
+	public String key;
+	public String estado;
+}

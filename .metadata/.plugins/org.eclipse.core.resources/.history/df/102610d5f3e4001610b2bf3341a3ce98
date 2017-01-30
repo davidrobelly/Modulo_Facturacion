@@ -1,0 +1,57 @@
+package controles;
+
+	import java.awt.Color;
+	import java.awt.event.FocusEvent;
+	import java.awt.event.FocusListener;
+
+	import javax.swing.JTextField;
+
+	public class JTextSombra extends JTextField implements FocusListener{
+	 String texto = "Escriba aqui...";
+	 
+	 public JTextSombra() {
+	  this.setText(texto);
+	  this.setForeground(Color.LIGHT_GRAY);
+	  
+	  this.addFocusListener(this);
+	 }
+	 
+	 public JTextSombra(int lg){
+	  super(lg);
+	  
+	  this.addFocusListener(this);
+	 }
+
+	 public JTextSombra(String texto) {
+	  this.texto = texto;
+	  this.setText(texto);
+	  this.setForeground(Color.LIGHT_GRAY);
+	  
+	  this.addFocusListener(this);
+	 }
+	 
+	 public JTextSombra(String texto, int lg) {
+	  super(lg);
+	  this.texto = texto;
+	  this.setText(texto);
+	  this.setForeground(Color.LIGHT_GRAY);
+	  this.addFocusListener(this);
+	 }
+	 
+	 @Override
+	 public void focusGained(FocusEvent arg0) {
+	  if(JTextSombra.this.getText().equalsIgnoreCase(texto)) {
+	   JTextSombra.this.setText("");
+	   JTextSombra.this.setForeground(Color.black);
+	  }
+	 }
+
+	 @Override
+	 public void focusLost(FocusEvent arg0) {
+	  if (JTextSombra.this.getText().equalsIgnoreCase("")) {
+	   JTextSombra.this.setText(texto);
+	   JTextSombra.this.setForeground(Color.LIGHT_GRAY);
+	  }
+	 }
+	}
+
