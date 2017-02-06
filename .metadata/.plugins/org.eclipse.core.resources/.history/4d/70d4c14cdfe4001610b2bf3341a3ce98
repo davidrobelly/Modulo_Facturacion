@@ -1,7 +1,0 @@
-package pantallas;
-
-import javax.swing.JFrame;
-
-public class ventana_ingreso_empleado extends JFrame {
-
-}

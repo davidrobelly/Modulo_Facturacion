@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename Java project &apos;Secutel-ERP&apos; to &apos;Modelo_Facturacion&apos;&#x0D;&#x0A;- Original element: &apos;Secutel-ERP&apos;&#x0D;&#x0A;- Renamed element: &apos;Secutel-ERP&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename Java project &apos;Secutel-ERP&apos;" flags="7" id="org.eclipse.jdt.ui.rename.java.project" input="=Secutel-ERP" name="Modelo_Facturacion" references="true" stamp="1485015817444" version="1.0"/>
-</session>
