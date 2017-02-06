@@ -1,0 +1,102 @@
+package Vista;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.util.Vector;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.AbstractTableModel;
+
+@SuppressWarnings("serial")
+public class Pantalla_Consulta_Producto extends JFrame{
+		
+		public ImageIcon ico_aplicacion;
+		public JTable jtbl_topten;
+		public JScrollPane scroll_topten; 
+		public JTable table;
+		MiTablaModelo miModelo;
+		
+		public Pantalla_Consulta_Producto(){
+			
+			super("Consulta de Productos");
+			setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			setVisible(true);
+	        
+	    	miModelo  =new MiTablaModelo();
+	    	table = new JTable(miModelo);
+	        table.setPreferredScrollableViewportSize(new Dimension(500, 600));          
+
+	        //Icono de la Aplicacion
+			ico_aplicacion = new ImageIcon("src/Imagenes/icono.gif");
+			setIconImage(ico_aplicacion.getImage());
+
+	        JScrollPane scrollPane = new JScrollPane(table);
+	        getContentPane().add(scrollPane, BorderLayout.CENTER);
+	        pack();
+
+	    }
+		
+	    
+		class MiTablaModelo extends AbstractTableModel {
+	    	
+	    	String[] nombreColumnas = {"Nombre", "Marca", "Modelo", "Precio"};
+	       	Vector <Object[]> fuenteDeDatos;
+	       	
+	       	
+	       	public MiTablaModelo() {
+	       		
+	       		fuenteDeDatos = new Vector<Object[]>();
+	       			    		
+	    		}
+
+	       	//Para llenar la tabla
+	       public void addDatos (String nombre, String marca, String modelo, double valor){// Para aumentar si quiere mas
+	    	   
+	       	
+	       		Object [] auxSgte = {nombre, marca, modelo, valor}; 		
+	    	    	fuenteDeDatos.addElement(auxSgte);
+	    		
+	       	
+	       }
+
+	       public String getColumnName(int col) {
+	           return nombreColumnas[col];
+	       }
+	      
+	       public int getColumnCount() {
+	           return nombreColumnas.length;
+	       }    
+
+	    	//@Override
+	    	public int getRowCount() {
+	    		return fuenteDeDatos.size();
+	    		
+	    	}
+
+	    	//@Override
+	    	public Object getValueAt(int row, int col) {
+	       	Object [] aux =  (Object[]) fuenteDeDatos.elementAt(row);
+	       	return ( aux [col]);
+	       }
+	    	
+	    	 public void setValueAt(Object value, int row, int col) {
+	           	fuenteDeDatos.elementAt(row)[col] = value;
+	           }
+
+
+	    	 public Class<?> getColumnClass(int c) {
+	               return getValueAt(0, c).getClass();
+	           }
+	    //	
+	    }
+		
+		public static void main(String[] args) {
+			
+			new Pantalla_Consulta_Producto();
+
+		}
+
+}

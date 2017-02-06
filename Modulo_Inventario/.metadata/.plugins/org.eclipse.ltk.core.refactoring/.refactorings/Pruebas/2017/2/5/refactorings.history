@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;Vistas.Layout.java&apos; to &apos;Pantalla_PruebaLayout.java&apos;&#x0D;&#x0A;- Original project: &apos;Pruebas&apos;&#x0D;&#x0A;- Original element: &apos;Vistas.Layout.java&apos;&#x0D;&#x0A;- Renamed element: &apos;Vistas.Pantalla_PruebaLayout.java&apos;" description="Rename compilation unit &apos;Layout.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;Vistas{Layout.java" name="Pantalla_PruebaLayout.java" references="false" stamp="1486240543922" version="1.0"/>
+</session>

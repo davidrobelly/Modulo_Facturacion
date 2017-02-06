@@ -1,0 +1,37 @@
+package Vistas;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+@SuppressWarnings("serial")
+public class Pantalla_PruebaLayout extends JFrame{
+	
+	JLabel lbl_categoria, lbl_nombre, lbl_existencia;
+	JComboBox<String> cbx_categoria;
+	JTextField txt_nombre, txt_existencia;
+	JButton btn_buscarCategoria, btn_buscarNombre, btn_buscarExistencia, btn_nuevo, 
+			btn_modificar, btn_eliminar, btn_limpiar, btn_imprimir, btn_salir;	
+	JPanel pnl_datos, pnl_botones;
+	
+	Pantalla_PruebaLayout(){
+		
+		super("Ingreso Producto");
+		setVisible(true);
+		setSize(300, 200);
+		setLocation(300, 300);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		setResizable(false);
+		
+		
+	}
+
+	public static void main(String[] args) {
+
+		new Pantalla_PruebaLayout();
+	}
+
+}

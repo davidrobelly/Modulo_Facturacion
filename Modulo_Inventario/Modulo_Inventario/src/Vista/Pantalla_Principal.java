@@ -1,6 +1,6 @@
 package Vista;
 
-import java.awt.event.ActionEvent;
+import java.awt.event.ActionEvent; 
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
@@ -9,18 +9,17 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JSeparator;
 
 @SuppressWarnings("serial")
 public class Pantalla_Principal extends JFrame implements ActionListener{
 	
 	public ImageIcon ico_aplicacion;
 	public JMenuBar barraMenu;
-	public JMenu menuInventario, menuCompras, menuVentas, menuCerrarSesion, menuSalir;
-	public JMenuItem menuItemParametrosInv, menuItemProcesosInv, menuItemReportesInv,
-					 menuItemParametrosCom, menuItemProcesosCom, menuItemReportesCom,
-					 menuItemParametrosVen, menuItemProcesosVen, menuItemReportesVen;
-	public JSeparator separador;
+	public JMenu menuInventario, menuCompras, menuVentas, menuOpciones, menuProcesosInv, menuReportesInv, menuProcesosCom, menuReportesCom,
+				 menuProcesosVen, menuReportesVen;
+	public JMenuItem menuItemProcesoIngPro, menuItemProcesoKardex, menuItemProcesoEstPro, 
+					 menuItemReportCategoria, menuItemReportProProvee, menuItemReportStockPro,
+					 menuItemCerrarSesion, menuItemSalir;
 	
 	public Pantalla_Principal(){
 		
@@ -32,8 +31,6 @@ public class Pantalla_Principal extends JFrame implements ActionListener{
 		
 		ico_aplicacion = new ImageIcon("src/Imagenes/icono.gif");
 		setIconImage(ico_aplicacion.getImage());
-		
-//		this.setSize(20, 20);
 		
 		crearMenu();
 		
@@ -48,69 +45,93 @@ public class Pantalla_Principal extends JFrame implements ActionListener{
 		menuInventario = new JMenu("Inventario");
 		menuInventario.setMnemonic(KeyEvent.VK_I);
 		
-		menuItemParametrosInv = new JMenuItem("Parametros", KeyEvent.VK_P);
-		menuInventario.add(menuItemParametrosInv);
+		menuProcesosInv = new JMenu("Procesos");
+		menuInventario.add(menuProcesosInv);
 		
-		menuItemProcesosInv = new JMenuItem("Procesos", KeyEvent.VK_R);
-		menuItemProcesosInv.addActionListener(this);
-		menuInventario.add(menuItemProcesosInv);
+		menuItemProcesoIngPro = new JMenuItem("Ingreso de Producto", KeyEvent.VK_I);
+		menuProcesosInv.add(menuItemProcesoIngPro);
+		menuItemProcesoIngPro.addActionListener(this);
 		
-		menuItemReportesInv = new JMenuItem("Reportes", KeyEvent.VK_E);
-		menuInventario.add(menuItemReportesInv);
+		menuItemProcesoKardex = new JMenuItem("Kardex - Entradas y Salidas", KeyEvent.VK_K);
+		menuProcesosInv.add(menuItemProcesoKardex);
+		menuItemProcesoKardex.addActionListener(this);
+		
+		menuItemProcesoEstPro = new JMenuItem("Camibio de Estado de Producto", KeyEvent.VK_E);
+		menuProcesosInv.add(menuItemProcesoEstPro);
+		menuItemProcesoEstPro.addActionListener(this);
+		
+		menuReportesInv = new JMenu("Reportes");
+		menuInventario.add(menuReportesInv);
+		
+		menuItemReportCategoria = new JMenuItem("Reporte - Producto por Categoria", KeyEvent.VK_C);
+		menuReportesInv.add(menuItemReportCategoria);
+		
+		menuItemReportProProvee = new JMenuItem("Reporte - Entrada de Productos", KeyEvent.VK_E);
+		menuReportesInv.add(menuItemReportProProvee);
+		
+		menuItemReportProProvee = new JMenuItem("Reporte - Salida de Productos", KeyEvent.VK_A);
+		menuReportesInv.add(menuItemReportProProvee);
+		
+		menuItemReportStockPro = new JMenuItem("Reporte - Stock de Productos", KeyEvent.VK_S);
+		menuReportesInv.add(menuItemReportStockPro);
 		
 		//Menu Compras
 		menuCompras = new JMenu("Compras");
 		menuCompras.setMnemonic(KeyEvent.VK_C);
 		
-		menuItemParametrosCom = new JMenuItem("Parametros", KeyEvent.VK_P);
-		menuCompras.add(menuItemParametrosCom);
+		menuProcesosCom = new JMenu("Procesos");
+		menuCompras.add(menuProcesosCom);
 		
-		menuItemProcesosCom = new JMenuItem("Procesos", KeyEvent.VK_R);
-		menuCompras.add(menuItemProcesosCom);
-		
-		menuItemReportesCom = new JMenuItem("Reportes", KeyEvent.VK_E);
-		menuCompras.add(menuItemReportesCom);
+		menuReportesCom = new JMenu("Reportes");
+		menuCompras.add(menuReportesCom);
 		
 		//Menu de Ventas
 		menuVentas = new JMenu("Ventas");
 		menuVentas.setMnemonic(KeyEvent.VK_V);
 		
-		menuItemParametrosVen = new JMenuItem("Parametros", KeyEvent.VK_P);
-		menuVentas.add(menuItemParametrosVen);
+		menuProcesosVen = new JMenu("Procesos");
+		menuVentas.add(menuProcesosVen);
 		
-		menuItemProcesosVen = new JMenuItem("Procesos", KeyEvent.VK_R);
-		menuVentas.add(menuItemProcesosVen);
+		menuReportesVen = new JMenu("Reportes");
+		menuVentas.add(menuReportesVen);
 		
-		menuItemReportesVen = new JMenuItem("Reportes", KeyEvent.VK_E);
-		menuVentas.add(menuItemReportesVen);
+		//Menu Opciones
+		menuOpciones = new JMenu("Opciones");
+		menuOpciones.setMnemonic(KeyEvent.VK_O);
 		
-		//Menu Cerrar Sesion
-		menuCerrarSesion = new JMenu("Cerrar-Sesion");
-		menuCerrarSesion.setMnemonic(KeyEvent.VK_E);
+		menuItemCerrarSesion = new JMenuItem("Cerrar Sesion", KeyEvent.VK_C);
+		menuOpciones.add(menuItemCerrarSesion);		
+		menuItemCerrarSesion.addActionListener(this);
 		
-//		separador.setPreferredSize(new Dimension(10, 10));		
-		
-		//Menu Salir
-		menuSalir = new JMenu("Salir");
-		menuSalir.setMnemonic(KeyEvent.VK_S);
+		menuItemSalir = new JMenuItem("Salir", KeyEvent.VK_S);
+		menuOpciones.add(menuItemSalir);
+		menuItemSalir.addActionListener(this);
 
 		//Adicion de Menus
 		barraMenu.add(menuInventario);
 		barraMenu.add(menuCompras);
 		barraMenu.add(menuVentas);
-//		barraMenu.add(separador);
-		barraMenu.add(menuCerrarSesion);
-		barraMenu.add(menuSalir);
+		barraMenu.add(menuOpciones);
 	}
-
 
 	public void actionPerformed(ActionEvent evento) {
 	
-		if (evento.getSource() == menuItemProcesosInv){
+		if (evento.getSource() == menuItemProcesoIngPro){
 			Pantalla_Ingreso_Inventario inventario;
 			inventario = new Pantalla_Ingreso_Inventario();
-			inventario.setVisible(true);
+			inventario.setVisible(true);	
+		}
+		
+		if (evento.getSource() == menuItemCerrarSesion) {
+			Pantalla_Ingreso ingreso;
+			ingreso = new Pantalla_Ingreso();
+			ingreso.setVisible(true);	
 			
+			this.setVisible(false);
+		}
+		
+		if (evento.getSource() == menuItemSalir) {
+			this.setVisible(false);		
 		}
 		
 	}	

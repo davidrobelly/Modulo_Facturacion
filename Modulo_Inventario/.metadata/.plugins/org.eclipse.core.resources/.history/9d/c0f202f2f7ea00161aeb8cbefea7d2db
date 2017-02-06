@@ -1,0 +1,35 @@
+package Persistencia;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class Conexion {
+	
+	private Connection conexion = null;
+	private String usuario = "root";
+	private String contraseña = "1234";
+
+	private String ubicacion = "jdbc:mysql://localhost/secutel-erp?";
+
+	public void conectar () {
+
+		try {			
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			conexion = DriverManager.getConnection(ubicacion, usuario, contraseña);
+			if (conexion != null) {
+				System.out.println("Se establecio conexion a la Base de Datos");
+			}
+		}
+		catch (SQLException ex) {
+			System.out.println("Error en la conexion a la Base de Datos");
+		}
+		catch (ClassNotFoundException ex) {
+			ex.printStackTrace();
+		}
+		catch (Exception ex) {
+			System.err.println(ex.getMessage());
+		}
+	}
+
+}

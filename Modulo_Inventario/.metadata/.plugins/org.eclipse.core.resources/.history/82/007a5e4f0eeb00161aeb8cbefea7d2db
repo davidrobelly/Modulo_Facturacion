@@ -1,0 +1,211 @@
+package Vista;
+
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
+
+import Modelo.Producto;
+import Persistencia.BDProducto;
+
+@SuppressWarnings("serial")
+public class Pantalla_Ingreso_Inventario extends JFrame implements ActionListener{
+	
+	public ImageIcon ico_aplicacion;
+	public JPanel pnl_datos, pnl_producto, pnl_detalleProducto, pnl_imagen, pnl_botones, 
+				  pnl_lista, pnl_btnBuscarProducto, pnl_infoIroducto, pnl_btnBuscarDetalleProducto, 
+				  pnl_infoDetalleIroducto;
+	public JLabel lbl_imagen, lbl_categoria, lbl_nombre, lbl_marca, lbl_modelo, lbl_serie,
+				  lbl_color, lbl_valor, lbl_existencia;
+	public JTextField txt_nombre, txt_marca, txt_modelo, txt_serie, txt_color,
+					  txt_valor, txt_existencia;
+	public JComboBox<String> cbx_categoria;
+	public JButton btn_agregar, btn_quitar, btn_buscar, btn_modificar, btn_limpiar, btn_salir,
+				   btn_buscarCategoria, btn_buscarNombre, btn_buscarMarca, btn_buscarModelo,
+				   btn_buscarValor, btn_buscarExistencia, btn_buscarSerie, btn_buscarColor;
+	
+	
+	BDProducto conexion;
+	Producto producto;
+	
+	public Pantalla_Ingreso_Inventario (){
+		
+		super("Ingreso de Inventario");
+		setSize(500,300);
+		setLocation(400,100);
+		setVisible(true);
+//		this.setResizable(false);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		//Icono de la Aplicacion
+		ico_aplicacion = new ImageIcon("src/Imagenes/icono.gif");
+		setIconImage(ico_aplicacion.getImage());
+		
+		pnl_datos = new JPanel();
+		pnl_datos.setLayout(new GridLayout(2, 1, 5, 5));
+		
+		pnl_producto = new JPanel();
+		pnl_producto.setBorder(new TitledBorder("Producto"));
+//		pnl_producto.setBackground(Color.GRAY);
+		pnl_producto.setLayout(new GridLayout(1, 2, 5, 5));
+		
+		pnl_infoIroducto = new JPanel();
+		pnl_infoIroducto.setLayout(new GridLayout(8, 2, 5, 5));
+//		pnl_infoIroducto.setBackground(Color.GRAY);
+		
+		lbl_categoria = new JLabel("Categoria :");
+		lbl_nombre = new JLabel("Nombre :");
+		lbl_marca = new JLabel("Marca :");
+		lbl_modelo = new JLabel("Modelo :");
+		lbl_valor = new JLabel("P.V.P :");
+		lbl_serie = new JLabel("Numero de serie :");
+		lbl_color = new JLabel("Color :");
+		lbl_existencia = new JLabel("Existencia :");
+		
+		cbx_categoria = new JComboBox<String>();
+		cbx_categoria.addItem("CIRCUITO CERRADO TV");
+		cbx_categoria.addItem("ALARMA CONTRAINCENDIO");
+		cbx_categoria.addItem("CABLES");
+		cbx_categoria.addItem("ACCESORIOS");
+		
+		txt_nombre = new JTextField();
+		txt_marca = new JTextField();
+		txt_modelo = new JTextField();
+		txt_valor = new JTextField();
+		txt_serie = new JTextField();
+		txt_color = new JTextField();
+		txt_existencia = new JTextField();
+		txt_existencia.setEnabled(false);
+		
+		pnl_infoIroducto.add(lbl_categoria);
+		pnl_infoIroducto.add(cbx_categoria);
+		pnl_infoIroducto.add(lbl_nombre);
+		pnl_infoIroducto.add(txt_nombre);
+		pnl_infoIroducto.add(lbl_marca);
+		pnl_infoIroducto.add(txt_marca);
+		pnl_infoIroducto.add(lbl_modelo);
+		pnl_infoIroducto.add(txt_modelo);
+		pnl_infoIroducto.add(lbl_valor);
+		pnl_infoIroducto.add(txt_valor);
+		pnl_infoIroducto.add(lbl_serie);
+		pnl_infoIroducto.add(txt_serie);
+		pnl_infoIroducto.add(lbl_color);
+		pnl_infoIroducto.add(txt_color);
+		pnl_infoIroducto.add(lbl_existencia);
+		pnl_infoIroducto.add(txt_existencia);
+		
+		pnl_btnBuscarProducto = new JPanel();
+		pnl_btnBuscarProducto.setLayout(new GridLayout(8, 1, 5, 5));
+//		pnl_btnBuscarProducto.setBackground(Color.GRAY);
+		
+		btn_buscarCategoria = new JButton(new ImageIcon("src/Imagenes/icono.gif"));
+		btn_buscarCategoria.setBorder(null);
+//		btn_buscarCategoria.setBackground(Color.gray);
+		btn_buscarNombre = new JButton(new ImageIcon("src/Imagenes/icono.gif"));
+		btn_buscarNombre.setBorder(null);
+		btn_buscarMarca = new JButton(new ImageIcon("src/Imagenes/icono.gif"));
+		btn_buscarMarca.setBorder(null);
+		btn_buscarModelo = new JButton(new ImageIcon("src/Imagenes/icono.gif"));
+		btn_buscarModelo.setBorder(null);
+		btn_buscarValor = new JButton(new ImageIcon("src/Imagenes/icono.gif"));
+		btn_buscarValor.setBorder(null);
+		btn_buscarValor.setEnabled(false);
+		btn_buscarSerie = new JButton(new ImageIcon("src/Imagenes/icono.gif"));
+		btn_buscarSerie.setBorder(null);
+		btn_buscarColor = new JButton(new ImageIcon("src/Imagenes/icono.gif"));
+		btn_buscarColor.setBorder(null);
+		btn_buscarExistencia = new JButton();
+		btn_buscarExistencia.setVisible(false);
+		
+		pnl_btnBuscarProducto.add(btn_buscarCategoria);
+		pnl_btnBuscarProducto.add(btn_buscarNombre);
+		pnl_btnBuscarProducto.add(btn_buscarMarca);
+		pnl_btnBuscarProducto.add(btn_buscarModelo);
+		pnl_btnBuscarProducto.add(btn_buscarValor);
+		pnl_btnBuscarProducto.add(btn_buscarSerie);
+		pnl_btnBuscarProducto.add(btn_buscarColor);
+		pnl_btnBuscarProducto.add(btn_buscarExistencia);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		pnl_botones = new JPanel();
+		pnl_botones.setLayout(new GridLayout(3, 2, 5, 5));
+		
+		btn_agregar = new JButton("AGREGAR");
+		btn_agregar.addActionListener(this);
+		btn_quitar = new JButton("QUITAR");
+		btn_buscar = new JButton("BUSCAR");
+		btn_modificar = new JButton("MODIFICAR");
+		btn_limpiar = new JButton("LIMPIAR");
+		btn_salir = new JButton("SALIR");
+		
+		pnl_botones.add(btn_agregar);
+		pnl_botones.add(btn_quitar);
+		pnl_botones.add(btn_buscar);
+		pnl_botones.add(btn_modificar);
+		pnl_botones.add(btn_limpiar);
+		pnl_botones.add(btn_salir);		
+	
+		pnl_producto.add(pnl_infoIroducto);
+		pnl_producto.add(pnl_btnBuscarProducto);
+		
+		pnl_datos.add(pnl_producto);
+		pnl_datos.add(pnl_botones);
+		
+//		getContentPane().add(pnl_imagen, BorderLayout.WEST);
+		getContentPane().add(pnl_datos, BorderLayout.CENTER);
+//		getContentPane().add(pnl_botones, BorderLayout.SOUTH);
+//		getContentPane().add(pnl_lista, BorderLayout.SOUTH);
+		
+//		pack();
+		((JComponent)getContentPane()).setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		
+//		pack();
+		
+	}
+
+	public void actionPerformed(ActionEvent evento) {
+		
+		if(evento.getSource() == btn_agregar){
+
+			producto = new Producto(txt_nombre.getText(),txt_marca.getText(), txt_modelo.getText());
+
+			conexion = new BDProducto();
+
+			conexion.conectar();
+
+			conexion.ingresarProducto(producto);
+			
+
+			JOptionPane.showMessageDialog(null, "Registro Exitoso");
+			
+		}
+	}
+	
+	public static void main(String[] args) {
+			
+			new Pantalla_Ingreso_Inventario();
+	
+		}
+
+}

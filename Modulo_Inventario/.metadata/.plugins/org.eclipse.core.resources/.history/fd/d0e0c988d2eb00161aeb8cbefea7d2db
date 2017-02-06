@@ -1,0 +1,114 @@
+package Vista;
+
+import java.awt.event.ActionEvent; 
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+
+@SuppressWarnings("serial")
+public class Pantalla_Principal extends JFrame implements ActionListener{
+	
+	public ImageIcon ico_aplicacion;
+	public JMenuBar barraMenu;
+	public JMenu menuInventario, menuCompras, menuVentas, menuCerrarSesion, menuSalir,
+				 menuProcesosInv, menuReportesInv, menuProcesosCom, menuReportesCom,
+				 menuProcesosVen, menuReportesVen;
+	public JMenuItem menuItemProcesoInv, menuItemReportCategoria, menuItemReportCambCli, menuItemReportCambPro;
+	
+	public Pantalla_Principal(){
+		
+		super("Secutel - ERP");
+		setSize(1000, 70);
+		setLocation(100, 0);
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		ico_aplicacion = new ImageIcon("src/Imagenes/icono.gif");
+		setIconImage(ico_aplicacion.getImage());
+		
+		crearMenu();
+		
+	}
+	
+	public void crearMenu(){	
+		//Barra de Menu
+		barraMenu = new JMenuBar();
+		setJMenuBar(barraMenu);
+		
+		//Menu de Inventario
+		menuInventario = new JMenu("Inventario");
+		menuInventario.setMnemonic(KeyEvent.VK_I);
+		
+		menuProcesosInv = new JMenu("Procesos");
+		menuInventario.add(menuProcesosInv);
+		
+		menuItemProcesoInv = new JMenuItem("Ingreso de Producto", KeyEvent.VK_I);
+		menuProcesosInv.add(menuItemProcesoInv);
+		menuItemProcesoInv.addActionListener(this);
+		
+		menuReportesInv = new JMenu("Reportes");
+		menuInventario.add(menuReportesInv);
+		
+		menuItemReportCategoria = new JMenuItem("Reporte - Producto por Categoria", KeyEvent.VK_C);
+		menuReportesInv.add(menuItemReportCategoria);
+		
+		//Menu Compras
+		menuCompras = new JMenu("Compras");
+		menuCompras.setMnemonic(KeyEvent.VK_C);
+		
+		menuProcesosCom = new JMenu("Procesos");
+		menuCompras.add(menuProcesosCom);
+		
+		menuReportesCom = new JMenu("Reportes");
+		menuCompras.add(menuReportesCom);
+		
+		//Menu de Ventas
+		menuVentas = new JMenu("Ventas");
+		menuVentas.setMnemonic(KeyEvent.VK_V);
+		
+		menuProcesosVen = new JMenu("Procesos");
+		menuVentas.add(menuProcesosVen);
+		
+		menuReportesVen = new JMenu("Reportes");
+		menuVentas.add(menuReportesVen);
+		
+		
+		
+		
+		
+		//Menu Cerrar Sesion
+		menuCerrarSesion = new JMenu("Cerrar-Sesion");
+		menuCerrarSesion.setMnemonic(KeyEvent.VK_E);		
+		
+		//Menu Salir
+		menuSalir = new JMenu("Salir");
+		menuSalir.setMnemonic(KeyEvent.VK_S);
+
+		//Adicion de Menus
+		barraMenu.add(menuInventario);
+		barraMenu.add(menuCompras);
+		barraMenu.add(menuVentas);
+		barraMenu.add(menuCerrarSesion);
+		barraMenu.add(menuSalir);
+	}
+
+
+	public void actionPerformed(ActionEvent evento) {
+	
+		if (evento.getSource() == menuItemProcesoInv){
+			Pantalla_Ingreso_Inventario inventario;
+			inventario = new Pantalla_Ingreso_Inventario();
+			inventario.setVisible(true);
+			
+		}
+		
+	}	
+	
+	
+
+}

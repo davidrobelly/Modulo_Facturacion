@@ -1,0 +1,57 @@
+package Vista;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+@SuppressWarnings("serial")
+public class Pantalla_Consulta_Producto extends JFrame{
+		
+		public ImageIcon ico_aplicacion;
+		public JTable productos;
+		public JScrollPane scroll_productos; 
+
+		
+		public Pantalla_Consulta_Producto(){
+			
+			super("Consulta de Productos");
+			setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			setVisible(true);
+	        
+			productos = new JTable();
+			scroll_productos= new JScrollPane();
+
+			DefaultTableModel dtmEjemplo = new DefaultTableModel(getFilas(),getColumnas());
+			productos.setModel(dtmEjemplo);
+			scroll_productos.add(productos);
+			this.add(scroll_productos);				
+			scroll_productos.setViewportView(productos);        
+
+	        //Icono de la Aplicacion
+			ico_aplicacion = new ImageIcon("src/Imagenes/icono.gif");
+			setIconImage(ico_aplicacion.getImage());
+
+	        
+
+	    }
+		
+		private Object[][] getFilas(){
+			Object fila[][]=new Object[][] {{"Mary",   "Campione", "Esquiar", 45}, {"Jenny",  "Campione", "Esquiar", 25}, {"Manuel", "Campione", "Esquiar", 65}};
+		return fila;
+		}
+		
+		private String[] getColumnas(){
+		String nombreColumnas[]=new String[]{"Nombre", "Marca", "Modelo", "Precio"};
+		return nombreColumnas;
+		}
+	    
+		
+		public static void main(String[] args) {
+			
+			new Pantalla_Consulta_Producto();
+
+		}
+
+}

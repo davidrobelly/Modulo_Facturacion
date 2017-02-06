@@ -1,0 +1,40 @@
+package Persistencia;
+
+import java.sql.CallableStatement; 
+import java.sql.SQLException;
+
+import Modelo.Producto;
+
+public class BDProducto extends Conexion{
+
+
+	public void ingresarProducto(Producto producto){
+
+		try {
+
+			String sp = "call ingresarproducto(?,?,?)";
+
+			CallableStatement procedimiento = conexion.prepareCall(sp);
+
+			procedimiento.setString(1, producto.getNombre());
+			procedimiento.setString(2, producto.getMarca());
+			procedimiento.setString(3, producto.getModelo());
+//			procedimiento.setString(4, producto.getEstado());
+
+			procedimiento.execute();
+
+		} catch (SQLException e) {
+
+			
+
+			e.printStackTrace();
+
+		}
+
+		
+
+	}
+
+	
+
+}

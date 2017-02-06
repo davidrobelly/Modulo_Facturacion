@@ -14,6 +14,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Modelo.Producto;
+import Persistencia.Conexion;
+
 
 @SuppressWarnings("serial")
 public class Pantalla_Ingreso extends JFrame implements ActionListener{
@@ -24,8 +27,8 @@ public class Pantalla_Ingreso extends JFrame implements ActionListener{
 	public JButton btn_ingresar, btn_cancelar;
 	public JPanel pnl_logo, pnl_datos, pnl_botones;
 	
-	
-	public Pantalla_Ingreso(){
+	Conexion conexion;
+	public Pantalla_Ingreso() {
 		
 		super("Ingreso");
 		setVisible(true);
@@ -36,6 +39,9 @@ public class Pantalla_Ingreso extends JFrame implements ActionListener{
 		//Icono de la Aplicacion
 		ico_aplicacion = new ImageIcon("src/Imagenes/icono.gif");
 		setIconImage(ico_aplicacion.getImage());
+		
+		conexion = new Conexion();
+		conexion.conectar();
 		
 		pnl_logo = new JPanel();		
 		pnl_datos = new JPanel(new GridLayout(2, 2, 5, 5));

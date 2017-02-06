@@ -1,0 +1,53 @@
+package Vistas;
+
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+@SuppressWarnings("serial")
+public class Tablas extends JFrame{
+		
+		public 
+	
+	
+	
+		public Tablas(){
+				
+			super("Prueba de Tablas");
+			setVisible(true);
+			this.setSize(500, 200);
+			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			
+			JTable tblEjemplo = new JTable();
+			JScrollPane scpEjemplo= new JScrollPane();
+
+			DefaultTableModel dtmEjemplo = new DefaultTableModel(getFilas(),getColumnas());
+			tblEjemplo.setModel(dtmEjemplo);
+			scpEjemplo.add(tblEjemplo);
+			this.add(scpEjemplo);				
+			scpEjemplo.setViewportView(tblEjemplo);
+				
+			}
+				
+				private Object[][] getFilas(){
+					Object fila[][]=new Object[][] {{"a1", "b1", "c1", "d1"},{"a2", "b2", "c2", "d2"},{"a3", "b3", "c3", "d3"}};
+				return fila;
+				}
+				
+				private String[] getColumnas(){
+				String columna[]=new String[]{"A","B","C", "D"};
+				return columna;
+				}
+				
+				public static void main(String args[]) {
+				
+					new Tablas();
+				
+				}
+				
+			
+
+
+}
+
