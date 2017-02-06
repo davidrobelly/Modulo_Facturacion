@@ -22,6 +22,7 @@ public class Producto {
 	
 	public Producto() {
 		super();
+		conectar = new Conexion();
 	}
 	
 	public Producto(String nombre, String marca, String modelo) {
@@ -73,6 +74,7 @@ public class Producto {
 		this.valor = valor;
 		this.minimo = minimo;
 		this.maximo = maximo;
+		conectar = new Conexion();
 	}
 
 	public int getCodigo() {
