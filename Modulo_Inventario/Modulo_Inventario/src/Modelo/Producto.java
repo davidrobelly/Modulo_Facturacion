@@ -1,6 +1,9 @@
 package Modelo;
 
+import java.sql.ResultSet; 
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import Persistencia.Conexion;
 
 public class Producto {
@@ -19,12 +22,23 @@ public class Producto {
 	Conexion conectar;
 	String sentencia;
 	java.sql.CallableStatement procedimiento;
+	ResultSet resultado;
 	
 	public Producto() {
 		super();
 		conectar = new Conexion();
 	}
 	
+	
+	
+	public Producto(String marca) {
+		super();
+		this.marca = marca;
+		conectar = new Conexion();
+	}
+
+
+
 	public Producto(String nombre, String marca, String modelo) {
 		super();
 		this.nombre = nombre;
@@ -200,5 +214,59 @@ public class Producto {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+	 }
+	
+	public Producto consultarProducto(String marca){
+		Producto producto = new Producto();
+		conectar.conectar();
+		try {
+			sentencia = "call consultarproducto(?)";
+			procedimiento = conectar.conn.prepareCall(sentencia);
+			procedimiento.setString(1, marca);
+			procedimiento.execute();
+			resultado = (ResultSet) procedimiento.executeQuery();
+			while (resultado.next()) {
+                 producto.setNombre(resultado.getString("nombre"));
+                 producto.setMarca(resultado.getString("marca"));
+                 producto.setModelo(resultado.getString("modelo"));
+                 producto.setValor(resultado.getDouble("valor"));
+                 producto.setMinimo(resultado.getInt("minimo"));
+                 producto.setMaximo(resultado.getInt("maximo"));
+             }
+			procedimiento.close();
+			conectar.cerrar();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return producto; 
+	 }
+	
+	public ArrayList<Producto> listaProductosxMarca(String marca){
+		 ArrayList<Producto> listaProductos = new ArrayList<>();
+		 conectar.conectar();
+			try {
+				sentencia = "call consultarproducto(?)";
+				procedimiento = conectar.conn.prepareCall(sentencia);
+				procedimiento.setString(1, marca);
+				procedimiento.execute();
+				resultado = (ResultSet) procedimiento.executeQuery();
+				while (resultado.next()) {
+					Producto producto = new Producto();
+					producto.setNombre(resultado.getString("nombre"));
+					producto.setMarca(resultado.getString("marca"));
+					producto.setModelo(resultado.getString("modelo"));
+					producto.setValor(resultado.getDouble("valor"));
+					producto.setMinimo(resultado.getInt("minimo"));
+					producto.setMaximo(resultado.getInt("maximo"));
+					if (producto.getNombre() != null) {
+						listaProductos.add(producto);
+					}
+	             }
+				procedimiento.close();
+				conectar.cerrar();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		 return listaProductos;
 	 }
 }

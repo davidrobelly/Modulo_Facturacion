@@ -117,8 +117,8 @@ public class Pantalla_Principal extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent evento) {
 	
 		if (evento.getSource() == menuItemProcesoIngPro){
-			Pantalla_Ingreso_Inventario inventario;
-			inventario = new Pantalla_Ingreso_Inventario();
+			Pantalla_Producto inventario;
+			inventario = new Pantalla_Producto();
 			inventario.setVisible(true);	
 		}
 		

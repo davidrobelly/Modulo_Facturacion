@@ -1,6 +1,6 @@
 package Vista;
 
-import java.awt.BorderLayout;  
+import java.awt.BorderLayout;   
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import Modelo.Producto;
 import Persistencia.Conexion;
 
 

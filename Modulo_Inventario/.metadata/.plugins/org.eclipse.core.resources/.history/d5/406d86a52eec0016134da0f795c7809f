@@ -1,8 +1,0 @@
-#usuario
-usu=root
-#contraseña
-pass=1234
-#base de datos
-bd=secutel-erp
-#direccion
-url=jdbc:mysql://localhost/
