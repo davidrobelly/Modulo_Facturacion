@@ -1,0 +1,9 @@
+package pantallas;
+
+import javax.swing.JFrame;
+
+public class Consultar_Clientes extends JFrame{
+	
+	public 
+
+}

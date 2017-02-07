@@ -1,0 +1,33 @@
+package Principal;
+import DBClases.ConexionDB;
+import pantallas.Pantalla_Ingreso;
+import pantallas.Ventana_Ingreso_Clientes;
+import pantallas.Ventana_Ingreso_Cotizacion;
+import pantallas.Ventana_Ingreso_Credenciales;
+import pantallas.Ventana_Ingreso_Empleado;
+import pantallas.Ventana_Ingreso_Factura;
+import pantallas.Ventana_Ingreso_Sucursal;
+
+@SuppressWarnings("unused")
+public class Principal {
+
+	public static void main(String[] args) {
+
+		
+		//ventana_ingreso_clientes vingreso = new ventana_ingreso_clientes();
+		
+		//ventana_ingreso_empleado vingresoe = new ventana_ingreso_empleado();
+		
+		//ventana_ingreso_sucursal vingresos = new ventana_ingreso_sucursal();
+		
+		//ventana_ingreso_credenciales credencial = new ventana_ingreso_credenciales();
+		
+		//ventana_ingreso_cotizacion ventana1 = new ventana_ingreso_cotizacion();
+		
+		//ventana_ingreso_factura ventana = new ventana_ingreso_factura();
+		
+		Pantalla_Ingreso ingreso = new Pantalla_Ingreso ();
+		
+	}
+
+}

@@ -1,0 +1,1285 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+
+<channel>
+	<title>Planet Eclipse</title>
+	<link>http://planeteclipse.org/planet/</link>
+	<language>en</language>
+	<description>Planet Eclipse - http://planeteclipse.org/planet/</description>
+
+<item>
+	<title>Maximilian and Jonas: EMF Forms 1.11.0 Feature: View Cache for Tree Master Detail</title>
+	<guid isPermaLink="false">http://eclipsesource.com/blogs/?p=27642</guid>
+	<link>http://eclipsesource.com/blogs/2017/02/06/emf-forms-1-11-0-feature-view-cache-for-tree-master-detail/</link>
+	<description>&lt;p&gt;With Neon.2, we released EMF Forms 1.11.0. EMF Forms makes it simple to create forms which edit your data based on an EMF model. To get started with EMF Forms please refer to our tutorial. In this post, we want to outline a new feature in the 1.11.0 release: A view cache for master detail views.&lt;br /&gt;
+In the last post, we introduced a related feature, that is the ability to replace the input of an already rendered view. This saves rendering time in master detail scenarios. The following screenshot shows such an example of this, the left panel shows a list of objects (“User” in this case), the right side shows a form rendering the object selected on the left.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://eclipsesource.com/blogs/wp-content/uploads/2017/02/image04.png&quot;&gt;&lt;img alt=&quot;image04&quot; class=&quot;alignnone wp-image-27644&quot; height=&quot;223&quot; src=&quot;http://eclipsesource.com/blogs/wp-content/uploads/2017/02/image04-300x179.png&quot; width=&quot;374&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Now instead of re-rendering the right side on every selection change, EMF Forms allows you to replace the input of the already rendered view like this:&lt;/span&gt;&lt;/p&gt;
+
+&lt;pre lang=&quot;&quot;&gt;renderedComposite.getViewModelContext().changeDomainModel(eObject);
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;While this works well with tables or lists, which show only one type of element, the approach does not directly work for master detail scenarios with mixed types (e.g. in a tree). In the following scenario, we show a tree on the left site, which contains two types of elements (“User” and “UserGroup”).&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://eclipsesource.com/blogs/wp-content/uploads/2017/02/image20.png&quot;&gt;&lt;img alt=&quot;image20&quot; class=&quot;alignnone wp-image-27646&quot; height=&quot;191&quot; src=&quot;http://eclipsesource.com/blogs/wp-content/uploads/2017/02/image20-300x155.png&quot; width=&quot;370&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Those TreeMasterDetail elements can be created with EMF Forms using the following line of code (more details &lt;/span&gt;&lt;a href=&quot;http://eclipsesource.com/blogs/2016/03/09/emf-forms-1-8-0-feature-factories-for-treeviewer-and-tableviewer/&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;here&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;):&lt;/span&gt;&lt;/p&gt;
+
+&lt;pre lang=&quot;&quot;&gt;TreeMasterDetailSWTFactory.createTreeMasterDetail(parent,
+			SWT.NONE, userGroup);
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Again, we have to re-load the details area on selection change. If we would always re-create it, there would be a small delay, depending on the size of the form. Unfortunately, we cannot simply replace the input &lt;/span&gt;&lt;a href=&quot;http://eclipsesource.com/blogs/2017/01/23/emf-forms-1-11-0-feature-change-input-domain-object/&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;as described before&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;, because there can be different forms displayed. To solve this, the EMF Forms TreeMasterDetail renderer allows you to add a cache, the following line uses the default implementation:&lt;/span&gt;&lt;/p&gt;
+
+&lt;pre lang=&quot;&quot;&gt;treeMasterDetail.setCache(new DefaultTreeMasterDetailCache(2));
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;When the selection changes, it will not dispose the previous UI, but will instead hide it. If the same element needs to be rendered again, it will restore the previously rendered UI and just replace its input. So for elements, which have been rendered before, there will no longer be a delay, when they are selected again. The default implementation allows you to specify the number of cached views.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Depending on your use case, you might even want to pre-fill the cache for for some or even all elements in the tree. This would then avoid any delay even on opening an element the first time. The interface for implementing a cache is actually pretty simple:&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://eclipsesource.com/blogs/wp-content/uploads/2017/02/image25.png&quot;&gt;&lt;img alt=&quot;image25&quot; class=&quot;alignnone size-medium wp-image-27647&quot; height=&quot;93&quot; src=&quot;http://eclipsesource.com/blogs/wp-content/uploads/2017/02/image25-300x93.png&quot; width=&quot;300&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;So have fun with the new feature! If you miss any feature or ways to adapt it, please provide feedback by &lt;/span&gt;&lt;a href=&quot;https://bugs.eclipse.org/bugs/enter_bug.cgi?product=ecp&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;submitting bugs or feature requests&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt; or &lt;/span&gt;&lt;a href=&quot;mailto:munich@eclipsesource.com&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;contact us&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt; if you are interested in enhancements or support.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;&lt;div style=&quot;display: inline-block;&quot;&gt;&lt;a href=&quot;https://twitter.com/intent/tweet?source=webclient&amp;amp;text=EMF+Forms+1.11.0+Feature%3A+View+Cache+for+Tree+Master+Detail&amp;amp;via=eclipsesource&amp;amp;url=http://eclipsesource.com/blogs/2017/02/06/emf-forms-1-11-0-feature-view-cache-for-tree-master-detail/&quot; style=&quot;margin-right: 5px;&quot; target=&quot;_blank&quot; title=&quot;Share on Twitter&quot;&gt;&lt;img alt=&quot;Twitter&quot; src=&quot;http://eclipsesource.com/blogs/wp-content/plugins/custom-about-author/images/social_media/twitter.png&quot; title=&quot;Twitter&quot; /&gt;&lt;/a&gt;&lt;a href=&quot;https://plus.google.com/share?url=http://eclipsesource.com/blogs/2017/02/06/emf-forms-1-11-0-feature-view-cache-for-tree-master-detail/&quot; style=&quot;margin-right: 5px;&quot; target=&quot;_blank&quot; title=&quot;+1&quot;&gt;&lt;img alt=&quot;Google+&quot; src=&quot;http://eclipsesource.com/blogs/wp-content/plugins/custom-about-author/images/social_media/google_plus.png&quot; title=&quot;Google+&quot; /&gt;&lt;/a&gt;&lt;a href=&quot;http://www.linkedin.com/cws/share?url=http://eclipsesource.com/blogs/2017/02/06/emf-forms-1-11-0-feature-view-cache-for-tree-master-detail/&quot; style=&quot;margin-right: 5px;&quot; target=&quot;_blank&quot; title=&quot;Share on LinkedIn&quot;&gt;&lt;img alt=&quot;LinkedIn&quot; src=&quot;http://eclipsesource.com/blogs/wp-content/plugins/custom-about-author/images/social_media/linkedin.png&quot; title=&quot;LinkedIn&quot; /&gt;&lt;/a&gt;&lt;a href=&quot;https://www.facebook.com/sharer/sharer.php?u=http://eclipsesource.com/blogs/2017/02/06/emf-forms-1-11-0-feature-view-cache-for-tree-master-detail/&amp;amp;t=EMF+Forms+1.11.0+Feature%3A+View+Cache+for+Tree+Master+Detail&quot; style=&quot;margin-right: 5px;&quot; target=&quot;_blank&quot; title=&quot;Facebook&quot;&gt;&lt;img alt=&quot;Facebook&quot; src=&quot;http://eclipsesource.com/blogs/wp-content/plugins/custom-about-author/images/social_media/facebook.png&quot; title=&quot;Facebook&quot; /&gt;&lt;/a&gt;&lt;/div&gt;&lt;br /&gt;&lt;a href=&quot;http://eclipsesource.com/blogs/2017/02/06/emf-forms-1-11-0-feature-view-cache-for-tree-master-detail/#respond&quot;&gt;Leave a Comment&lt;/a&gt;. Tagged with &lt;a href=&quot;http://eclipsesource.com/blogs/tag/eclipse/&quot; title=&quot;eclipse Tag&quot;&gt;eclipse&lt;/a&gt;, &lt;a href=&quot;http://eclipsesource.com/blogs/tag/emf/&quot; title=&quot;emf Tag&quot;&gt;emf&lt;/a&gt;, &lt;a href=&quot;http://eclipsesource.com/blogs/tag/emfcp/&quot; title=&quot;emfcp Tag&quot;&gt;emfcp&lt;/a&gt;, &lt;a href=&quot;http://eclipsesource.com/blogs/tag/emfforms/&quot; title=&quot;emfforms Tag&quot;&gt;emfforms&lt;/a&gt;, &lt;a href=&quot;http://eclipsesource.com/blogs/tag/eclipse/&quot; title=&quot;eclipse Tag&quot;&gt;eclipse&lt;/a&gt;, &lt;a href=&quot;http://eclipsesource.com/blogs/tag/emf/&quot; title=&quot;emf Tag&quot;&gt;emf&lt;/a&gt;, &lt;a href=&quot;http://eclipsesource.com/blogs/tag/emfcp/&quot; title=&quot;emfcp Tag&quot;&gt;emfcp&lt;/a&gt;, &lt;a href=&quot;http://eclipsesource.com/blogs/tag/emfforms/&quot; title=&quot;emfforms Tag&quot;&gt;emfforms&lt;/a&gt;&lt;p&gt;&lt;/p&gt;</description>
+	<pubDate>Mon, 06 Feb 2017 10:00:09 +0000</pubDate>
+</item>
+<item>
+	<title>Lorenzo Bettini: JaCoCo Code Coverage and Report of multiple Eclipse plug-in projects</title>
+	<guid isPermaLink="false">http://www.lorenzobettini.it/?p=911</guid>
+	<link>http://www.lorenzobettini.it/2017/02/jacoco-code-coverage-and-report-of-multiple-eclipse-plug-in-projects/</link>
+	<description>&lt;p&gt;In this tutorial I’ll show how to use Jacoco with Maven/Tycho to create a code coverage report of multiple Eclipse plug-in projects.&lt;/p&gt;
+&lt;p&gt;The code of the example is available here: &lt;a href=&quot;https://github.com/LorenzoBettini/tycho-multiproject-jacoco-report-example&quot; target=&quot;_blank&quot;&gt;https://github.com/LorenzoBettini/tycho-multiproject-jacoco-report-example&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This is the structure of the projects:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.lorenzobettini.it/2017/02/jacoco-code-coverage-and-report-of-multiple-eclipse-plug-in-projects/jacoco-report-projects/&quot; rel=&quot;attachment wp-att-915&quot;&gt;&lt;img alt=&quot;jacoco-report-projects&quot; class=&quot;aligncenter size-full wp-image-915&quot; height=&quot;277&quot; src=&quot;http://www.lorenzobettini.it/wp-content/uploads/2017/02/jacoco-report-projects.png&quot; width=&quot;286&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Each project’s code is tested in a specific .tests project. The code consists of simple Java classes doing nothing interesting, and tests just call that code.&lt;/p&gt;
+&lt;p&gt;The Maven parent pom file is written such that Jacoco is enabled only when the profile “jacoco” is explicitly activated:&lt;/p&gt;&lt;pre class=&quot;crayon-plain-tag&quot;&gt;&amp;lt;profile&amp;gt;
+	&amp;lt;id&amp;gt;jacoco&amp;lt;/id&amp;gt;
+	&amp;lt;activation&amp;gt;
+		&amp;lt;activeByDefault&amp;gt;false&amp;lt;/activeByDefault&amp;gt;
+	&amp;lt;/activation&amp;gt;
+	&amp;lt;build&amp;gt;
+		&amp;lt;plugins&amp;gt;
+			&amp;lt;plugin&amp;gt;
+				&amp;lt;groupId&amp;gt;org.jacoco&amp;lt;/groupId&amp;gt;
+				&amp;lt;artifactId&amp;gt;jacoco-maven-plugin&amp;lt;/artifactId&amp;gt;
+				&amp;lt;version&amp;gt;${jacoco-version}&amp;lt;/version&amp;gt;
+				&amp;lt;configuration&amp;gt;
+					&amp;lt;excludes&amp;gt;
+						&amp;lt;exclude&amp;gt;**/plugin1/Main.class&amp;lt;/exclude&amp;gt;
+					&amp;lt;/excludes&amp;gt;
+				&amp;lt;/configuration&amp;gt;
+				&amp;lt;executions&amp;gt;
+					&amp;lt;execution&amp;gt;
+						&amp;lt;goals&amp;gt;
+							&amp;lt;goal&amp;gt;prepare-agent&amp;lt;/goal&amp;gt;
+						&amp;lt;/goals&amp;gt;
+					&amp;lt;/execution&amp;gt;
+				&amp;lt;/executions&amp;gt;
+			&amp;lt;/plugin&amp;gt;
+		&amp;lt;/plugins&amp;gt;
+	&amp;lt;/build&amp;gt;
+&amp;lt;/profile&amp;gt;&lt;/pre&gt;&lt;p&gt;This is just an example of configuration; you might want to tweak it as you see fit for your own projects (in this example I also created a Main.java with a main method that I exclude from the coverage). By default, the &lt;strong&gt;jacoco-maven-plugin&lt;/strong&gt; will “prepare” the Jacoco agent in the property &lt;strong&gt;tycho.testArgLine&lt;/strong&gt; (since our test projects are Maven projects with packaging &lt;strong&gt;eclipse-plugin-test&lt;/strong&gt;); since tycho.testArgLine is automatically used by the tycho-surefire-plugin and since we have no special test configuration, the pom.xml of our test projects is just as simple as this:&lt;/p&gt;&lt;pre class=&quot;crayon-plain-tag&quot;&gt;&amp;lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+	xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&amp;gt;
+	&amp;lt;modelVersion&amp;gt;4.0.0&amp;lt;/modelVersion&amp;gt;
+	&amp;lt;parent&amp;gt;
+		&amp;lt;groupId&amp;gt;example&amp;lt;/groupId&amp;gt;
+		&amp;lt;artifactId&amp;gt;example.parent&amp;lt;/artifactId&amp;gt;
+		&amp;lt;version&amp;gt;0.0.1-SNAPSHOT&amp;lt;/version&amp;gt;
+	&amp;lt;/parent&amp;gt;
+	&amp;lt;artifactId&amp;gt;example.plugin1.tests&amp;lt;/artifactId&amp;gt;
+	&amp;lt;packaging&amp;gt;eclipse-test-plugin&amp;lt;/packaging&amp;gt;
+
+&amp;lt;/project&amp;gt;&lt;/pre&gt;&lt;p&gt;if you need a custom configuration, then you have to explicitly mention ${tycho.testArgLine} in the &amp;lt;argLine&amp;gt;.&lt;/p&gt;
+&lt;p&gt;Now we want to create an aggregate Jacoco report for the classes in plugin1 and plugin2 projects (tested by plugin1.tests and plugin2.tests, respectively); each test project will generate a jacoco.exec file with coverage information. Before Jacoco &lt;strong&gt;0.7.7&lt;/strong&gt;, creating an aggregate report wasn’t that easy and required to store all coverage data in a single an .exec file and then use an ant task (with a manual configuration specifying all the source file and class file paths). In 0.7.7, the &lt;strong&gt;jacoco:report-aggregate&lt;/strong&gt; has been added, which makes creating a report really easy!&lt;/p&gt;
+&lt;p&gt;Here’s an excerpt of the documentation:&lt;/p&gt;
+&lt;div&gt;
+&lt;blockquote&gt;&lt;p&gt;Creates a structured code coverage report (HTML, XML, and CSV) from multiple projects within reactor. The report is created from all modules this project depends on. From those projects class and source files as well as JaCoCo execution data files will be collected. […] This also allows to create coverage reports when tests are in separate projects than the code under test. […]&lt;/p&gt;
+&lt;p&gt;Using the dependency scope allows to distinguish projects which contribute execution data but should not become part of the report:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;compile&lt;/code&gt;: Project source and execution data is included in the report.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;test&lt;/code&gt;: Only execution data is considered for the report.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;p&gt;So it’s just a matter of creating a separate project (I called that &lt;strong&gt;example.tests.report&lt;/strong&gt;) where we:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;configure the &lt;strong&gt;report-aggregate&lt;/strong&gt; goal (in this example I bind that to the &lt;strong&gt;verify&lt;/strong&gt; phase)&lt;/li&gt;
+&lt;li&gt;add as dependencies with &lt;strong&gt;scope compile&lt;/strong&gt; the projects containing the actual code and with &lt;strong&gt;scope test&lt;/strong&gt; the projects containing the tests and .exec data&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;/p&gt;&lt;pre class=&quot;crayon-plain-tag&quot;&gt;&amp;lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+	xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&amp;gt;
+	&amp;lt;modelVersion&amp;gt;4.0.0&amp;lt;/modelVersion&amp;gt;
+	&amp;lt;parent&amp;gt;
+		&amp;lt;groupId&amp;gt;example&amp;lt;/groupId&amp;gt;
+		&amp;lt;artifactId&amp;gt;example.parent&amp;lt;/artifactId&amp;gt;
+		&amp;lt;version&amp;gt;0.0.1-SNAPSHOT&amp;lt;/version&amp;gt;
+	&amp;lt;/parent&amp;gt;
+	&amp;lt;artifactId&amp;gt;example.tests.report&amp;lt;/artifactId&amp;gt;
+
+	&amp;lt;packaging&amp;gt;pom&amp;lt;/packaging&amp;gt;
+
+	&amp;lt;profiles&amp;gt;
+		&amp;lt;profile&amp;gt;
+			&amp;lt;id&amp;gt;jacoco&amp;lt;/id&amp;gt;
+			&amp;lt;activation&amp;gt;
+				&amp;lt;activeByDefault&amp;gt;false&amp;lt;/activeByDefault&amp;gt;
+			&amp;lt;/activation&amp;gt;
+			&amp;lt;build&amp;gt;
+				&amp;lt;plugins&amp;gt;
+					&amp;lt;plugin&amp;gt;
+						&amp;lt;groupId&amp;gt;org.jacoco&amp;lt;/groupId&amp;gt;
+						&amp;lt;artifactId&amp;gt;jacoco-maven-plugin&amp;lt;/artifactId&amp;gt;
+						&amp;lt;version&amp;gt;${jacoco-version}&amp;lt;/version&amp;gt;
+						&amp;lt;executions&amp;gt;
+							&amp;lt;execution&amp;gt;
+								&amp;lt;phase&amp;gt;verify&amp;lt;/phase&amp;gt;
+								&amp;lt;goals&amp;gt;
+									&amp;lt;goal&amp;gt;report-aggregate&amp;lt;/goal&amp;gt;
+								&amp;lt;/goals&amp;gt;
+							&amp;lt;/execution&amp;gt;
+						&amp;lt;/executions&amp;gt;
+					&amp;lt;/plugin&amp;gt;
+				&amp;lt;/plugins&amp;gt;
+			&amp;lt;/build&amp;gt;
+		&amp;lt;/profile&amp;gt;
+	&amp;lt;/profiles&amp;gt;
+
+	&amp;lt;dependencies&amp;gt;
+		&amp;lt;dependency&amp;gt;
+			&amp;lt;groupId&amp;gt;example&amp;lt;/groupId&amp;gt;
+			&amp;lt;artifactId&amp;gt;example.plugin1&amp;lt;/artifactId&amp;gt;
+			&amp;lt;version&amp;gt;${project.version}&amp;lt;/version&amp;gt;
+			&amp;lt;scope&amp;gt;compile&amp;lt;/scope&amp;gt;
+		&amp;lt;/dependency&amp;gt;
+		&amp;lt;dependency&amp;gt;
+			&amp;lt;groupId&amp;gt;example&amp;lt;/groupId&amp;gt;
+			&amp;lt;artifactId&amp;gt;example.plugin2&amp;lt;/artifactId&amp;gt;
+			&amp;lt;version&amp;gt;${project.version}&amp;lt;/version&amp;gt;
+			&amp;lt;scope&amp;gt;compile&amp;lt;/scope&amp;gt;
+		&amp;lt;/dependency&amp;gt;
+		&amp;lt;dependency&amp;gt;
+			&amp;lt;groupId&amp;gt;example&amp;lt;/groupId&amp;gt;
+			&amp;lt;artifactId&amp;gt;example.plugin1.tests&amp;lt;/artifactId&amp;gt;
+			&amp;lt;version&amp;gt;${project.version}&amp;lt;/version&amp;gt;
+			&amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt;
+		&amp;lt;/dependency&amp;gt;
+		&amp;lt;dependency&amp;gt;
+			&amp;lt;groupId&amp;gt;example&amp;lt;/groupId&amp;gt;
+			&amp;lt;artifactId&amp;gt;example.plugin2.tests&amp;lt;/artifactId&amp;gt;
+			&amp;lt;version&amp;gt;${project.version}&amp;lt;/version&amp;gt;
+			&amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt;
+		&amp;lt;/dependency&amp;gt;
+	&amp;lt;/dependencies&amp;gt;
+&amp;lt;/project&amp;gt;&lt;/pre&gt;&lt;p&gt;That’s all!&lt;/p&gt;
+&lt;p&gt;Now run this command in the example.parent project:&lt;/p&gt;&lt;pre class=&quot;crayon-plain-tag&quot;&gt;mvn clean verify -Pjacoco&lt;/pre&gt;&lt;p&gt;and when the build terminates, you’ll find the HTML code coverage report for all your projects in the directory (again, you can configure jacoco with a different output path, that’s just the default):&lt;/p&gt;
+&lt;p&gt;/example.tests.report/target/site/jacoco-aggregate&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.lorenzobettini.it/2017/02/jacoco-code-coverage-and-report-of-multiple-eclipse-plug-in-projects/jacoco-report/&quot; rel=&quot;attachment wp-att-919&quot;&gt;&lt;img alt=&quot;jacoco-report&quot; class=&quot;aligncenter size-full wp-image-919&quot; height=&quot;208&quot; src=&quot;http://www.lorenzobettini.it/wp-content/uploads/2017/02/jacoco-report.png&quot; width=&quot;1145&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Since, besides the HTML report, jacoco will create an XML report, you can use any tool that keeps track of code coverage, like the online free solution &lt;strong&gt;Coveralls&lt;/strong&gt; (&lt;a href=&quot;https://coveralls.io/&quot; target=&quot;_blank&quot;&gt;https://coveralls.io/&lt;/a&gt;). Coveralls is automatically accessible from Travis (I assume that you know how to connect your github projects to Travis and Coveralls). So we just need to configure the coveralls-maven-plugin with the path of the Jacoco xml report (I’m doing this in the parent pom, in the pluginManagement section in the jacoco profile):&lt;/p&gt;&lt;pre class=&quot;crayon-plain-tag&quot;&gt;&amp;lt;plugin&amp;gt;
+	&amp;lt;groupId&amp;gt;org.eluder.coveralls&amp;lt;/groupId&amp;gt;
+	&amp;lt;artifactId&amp;gt;coveralls-maven-plugin&amp;lt;/artifactId&amp;gt;
+	&amp;lt;version&amp;gt;4.3.0&amp;lt;/version&amp;gt;
+	&amp;lt;configuration&amp;gt;
+		&amp;lt;jacocoReports&amp;gt;
+			&amp;lt;jacocoReport&amp;gt;${project.basedir}/example.tests.report/target/site/jacoco-aggregate/jacoco.xml&amp;lt;/jacocoReport&amp;gt;
+		&amp;lt;/jacocoReports&amp;gt;
+	&amp;lt;/configuration&amp;gt;
+&amp;lt;/plugin&amp;gt;&lt;/pre&gt;&lt;p&gt;And here’s the Travis file:&lt;/p&gt;&lt;pre class=&quot;crayon-plain-tag&quot;&gt;sudo: false
+
+language: java
+
+jdk: oraclejdk8
+
+cache:
+  directories:
+  - $HOME/.m2
+
+install: true
+
+script:
+ - mvn -f example.parent/pom.xml clean verify -Pjacoco coveralls:report&lt;/pre&gt;&lt;p&gt;This is the coveralls page for the example project &lt;a href=&quot;https://coveralls.io/github/LorenzoBettini/tycho-multiproject-jacoco-report-example&quot; target=&quot;_blank&quot;&gt;https://coveralls.io/github/LorenzoBettini/tycho-multiproject-jacoco-report-example&lt;/a&gt;. And an example of coverage information:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.lorenzobettini.it/2017/02/jacoco-code-coverage-and-report-of-multiple-eclipse-plug-in-projects/jacoco-coveralls/&quot; rel=&quot;attachment wp-att-921&quot;&gt;&lt;img alt=&quot;jacoco-coveralls&quot; class=&quot;aligncenter size-full wp-image-921&quot; height=&quot;539&quot; src=&quot;http://www.lorenzobettini.it/wp-content/uploads/2017/02/jacoco-coveralls.png&quot; width=&quot;765&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;That’s all!&lt;/p&gt;
+&lt;p&gt;Happy coverage! &lt;img alt=&quot;🙂&quot; class=&quot;wp-smiley&quot; src=&quot;https://s.w.org/images/core/emoji/2/72x72/1f642.png&quot; style=&quot;height: 1em;&quot; /&gt;&lt;/p&gt;
+&lt;div class=&quot;sociable&quot;&gt;&lt;div class=&quot;sociable_tagline&quot;&gt;Be Sociable, Share!&lt;/div&gt;&lt;ul class=&quot;clearfix&quot;&gt;&lt;li&gt;&lt;a class=&quot;option1_16&quot; href=&quot;http://twitter.com/intent/tweet?text=JaCoCo%20Code%20Coverage%20and%20Report%20of%20multiple%20Eclipse%20plug-in%20projects%20-%20http%3A%2F%2Fwww.lorenzobettini.it%2F2017%2F02%2Fjacoco-code-coverage-and-report-of-multiple-eclipse-plug-in-projects%2F%20&quot; rel=&quot;nofollow&quot; target=&quot;_blank&quot; title=&quot;Twitter&quot;&gt;&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a class=&quot;option1_16&quot; href=&quot;http://www.facebook.com/share.php?u=http%3A%2F%2Fwww.lorenzobettini.it%2F2017%2F02%2Fjacoco-code-coverage-and-report-of-multiple-eclipse-plug-in-projects%2F&amp;amp;t=JaCoCo%20Code%20Coverage%20and%20Report%20of%20multiple%20Eclipse%20plug-in%20projects&quot; rel=&quot;nofollow&quot; target=&quot;_blank&quot; title=&quot;Facebook&quot;&gt;&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a class=&quot;option1_16&quot; href=&quot;https://mail.google.com/mail/?view=cm&amp;amp;fs=1&amp;amp;to&amp;amp;su=JaCoCo%20Code%20Coverage%20and%20Report%20of%20multiple%20Eclipse%20plug-in%20projects&amp;amp;body=http%3A%2F%2Fwww.lorenzobettini.it%2F2017%2F02%2Fjacoco-code-coverage-and-report-of-multiple-eclipse-plug-in-projects%2F&amp;amp;ui=2&amp;amp;tf=1&amp;amp;shva=1&quot; rel=&quot;nofollow&quot; target=&quot;_blank&quot; title=&quot;email&quot;&gt;&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a class=&quot;option1_16&quot; rel=&quot;nofollow&quot; title=&quot;Add to favorites - doesn't work in Chrome&quot;&gt;&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a class=&quot;option1_16&quot; href=&quot;http://www.stumbleupon.com/submit?url=http%3A%2F%2Fwww.lorenzobettini.it%2F2017%2F02%2Fjacoco-code-coverage-and-report-of-multiple-eclipse-plug-in-projects%2F&amp;amp;title=JaCoCo%20Code%20Coverage%20and%20Report%20of%20multiple%20Eclipse%20plug-in%20projects&quot; rel=&quot;nofollow&quot; target=&quot;_blank&quot; title=&quot;StumbleUpon&quot;&gt;&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a class=&quot;option1_16&quot; href=&quot;http://delicious.com/post?url=http%3A%2F%2Fwww.lorenzobettini.it%2F2017%2F02%2Fjacoco-code-coverage-and-report-of-multiple-eclipse-plug-in-projects%2F&amp;amp;title=JaCoCo%20Code%20Coverage%20and%20Report%20of%20multiple%20Eclipse%20plug-in%20projects&amp;amp;notes=In%20this%20tutorial%20I%27ll%20show%20how%20to%20use%20Jacoco%20with%20Maven%2FTycho%20to%20create%20a%20code%20coverage%20report%20of%20multiple%20Eclipse%20plug-in%20projects.%0D%0A%0D%0AThe%20code%20of%20the%20example%20is%20available%20here%3A%C2%A0https%3A%2F%2Fgithub.com%2FLorenzoBettini%2Ftycho-multiproject-jacoco-report-exa&quot; rel=&quot;nofollow&quot; target=&quot;_blank&quot; title=&quot;Delicious&quot;&gt;&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a class=&quot;option1_16&quot; href=&quot;http://www.google.com/reader/link?url=http%3A%2F%2Fwww.lorenzobettini.it%2F2017%2F02%2Fjacoco-code-coverage-and-report-of-multiple-eclipse-plug-in-projects%2F&amp;amp;title=JaCoCo%20Code%20Coverage%20and%20Report%20of%20multiple%20Eclipse%20plug-in%20projects&amp;amp;srcURL=http%3A%2F%2Fwww.lorenzobettini.it%2F2017%2F02%2Fjacoco-code-coverage-and-report-of-multiple-eclipse-plug-in-projects%2F&amp;amp;srcTitle=Lorenzo+Bettini+My+Home+Page&quot; rel=&quot;nofollow&quot; target=&quot;_blank&quot; title=&quot;Google Reader&quot;&gt;&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a class=&quot;option1_16&quot; href=&quot;http://www.linkedin.com/shareArticle?mini=true&amp;amp;url=http%3A%2F%2Fwww.lorenzobettini.it%2F2017%2F02%2Fjacoco-code-coverage-and-report-of-multiple-eclipse-plug-in-projects%2F&amp;amp;title=JaCoCo%20Code%20Coverage%20and%20Report%20of%20multiple%20Eclipse%20plug-in%20projects&amp;amp;source=Lorenzo+Bettini+My+Home+Page&amp;amp;summary=In%20this%20tutorial%20I%27ll%20show%20how%20to%20use%20Jacoco%20with%20Maven%2FTycho%20to%20create%20a%20code%20coverage%20report%20of%20multiple%20Eclipse%20plug-in%20projects.%0D%0A%0D%0AThe%20code%20of%20the%20example%20is%20available%20here%3A%C2%A0https%3A%2F%2Fgithub.com%2FLorenzoBettini%2Ftycho-multiproject-jacoco-report-exa&quot; rel=&quot;nofollow&quot; target=&quot;_blank&quot; title=&quot;LinkedIn&quot;&gt;&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a class=&quot;option1_16&quot; href=&quot;http://www.blinklist.com/index.php?Action=Blink/addblink.php&amp;amp;Url=http%3A%2F%2Fwww.lorenzobettini.it%2F2017%2F02%2Fjacoco-code-coverage-and-report-of-multiple-eclipse-plug-in-projects%2F&amp;amp;Title=JaCoCo%20Code%20Coverage%20and%20Report%20of%20multiple%20Eclipse%20plug-in%20projects&quot; rel=&quot;nofollow&quot; style=&quot;background-position: 0px 0px;&quot; target=&quot;_blank&quot; title=&quot;BlinkList&quot;&gt;&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a rel=&quot;nofollow&quot; style=&quot;cursor: pointer;&quot;&gt;&lt;img src=&quot;http://www.lorenzobettini.it/wp-content/plugins/sociable/images/more.png&quot; /&gt;&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;div id=&quot;sociable-post-911&quot; style=&quot;display: none;&quot;&gt;   
+
+    &lt;div id=&quot;sociable&quot; style=&quot;display: block;&quot;&gt;
+
+
+
+		&lt;div class=&quot;popup&quot;&gt;
+
+			&lt;div class=&quot;content&quot;&gt;
+
+				&lt;ul&gt;&lt;li style=&quot;width: 16px;&quot;&gt;&lt;a class=&quot;option1_16&quot; href=&quot;http://www.myspace.com/Modules/PostTo/Pages/?u=http%3A%2F%2Fwww.lorenzobettini.it%2F2017%2F02%2Fjacoco-code-coverage-and-report-of-multiple-eclipse-plug-in-projects%2F&amp;amp;t=JaCoCo%20Code%20Coverage%20and%20Report%20of%20multiple%20Eclipse%20plug-in%20projects&quot; rel=&quot;nofollow&quot; target=&quot;_blank&quot; title=&quot;Myspace&quot;&gt;&lt;/a&gt;&lt;/li&gt;&lt;li style=&quot;width: 16px;&quot;&gt;&lt;a class=&quot;option1_16&quot; href=&quot;http://digg.com/submit?phase=2&amp;amp;url=http%3A%2F%2Fwww.lorenzobettini.it%2F2017%2F02%2Fjacoco-code-coverage-and-report-of-multiple-eclipse-plug-in-projects%2F&amp;amp;title=JaCoCo%20Code%20Coverage%20and%20Report%20of%20multiple%20Eclipse%20plug-in%20projects&amp;amp;bodytext=In%20this%20tutorial%20I%27ll%20show%20how%20to%20use%20Jacoco%20with%20Maven%2FTycho%20to%20create%20a%20code%20coverage%20report%20of%20multiple%20Eclipse%20plug-in%20projects.%0D%0A%0D%0AThe%20code%20of%20the%20example%20is%20available%20here%3A%C2%A0https%3A%2F%2Fgithub.com%2FLorenzoBettini%2Ftycho-multiproject-jacoco-report-exa&quot; rel=&quot;nofollow&quot; target=&quot;_blank&quot; title=&quot;Digg&quot;&gt;&lt;/a&gt;&lt;/li&gt;&lt;li style=&quot;width: 16px;&quot;&gt;&lt;a class=&quot;option1_16&quot; href=&quot;http://reddit.com/submit?url=http%3A%2F%2Fwww.lorenzobettini.it%2F2017%2F02%2Fjacoco-code-coverage-and-report-of-multiple-eclipse-plug-in-projects%2F&amp;amp;title=JaCoCo%20Code%20Coverage%20and%20Report%20of%20multiple%20Eclipse%20plug-in%20projects&quot; rel=&quot;nofollow&quot; target=&quot;_blank&quot; title=&quot;Reddit&quot;&gt;&lt;/a&gt;&lt;/li&gt;&lt;li style=&quot;width: 16px;&quot;&gt;&lt;a class=&quot;option1_16&quot; href=&quot;http://www.google.com/bookmarks/mark?op=edit&amp;amp;bkmk=http%3A%2F%2Fwww.lorenzobettini.it%2F2017%2F02%2Fjacoco-code-coverage-and-report-of-multiple-eclipse-plug-in-projects%2F&amp;amp;title=JaCoCo%20Code%20Coverage%20and%20Report%20of%20multiple%20Eclipse%20plug-in%20projects&amp;amp;annotation=In%20this%20tutorial%20I%27ll%20show%20how%20to%20use%20Jacoco%20with%20Maven%2FTycho%20to%20create%20a%20code%20coverage%20report%20of%20multiple%20Eclipse%20plug-in%20projects.%0D%0A%0D%0AThe%20code%20of%20the%20example%20is%20available%20here%3A%C2%A0https%3A%2F%2Fgithub.com%2FLorenzoBettini%2Ftycho-multiproject-jacoco-report-exa&quot; rel=&quot;nofollow&quot; target=&quot;_blank&quot; title=&quot;Google Bookmarks&quot;&gt;&lt;/a&gt;&lt;/li&gt;&lt;li style=&quot;width: 16px;&quot;&gt;&lt;a class=&quot;option1_16&quot; href=&quot;http://news.ycombinator.com/submitlink?u=http%3A%2F%2Fwww.lorenzobettini.it%2F2017%2F02%2Fjacoco-code-coverage-and-report-of-multiple-eclipse-plug-in-projects%2F&amp;amp;t=JaCoCo%20Code%20Coverage%20and%20Report%20of%20multiple%20Eclipse%20plug-in%20projects&quot; rel=&quot;nofollow&quot; target=&quot;_blank&quot; title=&quot;HackerNews&quot;&gt;&lt;/a&gt;&lt;/li&gt;&lt;li style=&quot;width: 16px;&quot;&gt;&lt;a class=&quot;option1_16&quot; href=&quot;http://reporter.es.msn.com/?fn=contribute&amp;amp;Title=JaCoCo%20Code%20Coverage%20and%20Report%20of%20multiple%20Eclipse%20plug-in%20projects&amp;amp;URL=http%3A%2F%2Fwww.lorenzobettini.it%2F2017%2F02%2Fjacoco-code-coverage-and-report-of-multiple-eclipse-plug-in-projects%2F&amp;amp;cat_id=6&amp;amp;tag_id=31&amp;amp;Remark=In%20this%20tutorial%20I%27ll%20show%20how%20to%20use%20Jacoco%20with%20Maven%2FTycho%20to%20create%20a%20code%20coverage%20report%20of%20multiple%20Eclipse%20plug-in%20projects.%0D%0A%0D%0AThe%20code%20of%20the%20example%20is%20available%20here%3A%C2%A0https%3A%2F%2Fgithub.com%2FLorenzoBettini%2Ftycho-multiproject-jacoco-report-exa&quot; rel=&quot;nofollow&quot; target=&quot;_blank&quot; title=&quot;MSNReporter&quot;&gt;&lt;/a&gt;&lt;/li&gt;&lt;li style=&quot;width: 16px;&quot;&gt;&lt;a class=&quot;option1_16&quot; href=&quot;http://sphinn.com/index.php?c=post&amp;amp;m=submit&amp;amp;link=http%3A%2F%2Fwww.lorenzobettini.it%2F2017%2F02%2Fjacoco-code-coverage-and-report-of-multiple-eclipse-plug-in-projects%2F&quot; rel=&quot;nofollow&quot; target=&quot;_blank&quot; title=&quot;Sphinn&quot;&gt;&lt;/a&gt;&lt;/li&gt;&lt;li style=&quot;width: 16px;&quot;&gt;&lt;a class=&quot;option1_16&quot; href=&quot;http://posterous.com/share?linkto=http%3A%2F%2Fwww.lorenzobettini.it%2F2017%2F02%2Fjacoco-code-coverage-and-report-of-multiple-eclipse-plug-in-projects%2F&amp;amp;title=JaCoCo%20Code%20Coverage%20and%20Report%20of%20multiple%20Eclipse%20plug-in%20projects&amp;amp;selection=In%20this%20tutorial%20I%27ll%20show%20how%20to%20use%20Jacoco%20with%20Maven%2FTycho%20to%20create%20a%20code%20coverage%20report%20of%20multiple%20Eclipse%20plug-in%20projects.%0D%0A%0D%0AThe%20code%20of%20the%20example%20is%20available%20here%3A%C2%A0https%3A%2F%2Fgithub.com%2FLorenzoBettini%2Ftycho-multiproject-jacoco-report-exa&quot; rel=&quot;nofollow&quot; target=&quot;_blank&quot; title=&quot;Posterous&quot;&gt;&lt;/a&gt;&lt;/li&gt;&lt;li style=&quot;width: 16px;&quot;&gt;&lt;a class=&quot;option1_16&quot; href=&quot;http://www.tumblr.com/share?v=3&amp;amp;u=http%3A%2F%2Fwww.lorenzobettini.it%2F2017%2F02%2Fjacoco-code-coverage-and-report-of-multiple-eclipse-plug-in-projects%2F&amp;amp;t=JaCoCo%20Code%20Coverage%20and%20Report%20of%20multiple%20Eclipse%20plug-in%20projects&amp;amp;s=In%20this%20tutorial%20I%27ll%20show%20how%20to%20use%20Jacoco%20with%20Maven%2FTycho%20to%20create%20a%20code%20coverage%20report%20of%20multiple%20Eclipse%20plug-in%20projects.%0D%0A%0D%0AThe%20code%20of%20the%20example%20is%20available%20here%3A%C2%A0https%3A%2F%2Fgithub.com%2FLorenzoBettini%2Ftycho-multiproject-jacoco-report-exa&quot; rel=&quot;nofollow&quot; target=&quot;_blank&quot; title=&quot;Tumblr&quot;&gt;&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;			
+
+			&lt;/div&gt;        
+
+		  &lt;a class=&quot;close&quot; style=&quot;cursor: pointer;&quot;&gt;
+
+		  &lt;img src=&quot;http://www.lorenzobettini.it/wp-content/plugins/sociable/images/closelabel.png&quot; title=&quot;close&quot; /&gt;
+
+		  &lt;/a&gt;
+
+		&lt;/div&gt;
+
+	&lt;/div&gt; 
+
+  &lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;sociable&quot; style=&quot;float: none;&quot;&gt;&lt;ul class=&quot;clearfix&quot;&gt;&lt;li id=&quot;Twitter_Counter&quot;&gt;&lt;a class=&quot;twitter-share-button&quot; href=&quot;https://twitter.com/share&quot;&gt;Tweet&lt;/a&gt;&lt;/li&gt;&lt;li id=&quot;Facebook_Counter&quot;&gt;&lt;/li&gt;&lt;li id=&quot;Google_p&quot;&gt;&lt;/li&gt;&lt;li id=&quot;LinkedIn_Counter&quot;&gt;&lt;/li&gt;&lt;li id=&quot;StumbleUpon_Counter&quot;&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description>
+	<pubDate>Sun, 05 Feb 2017 13:46:12 +0000</pubDate>
+</item>
+<item>
+	<title>Thea Aldrich: HIC SVNT LEONES</title>
+	<guid isPermaLink="false">http://theaaaaaa.wordpress.com/?p=28</guid>
+	<link>https://theaaaaaa.wordpress.com/2017/02/02/hic-svnt-leones/</link>
+	<description>&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;This year, LocationTech will not be hosting our annual FOSS4G-NA conference due to the return of the&lt;/span&gt; &lt;span style=&quot;font-weight: 400;&quot;&gt;international&lt;/span&gt;&lt;a href=&quot;http://2017.foss4g.org/&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt; FOSS4G&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt; conference to the United States. We are proud to announce that we are silver sponsors of the event in Boston on August 14-19, 2017. We will be back in 2018 – watch for news on that in the coming months.  &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;With no FOSS4G-NA this year we had the opportunity to focus our attention on developing a new conference concept that blurs the line between an open source and a traditional GIS event. So, LocationTech is thrilled to announce &lt;/span&gt;&lt;a href=&quot;https://calgis2017.locationcon.org/cfp&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;CalGIS LocationCon&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt; in Oakland, CA on May 22-25, 2017. &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;CalGIS LocationCon 2017 is a co-hosted conference that combines the annual California GIS conference (CalGIS) with LocationCon, which is a new LocationTech event that targets Eclipse Foundation members and others who are focused on the commercial use of open source technology. The event is 4 days, including a full day of workshops at no additional cost, meals, larger audiences and incredible speakers from all over the geospatial industry.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;We are still accepting presentations and workshop proposals. Get yours in before the deadline!&lt;/span&gt;&lt;a href=&quot;https://calgis2017.locationcon.org/cfp&quot;&gt; &lt;span style=&quot;font-weight: 400;&quot;&gt;Submit yours today. &lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt; Tracks include:&lt;/span&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li style=&quot;font-weight: 400;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;The Business of Geo&lt;/span&gt;&lt;/li&gt;
+&lt;li style=&quot;font-weight: 400;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Data: Big, Little and Everything In-between&lt;/span&gt;&lt;/li&gt;
+&lt;li style=&quot;font-weight: 400;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Geospatial Education&lt;/span&gt;&lt;/li&gt;
+&lt;li style=&quot;font-weight: 400;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Tools and Technology Innovations&lt;/span&gt;&lt;/li&gt;
+&lt;li style=&quot;font-weight: 400;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;and much, much more&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;You can learn more about the conference by visiting our&lt;/span&gt;&lt;a href=&quot;https://calgis2017.locationcon.org/&quot;&gt; &lt;span style=&quot;font-weight: 400;&quot;&gt;website&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;.Thanks and we look forward to seeing you in Oakland in May!&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;&lt;br /&gt;  &lt;a href=&quot;http://feeds.wordpress.com/1.0/gocomments/theaaaaaa.wordpress.com/28/&quot; rel=&quot;nofollow&quot;&gt;&lt;img alt=&quot;&quot; border=&quot;0&quot; src=&quot;http://feeds.wordpress.com/1.0/comments/theaaaaaa.wordpress.com/28/&quot; /&gt;&lt;/a&gt; &lt;img alt=&quot;&quot; border=&quot;0&quot; height=&quot;1&quot; src=&quot;https://pixel.wp.com/b.gif?host=theaaaaaa.wordpress.com&amp;amp;blog=123079642&amp;amp;post=28&amp;amp;subd=theaaaaaa&amp;amp;ref=&amp;amp;feed=1&quot; width=&quot;1&quot; /&gt;</description>
+	<pubDate>Thu, 02 Feb 2017 18:38:57 +0000</pubDate>
+</item>
+<item>
+	<title>Eclipse Announcements: Eclipse Summit India 2017 | CFP Open</title>
+	<guid isPermaLink="true">http://feedproxy.google.com/~r/eclipse/fnews/~3/q_o6jKVGgjA/</guid>
+	<link>http://feedproxy.google.com/~r/eclipse/fnews/~3/q_o6jKVGgjA/</link>
+	<description>Eclipse Summit India is scheduled for July 27-29 in Bangalore. CFP is open until February 28, 2017.&lt;img alt=&quot;&quot; height=&quot;1&quot; src=&quot;http://feeds.feedburner.com/~r/eclipse/fnews/~4/q_o6jKVGgjA&quot; width=&quot;1&quot; /&gt;</description>
+	<pubDate>Thu, 02 Feb 2017 16:00:00 +0000</pubDate>
+</item>
+<item>
+	<title>JBoss Tools Team: JBoss Tools 4.4.3.AM2 for Eclipse Neon.2</title>
+	<guid isPermaLink="true">https://tools.jboss.org/blog/am2-for-neon.2.html</guid>
+	<link>https://tools.jboss.org/blog/am2-for-neon.2.html</link>
+	<description>&lt;div&gt;&lt;div id=&quot;preamble&quot;&gt;
+      &lt;div class=&quot;sectionbody&quot;&gt;
+      &lt;div class=&quot;paragraph&quot;&gt;
+      &lt;p&gt;Happy to announce 4.4.3.AM2 (Developer Milestone 2) build for Eclipse Neon.2.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;paragraph&quot;&gt;
+      &lt;p&gt;Downloads available at &lt;a href=&quot;https://tools.jboss.org/downloads/jbosstools/neon/4.4.3.AM2.html&quot;&gt;JBoss Tools 4.4.3 AM2&lt;/a&gt;.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;sect1&quot;&gt;
+      &lt;h2 id=&quot;what-is-new&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;http://tools.jboss.org/blog/news.atom#what-is-new&quot;&gt;&lt;/a&gt;What is New?&lt;/h2&gt;
+      &lt;div class=&quot;sectionbody&quot;&gt;
+      &lt;div class=&quot;paragraph&quot;&gt;
+      &lt;p&gt;Full info is at &lt;a href=&quot;https://tools.jboss.org/documentation/whatsnew/jbosstools/4.4.3.AM2.html&quot;&gt;this page&lt;/a&gt;. Some highlights are below.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;sect2&quot;&gt;
+      &lt;h3 id=&quot;openshift-3&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;http://tools.jboss.org/blog/news.atom#openshift-3&quot;&gt;&lt;/a&gt;OpenShift 3&lt;/h3&gt;
+      &lt;div class=&quot;paragraph&quot;&gt;
+      &lt;p&gt;Although our main focus is bug fixes, we continue to work on providing better experience for container based development in JBoss Tools and Developer Studio. Let’s go through a few interesting updates here and you can find more details on &lt;a href=&quot;https://tools.jboss.org/documentation/whatsnew/jbosstools/4.4.2.AM1.html&quot;&gt;the What’s New page&lt;/a&gt;.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;sect3&quot;&gt;
+      &lt;h4 id=&quot;openshift-container-platform-3-4-support&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;http://tools.jboss.org/blog/news.atom#openshift-container-platform-3-4-support&quot;&gt;&lt;/a&gt;OpenShift Container Platform 3.4 support&lt;/h4&gt;
+      &lt;div class=&quot;paragraph&quot;&gt;
+      &lt;p&gt;OpenShift Container Platform (OCP) 3.4 has been
+      &lt;a href=&quot;https://www.redhat.com/en/about/press-releases/red-hat-breaks-down-barriers-enterprise-container-adoption-dynamic-storage-provisioning-latest-version-red-hat-openshift-container-platform&quot; target=&quot;_blank&quot;&gt;announced&lt;/a&gt; by Red Hat.
+      JBossTools 4.4.3.AM2 has been validated against OCP 3.4.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;paragraph&quot;&gt;
+      &lt;p&gt;If you are using JBossTools together with the &lt;a href=&quot;https://developers.redhat.com/products/cdk/overview/&quot; target=&quot;_blank&quot;&gt;Container Development Toolkit&lt;/a&gt; (CDK),
+      the latest version is using OCP 3.3 by default. If you are using CDK 2.3, there is a way to upgrade to OCP 3.4. Edit the &lt;strong&gt;Vagrantfile&lt;/strong&gt;,
+      locate the line with &lt;strong&gt;IMAGE_TAG=&quot;&quot;&lt;/strong&gt; and replace by &lt;strong&gt;IMAGE_TAG=&quot;v3.4.1.2-2&quot;&lt;/strong&gt;. then restart the CDK VM (vagrant halt; vagrant up).&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;admonitionblock warning&quot;&gt;
+      &lt;table&gt;
+      &lt;tbody&gt;&lt;tr&gt;
+      &lt;td class=&quot;icon&quot;&gt;
+      &lt;i class=&quot;fa icon-warning&quot; title=&quot;Warning&quot;&gt;&lt;/i&gt;
+      &lt;/td&gt;
+      &lt;td class=&quot;content&quot;&gt;
+      It seems there are some upgrade problems between OCP 3.3 and OCP 3.4 so you may experience deploy errors. We recommand
+      that you destroy the CDK VM (vagrant destroy) before upgrading to OCP.
+      &lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;/tbody&gt;&lt;/table&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;paragraph&quot;&gt;
+      &lt;p&gt;Enjoy!&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;paragraph&quot;&gt;
+      &lt;p&gt;Jeff Maury&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;/div&gt;&lt;/div&gt;</description>
+	<pubDate>Thu, 02 Feb 2017 14:37:42 +0000</pubDate>
+</item>
+<item>
+	<title>Lars Vogel: New Java index now used in Eclipse 4.7 for caching JAR information</title>
+	<guid isPermaLink="false">http://blog.vogella.com/?p=7524</guid>
+	<link>http://blog.vogella.com/2017/02/02/new-java-index-now-used-in-eclipse-4-7-for-caching-jar-information/</link>
+	<description>&lt;p&gt;Stefan Xenos from Google &lt;a href=&quot;https://dev.eclipse.org/mhonarc/lists/platform-ui-dev/msg07622.html&quot;&gt;reports&lt;/a&gt; that the JDT index is being used as a cache for the majority of .jar file access. This should significantly speed up the usage of the Eclipse Java tooling. &lt;/p&gt;
+&lt;p&gt;Please download the latest I-Build from &lt;a href=&quot;http://download.eclipse.org/eclipse/downloads/&quot;&gt;http://download.eclipse.org/eclipse/downloads/&lt;/a&gt; and follow &lt;a href=&quot;https://dev.eclipse.org/mhonarc/lists/platform-ui-dev/msg07622.html&quot;&gt;Stefan instructions&lt;/a&gt; to report remaining UI freezes in the Java tooling. Good test candidates are large Eclipse workspaces with ton of projects and dependencies.&lt;/p&gt;</description>
+	<pubDate>Thu, 02 Feb 2017 09:34:14 +0000</pubDate>
+</item>
+<item>
+	<title>Jeremie Bresson: Mylyn Docs Wikitext: changes with Version 3.0.0</title>
+	<guid isPermaLink="true">http://jmini.github.io/blog/2017/2017-02-02_wikitext_v3.html</guid>
+	<link>http://jmini.github.io/blog/2017/2017-02-02_wikitext_v3.html</link>
+	<description>&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;David Green has proposed to do a lot of changes to Mylyn Docs Wikitext. The &quot;core&quot; plugins will now be plain java/maven artifacts. The expected benefits are:&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;ulist&quot;&gt; 
+ &lt;ul&gt; 
+  &lt;li&gt; &lt;p&gt;easier to build/release Mylyn Docs (or at least Mylyn WikiText) separately from Mylyn&lt;/p&gt; &lt;/li&gt; 
+  &lt;li&gt; &lt;p&gt;easier to consume Mylyn WikiText core bundles (e.g. as plain jars, with normal poms)&lt;/p&gt; &lt;/li&gt; 
+  &lt;li&gt; &lt;p&gt;easier to contribute (e.g. without knowledge of OSGi or PDE)&lt;/p&gt; &lt;/li&gt; 
+  &lt;li&gt; &lt;p&gt;better structured code/tests (e.g. using normal Maven project layout)&lt;/p&gt; &lt;/li&gt; 
+  &lt;li&gt; &lt;p&gt;faster cycle time (e.g. easier to verify code changes, faster builds)&lt;/p&gt; &lt;/li&gt; 
+ &lt;/ul&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;Another side goal is to be present on maven central as soon as possible.&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;These structural modifications require changing the version to &lt;code&gt;3.0.0-SNAPSHOT&lt;/code&gt; and this is the occasion to review what we are publishing and how (update sites, features, p2 repository, bundle names, package names, …​). If you are using wikitext as part of your build (to build the eclipse help for example) or as part of another tool, be aware that this is a breaking change. Your feedback is welcomed on &lt;a href=&quot;https://bugs.eclipse.org/bugs/show_bug.cgi?id=511120&quot;&gt;Bug 511120&lt;/a&gt;. You can also follow the discussion on the &lt;a href=&quot;http://dev.eclipse.org/mhonarc/lists/mylyn-docs-dev/&quot;&gt;mylyn-docs-dev mailing list&lt;/a&gt;.&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;Here is one example: we might drop the standalone distribution of wikitext (jars available in a zip) that is currently available on the &lt;a href=&quot;https://eclipse.org/mylyn/downloads/&quot;&gt;Mylyn download page&lt;/a&gt;.&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;imageblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;img alt=&quot;Mylyn download page&quot; src=&quot;http://jmini.github.io/blog/2017/2017-02-02_wikitext-download-standalone.png&quot; /&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;If you are using it, please notify us on Bugzilla.&lt;/p&gt; 
+&lt;/div&gt;</description>
+	<pubDate>Wed, 01 Feb 2017 23:00:00 +0000</pubDate>
+</item>
+<item>
+	<title>itemis: How to get started with Xtext Language Servers and Che</title>
+	<guid isPermaLink="true">https://blogs.itemis.com/en/how-to-get-started-with-xtext-language-servers-and-che</guid>
+	<link>https://blogs.itemis.com/en/how-to-get-started-with-xtext-language-servers-and-che</link>
+	<description>&lt;p&gt;&lt;a href=&quot;http://www.eclipse.org/che/&quot;&gt;Eclipse Che 5&lt;/a&gt; has support for the &lt;a href=&quot;https://github.com/Microsoft/language-server-protocol&quot;&gt;Microsoft Language Server Protocol&lt;/a&gt; and so has &lt;a href=&quot;https://www.eclipse.org/Xtext/&quot;&gt;Eclipse Xtext&lt;/a&gt; in its new Version 2.11. So let's see how we can bring them both together.&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;  
+&lt;h2&gt;Prerequisites&lt;/h2&gt; 
+&lt;p&gt;This tutorial requires some software to be available on your machine. Please install if not already done:&lt;/p&gt; 
+&lt;ul&gt; 
+ &lt;li&gt;Eclipse Luna or newer with &lt;a href=&quot;http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/&quot;&gt;Xtext 2.11&lt;/a&gt;&lt;/li&gt; 
+ &lt;li&gt;&lt;a href=&quot;https://maven.apache.org/download.cgi&quot;&gt;Maven&lt;/a&gt;&lt;/li&gt; 
+ &lt;li&gt;&lt;a href=&quot;https://nodejs.org/en/download/&quot;&gt;Node.js&lt;/a&gt;&lt;/li&gt; 
+ &lt;li&gt;&lt;a href=&quot;https://docs.docker.com/engine/installation/&quot;&gt;Docker&lt;/a&gt;&lt;/li&gt; 
+ &lt;li&gt;&lt;a href=&quot;https://golang.org/dl/&quot;&gt;Go&lt;/a&gt;&lt;/li&gt; 
+&lt;/ul&gt; 
+&lt;h2&gt;Provide the Xtext Language Server&lt;/h2&gt; 
+&lt;p&gt;The first step is to prepare the Xtext Langauge Server. We create a new Xtext Project using the wizard in Eclipse. We &lt;span style=&quot;font-family: arial,helvetica,sans-serif;&quot;&gt;deselect the &lt;em&gt;Eclipse plug-in&lt;/em&gt; option and choose &lt;em&gt;Gradle&lt;/em&gt; a&lt;/span&gt;s &lt;em&gt;Preferred Build System&lt;/em&gt; (option &lt;em&gt;Generic IDE Support&lt;/em&gt; is preselected and required). We create a very simple example grammar:&lt;br /&gt;&lt;br /&gt;&lt;/p&gt; 
+&lt;pre class=&quot;prettyprint&quot;&gt;Model:
+    greetings+=Greeting*;
+
+Greeting:
+'Hello' name=ID ('from' from=[Greeting])? '!';
+&lt;/pre&gt; 
+&lt;p&gt;&lt;br /&gt;We will use the &lt;a href=&quot;https://docs.gradle.org/current/userguide/application_plugin.html&quot;&gt;gradle application plugin&lt;/a&gt; to package our DSL as an executable package. Therefore we edit &lt;code&gt;org.xtext.example.mydsl.ide/build.gradle&lt;/code&gt; and add the following code.&lt;br /&gt;&lt;br /&gt;&lt;/p&gt; 
+&lt;pre class=&quot;prettyprint&quot;&gt;apply plugin: 'application'
+mainClassName = &quot;org.eclipse.xtext.ide.server.ServerLauncher&quot;
+
+distributions {
+    main {
+        baseName = 'mydsl'
+    }
+}
+
+distZip {
+    archiveName &quot;mydsl.zip&quot;
+}
+
+distTar {
+    archiveName &quot;mydsl.tar&quot;
+}
+&lt;/pre&gt; 
+&lt;p&gt;&lt;br /&gt;We don't need to code anything to make the DSL Language Server enabled. The real interesting part is the &lt;a href=&quot;https://github.com/eclipse/xtext-core/blob/master/org.eclipse.xtext.ide/xtend-gen/org/eclipse/xtext/ide/server/ServerLauncher.java&quot;&gt;&lt;code&gt;org.eclipse.xtext.ide.server.ServerLauncher&lt;/code&gt;&lt;/a&gt; main class. This is a class shipped with Xtext that enables Language Server support.&lt;/p&gt; 
+&lt;p&gt;We build the projects with Gradle.&lt;/p&gt; 
+&lt;pre class=&quot;prettyprint&quot;&gt; 
+./gradlew clean build distZip&lt;/pre&gt; 
+&lt;p&gt;&lt;br /&gt;Inside the &lt;code&gt;org.xtext.example.mydsl.parent/org.xtext.example.mydsl.ide/build/distributions&lt;/code&gt; folder we can now find tar/zip files that we can provide via a webserver so that it later can be pulled from Che.&lt;/p&gt; 
+&lt;p&gt;You can find my prepared version &lt;a href=&quot;http://dl.bintray.com/cdietrich/MyDslXtextLanguageServer/mydsl.tar&quot;&gt;here&lt;/a&gt;.&lt;/p&gt; 
+&lt;h2&gt;Build a custom &quot;Che with Xtext&quot; plugin&lt;/h2&gt; 
+&lt;p&gt;The second step is to add a new Che Plugin that uses our Xtext Lanuage Server to provide editing support for &lt;code&gt;mydsl&lt;/code&gt;files. In order to &lt;a href=&quot;https://www.eclipse.org/che/docs/plugins/create-and-build-extensions/&quot;&gt;build a Che extension&lt;/a&gt; we need to &lt;a href=&quot;https://www.eclipse.org/che/docs/plugins/setup-che-workspace/index.html&quot;&gt;grap the source code, modify and build it locally&lt;/a&gt;.&lt;/p&gt; 
+&lt;h3&gt;Get the Che source code&lt;/h3&gt; 
+&lt;p&gt;We clone the Che git repository and create a new branch from the latest release tag.&lt;/p&gt; 
+&lt;pre class=&quot;prettyprint&quot;&gt;https://github.com/eclipse/che.git
+cd che
+git checkout -b che-xtext-example 5.1.2
+&lt;/pre&gt; 
+&lt;h3&gt;Create the Che plugin&lt;/h3&gt; 
+&lt;p&gt;We need to create a plugin that tells Che how to start our Language Server and what the file extension is.&lt;/p&gt; 
+&lt;p&gt;First we create a bunch of folders and pom files.&lt;/p&gt; 
+&lt;pre class=&quot;prettyprint&quot;&gt;touch agents/che-core-api-agent/src/main/resources/agents/org.eclipse.che.ls.mydsl.json&lt;br /&gt;touch agents/che-core-api-agent/src/main/resources/agents/scripts/org.eclipse.che.ls.mydsl.script.sh&lt;br /&gt;cd plugins
+mkdir plugin-mydsl
+cd plugin-mydsl
+touch pom.xml
+mkdir che-plugin-mydsl-lang-server
+cd che-plugin-mydsl-lang-server
+touch pom.xml&lt;br /&gt;mkdir -p src/main/java&lt;br /&gt;
+&lt;/pre&gt; 
+&lt;p&gt;&lt;br /&gt;Here is how the &lt;code&gt;plugin-mydsl/pom.xml&lt;/code&gt; looks like:&lt;/p&gt; 
+&lt;pre class=&quot;prettyprint&quot;&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;
+&amp;lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;&amp;gt;
+    &amp;lt;modelVersion&amp;gt;4.0.0&amp;lt;/modelVersion&amp;gt;
+    &amp;lt;parent&amp;gt;
+        &amp;lt;artifactId&amp;gt;che-plugin-parent&amp;lt;/artifactId&amp;gt;
+        &amp;lt;groupId&amp;gt;org.eclipse.che.plugin&amp;lt;/groupId&amp;gt;
+        &amp;lt;version&amp;gt;5.1.2&amp;lt;/version&amp;gt;
+        &amp;lt;relativePath&amp;gt;../pom.xml&amp;lt;/relativePath&amp;gt;
+    &amp;lt;/parent&amp;gt;
+    &amp;lt;artifactId&amp;gt;che-plugin-mydsl-parent&amp;lt;/artifactId&amp;gt;
+    &amp;lt;packaging&amp;gt;pom&amp;lt;/packaging&amp;gt;
+    &amp;lt;name&amp;gt;Che Plugin :: MyDsl (Xtext) :: Parent&amp;lt;/name&amp;gt;
+    &amp;lt;modules&amp;gt;
+        &amp;lt;module&amp;gt;che-plugin-mydsl-lang-server&amp;lt;/module&amp;gt;
+    &amp;lt;/modules&amp;gt;
+    &amp;lt;build&amp;gt;
+        &amp;lt;pluginManagement&amp;gt;
+            &amp;lt;plugins&amp;gt;
+                &amp;lt;plugin&amp;gt;
+                    &amp;lt;groupId&amp;gt;org.eclipse.che.core&amp;lt;/groupId&amp;gt;
+                    &amp;lt;artifactId&amp;gt;che-core-api-dto-maven-plugin&amp;lt;/artifactId&amp;gt;
+                    &amp;lt;version&amp;gt;${project.version}&amp;lt;/version&amp;gt;
+                &amp;lt;/plugin&amp;gt;
+            &amp;lt;/plugins&amp;gt;
+        &amp;lt;/pluginManagement&amp;gt;
+    &amp;lt;/build&amp;gt;
+&amp;lt;/project&amp;gt;
+
+&lt;/pre&gt; 
+&lt;p&gt; &lt;br /&gt;And here is how the &lt;code&gt;plugin-mydsl/che-plugin-mydsl-lang-server/pom.xml&lt;/code&gt; looks like:&lt;/p&gt; 
+&lt;pre class=&quot;prettyprint&quot;&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;
+&amp;lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&amp;gt;
+    &amp;lt;modelVersion&amp;gt;4.0.0&amp;lt;/modelVersion&amp;gt;
+    &amp;lt;parent&amp;gt;
+        &amp;lt;artifactId&amp;gt;che-plugin-mydsl-parent&amp;lt;/artifactId&amp;gt;
+        &amp;lt;groupId&amp;gt;org.eclipse.che.plugin&amp;lt;/groupId&amp;gt;
+        &amp;lt;version&amp;gt;5.1.2&amp;lt;/version&amp;gt;
+    &amp;lt;/parent&amp;gt;
+    &amp;lt;artifactId&amp;gt;che-plugin-mydsl-lang-server&amp;lt;/artifactId&amp;gt;
+    &amp;lt;name&amp;gt;Che Plugin :: MyDsl (Xtext) :: Extension Server&amp;lt;/name&amp;gt;
+    &amp;lt;properties&amp;gt;
+        &amp;lt;findbugs.failonerror&amp;gt;false&amp;lt;/findbugs.failonerror&amp;gt;
+    &amp;lt;/properties&amp;gt;
+    &amp;lt;dependencies&amp;gt;
+        &amp;lt;dependency&amp;gt;
+            &amp;lt;groupId&amp;gt;com.google.guava&amp;lt;/groupId&amp;gt;
+            &amp;lt;artifactId&amp;gt;guava&amp;lt;/artifactId&amp;gt;
+        &amp;lt;/dependency&amp;gt;
+        &amp;lt;dependency&amp;gt;
+            &amp;lt;groupId&amp;gt;com.google.inject&amp;lt;/groupId&amp;gt;
+            &amp;lt;artifactId&amp;gt;guice&amp;lt;/artifactId&amp;gt;
+        &amp;lt;/dependency&amp;gt;
+        &amp;lt;dependency&amp;gt;
+            &amp;lt;groupId&amp;gt;com.google.inject.extensions&amp;lt;/groupId&amp;gt;
+            &amp;lt;artifactId&amp;gt;guice-multibindings&amp;lt;/artifactId&amp;gt;
+        &amp;lt;/dependency&amp;gt;
+        &amp;lt;dependency&amp;gt;
+            &amp;lt;groupId&amp;gt;io.typefox.lsapi&amp;lt;/groupId&amp;gt;
+            &amp;lt;artifactId&amp;gt;io.typefox.lsapi.services&amp;lt;/artifactId&amp;gt;
+        &amp;lt;/dependency&amp;gt;
+        &amp;lt;dependency&amp;gt;
+            &amp;lt;groupId&amp;gt;org.eclipse.che.core&amp;lt;/groupId&amp;gt;
+            &amp;lt;artifactId&amp;gt;che-core-api-core&amp;lt;/artifactId&amp;gt;
+        &amp;lt;/dependency&amp;gt;
+        &amp;lt;dependency&amp;gt;
+            &amp;lt;groupId&amp;gt;org.eclipse.che.core&amp;lt;/groupId&amp;gt;
+            &amp;lt;artifactId&amp;gt;che-core-api-languageserver&amp;lt;/artifactId&amp;gt;
+        &amp;lt;/dependency&amp;gt;
+        &amp;lt;dependency&amp;gt;
+            &amp;lt;groupId&amp;gt;org.eclipse.che.core&amp;lt;/groupId&amp;gt;
+            &amp;lt;artifactId&amp;gt;che-core-api-languageserver-shared&amp;lt;/artifactId&amp;gt;
+        &amp;lt;/dependency&amp;gt;
+        &amp;lt;dependency&amp;gt;
+            &amp;lt;groupId&amp;gt;org.eclipse.che.core&amp;lt;/groupId&amp;gt;
+            &amp;lt;artifactId&amp;gt;che-core-api-project&amp;lt;/artifactId&amp;gt;
+        &amp;lt;/dependency&amp;gt;
+        &amp;lt;dependency&amp;gt;
+            &amp;lt;groupId&amp;gt;org.eclipse.che.core&amp;lt;/groupId&amp;gt;
+            &amp;lt;artifactId&amp;gt;che-core-commons-inject&amp;lt;/artifactId&amp;gt;
+        &amp;lt;/dependency&amp;gt;
+        &amp;lt;dependency&amp;gt;
+            &amp;lt;groupId&amp;gt;org.eclipse.che.core&amp;lt;/groupId&amp;gt;
+            &amp;lt;artifactId&amp;gt;che-core-commons-lang&amp;lt;/artifactId&amp;gt;
+        &amp;lt;/dependency&amp;gt;
+        &amp;lt;dependency&amp;gt;
+            &amp;lt;groupId&amp;gt;org.slf4j&amp;lt;/groupId&amp;gt;
+            &amp;lt;artifactId&amp;gt;slf4j-api&amp;lt;/artifactId&amp;gt;
+        &amp;lt;/dependency&amp;gt;
+    &amp;lt;/dependencies&amp;gt;
+&amp;lt;/project&amp;gt;
+&lt;/pre&gt; 
+&lt;p&gt;&lt;br /&gt;We register our plugin in the existing &lt;code&gt;plugins/pom.xml.&lt;/code&gt;&lt;/p&gt; 
+&lt;pre class=&quot;prettyprint&quot;&gt; &amp;lt;module&amp;gt;plugin-csharp&amp;lt;/module&amp;gt;
+ &amp;lt;!-- this line is the new entry --&amp;gt;
+ &amp;lt;module&amp;gt;plugin-mydsl&amp;lt;/module&amp;gt;
+ &amp;lt;module&amp;gt;plugin-nodejs&amp;lt;/module&amp;gt;
+&lt;/pre&gt; 
+&lt;p&gt;&lt;br /&gt;And (including its version) inside the root-pom of Che (&lt;code&gt;/pom.xml&lt;/code&gt;).&lt;/p&gt; 
+&lt;pre class=&quot;prettyprint&quot;&gt;&amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;org.eclipse.che.plugin&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;gt;che-plugin-maven-shared&amp;lt;/artifactId&amp;gt;
+    &amp;lt;version&amp;gt;${che.version}&amp;lt;/version&amp;gt;
+&amp;lt;/dependency&amp;gt;
+&amp;lt;!-- this is the new entry --&amp;gt;
+&amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;org.eclipse.che.plugin&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;gt;che-plugin-mydsl-lang-server&amp;lt;/artifactId&amp;gt;
+    &amp;lt;version&amp;gt;${che.version}&amp;lt;/version&amp;gt;
+&amp;lt;/dependency&amp;gt;
+&amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;org.eclipse.che.plugin&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;gt;che-plugin-nodejs-debugger-ide&amp;lt;/artifactId&amp;gt;
+    &amp;lt;version&amp;gt;${che.version}&amp;lt;/version&amp;gt;
+&amp;lt;/dependency&amp;gt;
+&lt;/pre&gt; 
+&lt;p&gt;&lt;br /&gt;We have to package it into the &lt;code&gt;assembly-wsagent&lt;/code&gt; war (&lt;code&gt;assembly/assembly-wsagent-war/pom.xml&lt;/code&gt;):&lt;/p&gt; 
+&lt;pre class=&quot;prettyprint&quot;&gt;&amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;org.eclipse.che.plugin&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;gt;che-plugin-maven-server&amp;lt;/artifactId&amp;gt;
+&amp;lt;/dependency&amp;gt;
+&amp;lt;!-- this is the new entry --&amp;gt;
+&amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;org.eclipse.che.plugin&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;gt;che-plugin-mydsl-lang-server&amp;lt;/artifactId&amp;gt;
+&amp;lt;/dependency&amp;gt;
+&amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;org.eclipse.che.plugin&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;gt;che-plugin-nodejs-debugger-server&amp;lt;/artifactId&amp;gt;
+&amp;lt;/dependency&amp;gt;
+&lt;/pre&gt; 
+&lt;h3&gt;&lt;br /&gt;Implement the code&lt;/h3&gt; 
+&lt;p&gt;Now that we've prepared the infrastructure we can start to write the actual plugin code. The easiest way (at least for me) is to import our plugin into eclipse (as maven projects) so that we can write the plugin-code. This should look like this:&lt;br /&gt;&lt;br /&gt;&lt;/p&gt; 
+&lt;p&gt;&lt;a href=&quot;https://github.com/itemis/itemis-blog/blob/che-xtext/CheBlog_PluginInEclipse.png&quot;&gt;&lt;img alt=&quot;Projects after imported in Eclipse&quot; src=&quot;https://github.com/itemis/itemis-blog/raw/che-xtext/CheBlog_PluginInEclipse.png&quot; style=&quot;width: 724px;&quot; title=&quot;Projects after imported in Eclipse&quot; width=&quot;724&quot; /&gt;&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;We need to create some Java classes to hook into Che.&lt;/p&gt; 
+&lt;p&gt;The first one is &lt;code&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;org.eclipse.che.plugin.mydsl.languageserver.MyDslLanguageServerLauncher&lt;/span&gt;&lt;br /&gt;&lt;/code&gt;&lt;/p&gt; 
+&lt;pre class=&quot;prettyprint&quot;&gt;package org.eclipse.che.plugin.mydsl.languageserver;
+
+import static java.util.Arrays.asList;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import org.eclipse.che.api.languageserver.exception.LanguageServerException;
+import org.eclipse.che.api.languageserver.launcher.LanguageServerLauncherTemplate;
+import org.eclipse.che.api.languageserver.shared.model.LanguageDescription;
+import org.eclipse.che.api.languageserver.shared.model.impl.LanguageDescriptionImpl;
+
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+
+import io.typefox.lsapi.services.json.JsonBasedLanguageServer;
+
+@Singleton
+public class MyDslLanguageServerLauncher extends LanguageServerLauncherTemplate {
+
+    private static final String   LANGUAGE_ID = &quot;mydsl&quot;;
+    private static final String[] EXTENSIONS  = new String[] {&quot;mydsl&quot;};
+    private static final String[] MIME_TYPES  = new String[] {&quot;text/x-mydsl&quot;};
+    private static final LanguageDescriptionImpl description;
+
+    private final Path launchScript;
+
+    static {
+        description = new LanguageDescriptionImpl();
+        description.setFileExtensions(asList(EXTENSIONS));
+        description.setLanguageId(LANGUAGE_ID);
+        description.setMimeTypes(asList(MIME_TYPES));
+    }
+
+    @Inject
+    public MyDslLanguageServerLauncher() {
+        launchScript = Paths.get(System.getenv(&quot;HOME&quot;), &quot;che/ls-mydsl/mydsl/bin/mydsl-standalone&quot;);
+    }
+
+    @Override
+    public LanguageDescription getLanguageDescription() {
+        return description;
+    }
+
+    @Override
+    public boolean isAbleToLaunch() {
+        return Files.exists(launchScript);
+    }
+
+    protected JsonBasedLanguageServer connectToLanguageServer(Process languageServerProcess) {
+        JsonBasedLanguageServer languageServer = new JsonBasedLanguageServer();
+        languageServer.connect(languageServerProcess.getInputStream(), languageServerProcess.getOutputStream());
+        return languageServer;
+    }
+
+    protected Process startLanguageServerProcess(String projectPath) throws LanguageServerException {
+        ProcessBuilder processBuilder = new ProcessBuilder(launchScript.toString());
+        processBuilder.redirectInput(ProcessBuilder.Redirect.PIPE);
+        processBuilder.redirectOutput(ProcessBuilder.Redirect.PIPE);
+        try {
+            return processBuilder.start();
+        } catch (IOException e) {
+            throw new LanguageServerException(&quot;Can't start JSON language server&quot;, e);
+        }
+    }
+}
+&lt;/pre&gt; 
+&lt;p&gt;&lt;br /&gt;There are only two interesting things: The &lt;code&gt;LanguageDescription&lt;/code&gt; which tells Che what the language id and file extensions etc. are and the &lt;code&gt;startLanguageServerProcess()&lt;/code&gt; method that creates a new process for our language server calling a launch script and wires the stdin/stdout of the child process.&lt;/p&gt; 
+&lt;p&gt;We also need to register the launcher class to Che via a new &lt;code&gt;DynaModule&lt;/code&gt;.&lt;/p&gt; 
+&lt;pre class=&quot;prettyprint&quot;&gt;package org.eclipse.che.plugin.mydsl.inject;
+
+import com.google.inject.AbstractModule;
+import com.google.inject.multibindings.Multibinder;
+
+import org.eclipse.che.inject.DynaModule;
+import org.eclipse.che.plugin.mydsl.languageserver.MyDslLanguageServerLauncher;
+import org.eclipse.che.api.languageserver.launcher.LanguageServerLauncher;
+
+@DynaModule
+public class MyDslModule extends AbstractModule {
+    @Override
+    protected void configure() {
+        Multibinder.newSetBinder(binder(), LanguageServerLauncher.class).addBinding().to(MyDslLanguageServerLauncher.class);
+    }
+}
+&lt;/pre&gt; 
+&lt;h3&gt;Prepare the agent&lt;/h3&gt; 
+&lt;p&gt;This Che plugin starts our server via a &lt;code&gt;laucher.sh&lt;/code&gt; shell script. Therefore we need to add a &lt;code&gt;agent&lt;/code&gt; to Che as well. This agent allows us to get the Language Server server part downloaded automatically (side-load). This looks like this:&lt;/p&gt; 
+&lt;pre class=&quot;prettyprint&quot;&gt;cd agents/che-core-api-agent/src/main/resources/agents/
+&lt;/pre&gt; 
+&lt;p&gt;&lt;br /&gt;Here we create a new JSON &lt;code&gt;org.eclipse.che.ls.mydsl.json &lt;/code&gt;file for the MyDsl-Agent&lt;/p&gt; 
+&lt;pre class=&quot;prettyprint&quot;&gt;{
+&quot;id&quot;: &quot;org.eclipse.che.ls.mydsl&quot;,
+&quot;name&quot;: &quot;MyDsl (Xtext) language server&quot;,
+&quot;description&quot;: &quot;MyDsl (Xtext) language server&quot;,
+&quot;dependencies&quot;: [],
+&quot;properties&quot;: {},
+&quot;script&quot; : &quot;&quot;
+}
+&lt;/pre&gt; 
+&lt;p&gt;and &lt;code&gt;scripts/org.eclipse.che.ls.mydsl.script.sh&lt;/code&gt; that does the download of the server and the unpacking stuff (we basically copy&amp;amp;paste an existing file and adapt it to our needs).&lt;/p&gt; 
+&lt;pre class=&quot;prettyprint&quot;&gt;#
+# Copyright (c) 2012-2017 Codenvy, S.A.
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors:
+#   Codenvy, S.A. - initial API and implementation
+#
+
+unset PACKAGES
+unset SUDO
+command -v tar &amp;gt;/dev/null 2&amp;gt;&amp;amp;1 || { PACKAGES=${PACKAGES}&quot; tar&quot;; }
+command -v curl &amp;gt;/dev/null 2&amp;gt;&amp;amp;1 || { PACKAGES=${PACKAGES}&quot; curl&quot;; }
+test &quot;$(id -u)&quot; = 0 || SUDO=&quot;sudo&quot;
+
+AGENT_BINARIES_URI=http://dl.bintray.com/cdietrich/MyDslXtextLanguageServer/mydsl.tar
+CHE_DIR=$HOME/che
+LS_DIR=${CHE_DIR}/ls-mydsl
+LS_LAUNCHER=${LS_DIR}/launch.sh
+
+if [ -f /etc/centos-release ]; then
+    FILE=&quot;/etc/centos-release&quot;
+    LINUX_TYPE=$(cat $FILE | awk '{print $1}')
+ elif [ -f /etc/redhat-release ]; then
+    FILE=&quot;/etc/redhat-release&quot;
+    LINUX_TYPE=$(cat $FILE | cut -c 1-8)
+ else
+    FILE=&quot;/etc/os-release&quot;
+    LINUX_TYPE=$(cat $FILE | grep ^ID= | tr '[:upper:]' '[:lower:]')
+    LINUX_VERSION=$(cat $FILE | grep ^VERSION_ID=)
+fi
+
+MACHINE_TYPE=$(uname -m)
+
+mkdir -p ${CHE_DIR}
+mkdir -p ${LS_DIR}
+
+########################
+### Install packages ###
+########################
+
+# Red Hat Enterprise Linux 7
+############################
+if echo ${LINUX_TYPE} | grep -qi &quot;rhel&quot;; then
+    test &quot;${PACKAGES}&quot; = &quot;&quot; || {
+        ${SUDO} yum install ${PACKAGES};
+    }
+
+# Red Hat Enterprise Linux 6
+############################
+elif echo ${LINUX_TYPE} | grep -qi &quot;Red Hat&quot;; then
+    test &quot;${PACKAGES}&quot; = &quot;&quot; || {
+        ${SUDO} yum install ${PACKAGES};
+    }
+
+# Ubuntu 14.04 16.04 / Linux Mint 17
+####################################
+elif echo ${LINUX_TYPE} | grep -qi &quot;ubuntu&quot;; then
+    test &quot;${PACKAGES}&quot; = &quot;&quot; || {
+        ${SUDO} apt-get update;
+        ${SUDO} apt-get -y install ${PACKAGES};
+    }
+
+
+# Debian 8
+##########
+elif echo ${LINUX_TYPE} | grep -qi &quot;debian&quot;; then
+    test &quot;${PACKAGES}&quot; = &quot;&quot; || {
+        ${SUDO} apt-get update;
+        ${SUDO} apt-get -y install ${PACKAGES};
+    }
+
+# Fedora 23
+###########
+elif echo ${LINUX_TYPE} | grep -qi &quot;fedora&quot;; then
+    command -v ps &amp;gt;/dev/null 2&amp;gt;&amp;amp;1 || { PACKAGES=${PACKAGES}&quot; procps-ng&quot;; }
+    test &quot;${PACKAGES}&quot; = &quot;&quot; || {
+        ${SUDO} dnf -y install ${PACKAGES};
+    }
+
+
+# CentOS 7.1 &amp;amp; Oracle Linux 7.1
+###############################
+elif echo ${LINUX_TYPE} | grep -qi &quot;centos&quot;; then
+    test &quot;${PACKAGES}&quot; = &quot;&quot; || {
+        ${SUDO} yum -y install ${PACKAGES};
+    }
+
+# openSUSE 13.2
+###############
+elif echo ${LINUX_TYPE} | grep -qi &quot;opensuse&quot;; then
+    test &quot;${PACKAGES}&quot; = &quot;&quot; || {
+        ${SUDO} zypper install -y ${PACKAGES};
+    }
+
+else
+    &amp;gt;&amp;amp;2 echo &quot;Unrecognized Linux Type&quot;
+    &amp;gt;&amp;amp;2 cat /etc/os-release
+    exit 1
+fi
+
+
+######################
+### Install MYDSL LS ###
+######################
+
+curl -L -s ${AGENT_BINARIES_URI} &amp;gt; ${LS_DIR}/mydsl.tar &amp;amp;&amp;amp; tar xvf ${LS_DIR}/mydsl.tar -C ${LS_DIR}
+touch ${LS_LAUNCHER}
+chmod +x ${LS_LAUNCHER}
+echo &quot;exec ${LS_DIR}/mydsl/bin/mydsl-standalone&quot; &amp;gt;&amp;gt; ${LS_LAUNCHER}&lt;br /&gt;
+&lt;/pre&gt; 
+&lt;p&gt;&lt;br /&gt;The script looks quite complicated but that's caused by Che's ability to support different linuxes as workspace machines. The relevant part does&lt;/p&gt; 
+&lt;ul&gt; 
+ &lt;li&gt;download the server tar file from the internet&lt;/li&gt; 
+ &lt;li&gt;unpack it&lt;/li&gt; 
+ &lt;li&gt;create a launch script&lt;/li&gt; 
+&lt;/ul&gt; 
+&lt;p&gt;We update &lt;code&gt;scripts/update_agents.sh&lt;/code&gt; so that it knows to process ours shell script and JSON&lt;/p&gt; 
+&lt;pre class=&quot;prettyprint&quot;&gt; 
+updateAgentScript &quot;..&quot; &quot;org.eclipse.che.ls.mydsl&quot;&lt;/pre&gt; 
+&lt;p&gt;and run it. Our &lt;code&gt;org.eclipse.che.ls.mydsl.json&lt;/code&gt; should be updated with the script now.&lt;/p&gt; 
+&lt;h3&gt;Adapt the stacks&lt;/h3&gt; 
+&lt;p&gt;To make our agent available we need to create a new Che stack or edit and existing one so that it contains our agent. We edit the &lt;code&gt;debianlsp&lt;/code&gt; stack inside &lt;code&gt;ide/che-core-ide-stacks/src/main/resources/stacks.json&lt;br /&gt;&lt;br /&gt;&lt;/code&gt;&lt;/p&gt; 
+&lt;pre class=&quot;prettyprint&quot;&gt; &quot;agents&quot;: [
+                &quot;org.eclipse.che.terminal&quot;,
+                &quot;org.eclipse.che.ws-agent&quot;,
+                &quot;org.eclipse.che.ssh&quot;,
+                &quot;org.eclipse.che.ls.csharp&quot;,
+                &quot;org.eclipse.che.ls.json&quot;,
+                &quot;org.eclipse.che.ls.php&quot;,
+                &quot;org.eclipse.che.ls.mydsl&quot;
+              ],
+&lt;/pre&gt; 
+&lt;p&gt;&lt;br /&gt;That's it for coding. So lets build and test it.&lt;/p&gt; 
+&lt;h3&gt;Build and run Che&lt;/h3&gt; 
+&lt;pre class=&quot;prettyprint&quot;&gt;npm install -g bower gulp typings
+mvn clean install -P fast
+docker run -v /var/run/docker.sock:/var/run/docker.sock -e CHE_DEBUG_SERVER=true -e CHE_ASSEMBLY=/home/dietrich/che-dev/che/assembly/assembly-main/target/eclipse-che-5.1.2/eclipse-che-5.1.2/ codenvy/che-launcher:nightly start
+&lt;/pre&gt; 
+&lt;p&gt;(if you face an &lt;code&gt;EACCES&lt;/code&gt; error please refer to &lt;a href=&quot;https://docs.npmjs.com/getting-started/fixing-npm-permissions&quot;&gt;this document&lt;/a&gt;)&lt;/p&gt; 
+&lt;h3&gt;Test it&lt;/h3&gt; 
+&lt;p&gt;After the server has started we open a browser and go to &lt;code&gt;http://172.17.0.1:8080&lt;/code&gt; (or the URL Che tells you to go to).&lt;/p&gt; 
+&lt;p&gt;We create a new workspace using the &lt;code&gt;Debian LSP&lt;/code&gt; stack and a &lt;code&gt;Blank Project&lt;/code&gt;. Once the workspace is started and the project is created we create a new &lt;code&gt;test.mydsl&lt;/code&gt; file. We get notified that the Language Server is started and finally can start editing.&lt;br /&gt;&lt;br /&gt;&lt;/p&gt; 
+&lt;p&gt;&lt;a href=&quot;https://github.com/itemis/itemis-blog/blob/che-xtext/CheBlog_InAction.png&quot;&gt;&lt;img alt=&quot;Xtext in Che in Action&quot; src=&quot;https://github.com/itemis/itemis-blog/raw/che-xtext/CheBlog_InAction.png&quot; style=&quot;width: 320px; display: block; margin-left: auto; margin-right: auto;&quot; title=&quot;Xtext in Che in Action&quot; width=&quot;320&quot; /&gt;&lt;/a&gt;&lt;br /&gt;That's it. You can find the example code &lt;a href=&quot;https://github.com/cdietrich/che/tree/che-xtext-example&quot;&gt;here&lt;/a&gt;.&lt;/p&gt; 
+&lt;p&gt; &lt;/p&gt;  
+&lt;img alt=&quot;&quot; height=&quot;1&quot; src=&quot;http://track.hubspot.com/__ptq.gif?a=761475&amp;amp;k=14&amp;amp;r=https%3A%2F%2Fblogs.itemis.com%2Fen%2Fhow-to-get-started-with-xtext-language-servers-and-che&amp;amp;bu=https%253A%252F%252Fblogs.itemis.com&amp;amp;bvt=rss&quot; style=&quot;width: 1px!important;&quot; width=&quot;1&quot; /&gt;</description>
+	<pubDate>Wed, 01 Feb 2017 13:03:17 +0000</pubDate>
+	<author>dietrich@itemis.de (Christian Dietrich)</author>
+</item>
+<item>
+	<title>itemis: Eclipse Xtext 2.11 is released!</title>
+	<guid isPermaLink="true">https://blogs.itemis.com/en/eclipse-xtext-2.11-is-released</guid>
+	<link>https://blogs.itemis.com/en/eclipse-xtext-2.11-is-released</link>
+	<description>&lt;p&gt;The Xtext team is happy to announce the release 2.11. The update is available on the &lt;a href=&quot;http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/&quot;&gt;release repository&lt;/a&gt;. Eclipse independent libraries are published to &lt;a href=&quot;http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.eclipse.xtext%22&quot;&gt;Maven Central&lt;/a&gt;. We encourage users to upgrade now and enjoy an even better experience with the Xtext framework.&lt;/p&gt;  
+&lt;h2&gt;&lt;strong&gt;Commit Activity&lt;/strong&gt;&lt;/h2&gt; 
+&lt;p&gt;Much work has been done for the new release. A large portion of it has been invested into the restructuring activities. Finally, these activities are finished and Xtext is splitted into several repositories with clear dependencies. We hope to have now a clearer structure, faster builds and better separation of core code from IDE or tool specific code.&lt;/p&gt; 
+&lt;p&gt;We have collected the number of commits per release to get a better impression on the team’s activity per release:&lt;br /&gt;&lt;br /&gt;&lt;/p&gt; 
+&lt;p&gt;&lt;img alt=&quot;Xtext Commit Activity.png&quot; height=&quot;262&quot; src=&quot;https://blogs.itemis.com/hs-fs/hubfs/Blog/Xtext/Xtext%20Commit%20Activity.png?t=1485952184739&amp;amp;width=724&amp;amp;height=262&amp;amp;name=Xtext%20Commit%20Activity.png&quot; width=&quot;724&quot; /&gt;&lt;/p&gt; 
+&lt;p&gt;While Xtext’s Neon release 2.10 was mostly a smaller bug fix release, the activity for 2.11 notably increased. This clearly shows how vital the Xtext project is. &lt;/p&gt; 
+&lt;h2&gt;&lt;strong&gt;Language Server Protocol&lt;/strong&gt;&lt;/h2&gt; 
+&lt;p&gt;Xtext’s most notable new feature the support of the &lt;a href=&quot;https://github.com/Microsoft/language-server-protocol&quot;&gt;Language Server Protocol&lt;/a&gt; (LSP). This enables Xtext DSLs to be used in any editor supporting the LSP. Currently this includes Visual Studio Code, Eclipse Che and Eclipse Orion is following. Other editors are working on the integration of the protocol’s client side. This big step could only happen because of the brand new project &lt;a href=&quot;https://projects.eclipse.org/projects/technology.lsp4j&quot;&gt;LSP4J&lt;/a&gt;, that enabled the java world to participate in the LSP.&lt;/p&gt; 
+&lt;p&gt;We have prepared an example for a DSL language server that integrates with VS Code in the GitHub repo &lt;a href=&quot;https://github.com/itemis/xtext-languageserver-example&quot;&gt;xtext-languageserver-example&lt;/a&gt;.&lt;/p&gt; 
+&lt;h2&gt;&lt;strong&gt;Usability&lt;/strong&gt;&lt;/h2&gt; 
+&lt;p&gt;We are paying more attention on the user experience and listen to our users. While power users appreciate Xtext’s flexibility, performance and functional richness, the less experienced and new users struggled in some areas.&lt;/p&gt; 
+&lt;p&gt;Because of that we performed a &lt;a href=&quot;http://www.slideshare.net/SandraSchering/usability-test-results-xtext-new-project-wizard&quot;&gt;usability test for Xtext’s Project Wizard&lt;/a&gt; together with the itemis usability engineering team. That gave us new insights on usability flaws that we were not so aware of. As a result, we made some improvements on the Advanced Configuration page and its messages.&lt;/p&gt; 
+&lt;p&gt;We plan to continue our work with the usability engineers to identify more potential for improvements.&lt;/p&gt; 
+&lt;h2&gt;&lt;strong&gt;Xbase Compiler&lt;/strong&gt;&lt;/h2&gt; 
+&lt;p&gt;Xbase and Xtend code is automatically generated to Java. Most of this work is done by the XbaseCompiler class, while the XtendCompiler is deriving from it and adds Xtend specific stuff. The code is meant to be compilable, debuggable and performant, but not necessarily readable.&lt;/p&gt; 
+&lt;p&gt;The compiler was optimized to reduce the amount of synthetic variables in favor of readability now. In this diff you can see what Xtend compiled from the same code before (red) and after (green). As you can see the code becomes far more compact and readability. On the other hand the more verbose code could be more debuggable. We plan to make the “verbosity” of the compiled code configurable later, but leave with the compact mode as default.&lt;/p&gt; 
+&lt;p&gt;Other optimizations on the compiler increase the performance for template expressions and robustness.&lt;/p&gt; 
+&lt;h2&gt;&lt;strong&gt;Deprecation of the old generator infrastructure&lt;/strong&gt;&lt;/h2&gt; 
+&lt;p&gt;Xtext’s generator was initially build with Xpand. With Xtext 2.9 the language generator was reimplemented with Xtend, with a new project layout and generator workflow. While Xtext keeps the old generator for backward compatibility, it has now been deprecated and we encourage users to switch to the new generator. New extensions and improvements to the generator won’t be backported to the old one.&lt;/p&gt; 
+&lt;p&gt;Note that we can not remove the old generator from Xtext for backward compatibility. For the case that Xtext gets a major upgrade to Xtext 3.0, we will definitely remove that code. At the moment there are no concrete plans about a version 3, we will continue with 2.12 for Eclipse Oxygen.&lt;/p&gt; 
+&lt;h2&gt;&lt;strong&gt;Advanced Oomph Setup&lt;/strong&gt;&lt;/h2&gt; 
+&lt;p&gt;The repository split and increasing usage of Gradle for the Xtext build had many implications on the development environment. Xtext provides a setup for Oomph which has been changed to support these changes and add some other benefits. Provisioning an Xtext development environment has never been easier!&lt;/p&gt; 
+&lt;p&gt;The updated set up considers the splitted repository structure and enables a specific selection on the project set that a developer works on. Or the other way around: It allows to leave out projects that are not in the developer’s scope.&lt;/p&gt; 
+&lt;p&gt;Xtext uses the recently released Buildship 2.0 feature for Gradle support. However, Xtext’s multi-repository multi-project structure hit limitations of the Buildship tooling in regards of cross-repository project relationship resolution. This implied the introduction of a &lt;a href=&quot;https://blogs.itemis.com/en/eclipse-xtexts-new-umbrella-repository&quot;&gt;new umbrella project&lt;/a&gt; and scripting of Buildship preferences generation. The Oomph setup takes care of these details, so developers don’t have to be bothered with them.&lt;/p&gt; 
+&lt;h2&gt;&lt;strong&gt;Conclusion&lt;/strong&gt;&lt;/h2&gt; 
+&lt;p&gt;Xtext 2.11 is a major shift in the frameworks history. Especially its support for the Language Server Protocol will be a game changer that opens DSLs for increasing more editors. Besides that this release provides a ton of bug fixes and small improvements, especially which affect stability, performance and usability. Xtend users will appreciate the improved Java code generated from Xtend classes.&lt;/p&gt; 
+&lt;p&gt;Go and get the new release now. The Xtext team is happily awaiting your feedback!&lt;/p&gt;  
+&lt;img alt=&quot;&quot; height=&quot;1&quot; src=&quot;http://track.hubspot.com/__ptq.gif?a=761475&amp;amp;k=14&amp;amp;r=https%3A%2F%2Fblogs.itemis.com%2Fen%2Feclipse-xtext-2.11-is-released&amp;amp;bu=https%253A%252F%252Fblogs.itemis.com&amp;amp;bvt=rss&quot; style=&quot;width: 1px!important;&quot; width=&quot;1&quot; /&gt;</description>
+	<pubDate>Wed, 01 Feb 2017 12:34:36 +0000</pubDate>
+	<author>thoms@itemis.de (Karsten Thoms)</author>
+</item>
+<item>
+	<title>typefox.io: Xtext 2.11 Is Released</title>
+	<guid isPermaLink="false">http://typefox.io/?p=14106</guid>
+	<link>http://typefox.io/xtext-2-11-is-released</link>
+	<description>&lt;div class=&quot;fusion-fullwidth fullwidth-box nonhundred-percent-fullwidth&quot; style=&quot;background-color: rgba(255,255,255,0); background-position: center center; padding-top: 20px; padding-right: 0px; padding-bottom: 20px; padding-left: 0px;&quot;&gt;&lt;div class=&quot;fusion-builder-row fusion-row &quot;&gt;&lt;div class=&quot;fusion-layout-column fusion_builder_column fusion_builder_column_1_1  fusion-one-full fusion-column-first fusion-column-last 1_1&quot; style=&quot;margin-top: 0px; margin-bottom: 20px;&quot;&gt;
+			&lt;div class=&quot;fusion-column-wrapper&quot;&gt;
+				&lt;p&gt;After more than 7 months we finally got Xtext 2.11 out the door. Thanks for your patience. But good things come to those who wait! So go and &lt;a href=&quot;http://www.eclipse.org/Xtext/download.html&quot;&gt;get it while it’s hot&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Xtext 2.11 comes with tons of bugfixes and improvements for the framework itself and for Xtend. If you want more technical details, please have a look at the &lt;a href=&quot;http://www.eclipse.org/Xtext/releasenotes.html&quot;&gt;release notes&lt;/a&gt;. In this post, I want to highlight three points that are special to this release from my perspective.&lt;/p&gt;
+&lt;p&gt;With Xtext 2.11 we have &lt;a href=&quot;http://typefox.io/xtext-core-less-is-more&quot;&gt;split up our monolithic repository&lt;/a&gt; into multiple smaller parts. It was a huge effort to separate the Git repos without losing their history or tags, get the individual builds running, setup a staged CI and make all tests green again. But as of now, it should be much easier to fork, build and consume just the parts of the framework you are really interested in.&lt;/p&gt;
+&lt;p&gt;The biggest innovation in Xtext 2.11 is that it allows you to &lt;a href=&quot;http://typefox.io/tutorial-building-a-language-server-for-your-dsl&quot;&gt;generate a language server for your language&lt;/a&gt;. This language server provides the smartness of your language to various editor clients such as VS Code, the Eclipse Generic Editor, Eclipse Che, Sublime, Eclipse Orion and hopefully more in the future. In short, we are close to provide support for your language in all major editors and IDEs by a single implementation. We have started the new Eclipse project LSP4J with an implementation of the &lt;a href=&quot;http://typefox.io/eclipse-lsp4j-is-here&quot;&gt;language server protocol in Java&lt;/a&gt; to be picked up by other LSP implementors.&lt;/p&gt;
+&lt;p&gt;Last but not least, this release is a joint effort by multiple individuals and companies. I want to thank Christian Dietrich, Karsten Thoms, Holger Schill, Lorenzo Bettini and of course everybody from TypeFox for their great work. And of course thanks to the community for your helpful feedback and appreciation.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;div class=&quot;fusion-clearfix&quot;&gt;&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</description>
+	<pubDate>Wed, 01 Feb 2017 12:04:09 +0000</pubDate>
+</item>
+<item>
+	<title>Tom Schindl: e(fx)clipse runtime library – Dealing with listeners on JavaFX-Observables</title>
+	<guid isPermaLink="false">http://tomsondev.bestsolution.at/?p=4940</guid>
+	<link>https://tomsondev.bestsolution.at/2017/01/31/efxclipse-runtime-library-dealing-with-listeners-on-javafx-observables/</link>
+	<description>&lt;p&gt;Now that the e(fx)clipse runtime code base is available to any application developer (&lt;a href=&quot;https://tomsondev.bestsolution.at/2017/01/26/make-it-easy-to-consume-efxclipse-libraries-in-maven-or-gradle/&quot;&gt;see this blog post&lt;/a&gt;). It is time to explore all the cool stuff it provides for Java(FX) application development.&lt;/p&gt;
+&lt;p&gt;In the next few weeks I’ll blog about new stuff and old stuff you can make use by just adding a dependency on one of our libraries. I’ll use maven in the samples because that’s what I’m most used to but IIRC things will work for gradle as well.&lt;/p&gt;
+&lt;p&gt;In this first post I’d like to draw your attention to an Utility-Class (&lt;code&gt;org.eclipse.fx.core.observable.FXObservableUtil&lt;/code&gt;) I just checked in a few minutes ago into the repository helping you to write fewer and less error prone code:&lt;/p&gt;
+&lt;h1&gt;FXObservableUtil.onChange for ObservableValue &amp;amp; Property&lt;/h1&gt;
+&lt;p&gt;Let’s take a look at a first code-pattern, I’ve noticed frequently in my JavaFX code-bases:&lt;/p&gt;
+&lt;pre class=&quot;brush: java; title: ; notranslate&quot;&gt;private StringProperty p = ...;
+
+void attachHandler() {
+   p.addListener( this::handle );
+}
+
+void detachHandler() {
+   p.removeListener( this::handle );
+}
+
+void handle(Observable ob, String ol, String ne) {
+   System.out.println( ne );
+}
+&lt;/pre&gt;
+&lt;p&gt;The code above has the following problems:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;I have to declare a method with 3 arguments although I only make use of the new value&lt;/li&gt;
+&lt;li&gt;I have created a &lt;strong&gt;huuuge&lt;/strong&gt; listener leak (Arghhh!)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Let’s improve the situation by using one of our core-libraries &lt;code&gt;org.eclipse.fx.core&lt;/code&gt;. Just the following to your maven build:&lt;/p&gt;
+&lt;pre class=&quot;brush: xml; title: ; notranslate&quot;&gt;...
+&amp;lt;repositories&amp;gt;
+  ...
+  &amp;lt;repository&amp;gt;
+    &amp;lt;name&amp;gt;BestSolution e(fx)clipse snapshots&amp;lt;/name&amp;gt;
+    &amp;lt;id&amp;gt;efxclipse-snapshots&amp;lt;/id&amp;gt;
+    &amp;lt;url&amp;gt;http://maven.bestsolution.at/efxclipse-snapshots/&amp;lt;/url&amp;gt;
+    &amp;lt;snapshots&amp;gt;
+      &amp;lt;enabled&amp;gt;true&amp;lt;/enabled&amp;gt;
+    &amp;lt;/snapshots&amp;gt;
+  &amp;lt;/repository&amp;gt;
+&amp;lt;/repositories&amp;gt;
+...
+&amp;lt;dependencies&amp;gt;
+  ...
+  &amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;at.bestsolution.efxclipse.rt&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;gt;org.eclipse.fx.core&amp;lt;/artifactId&amp;gt;
+    &amp;lt;version&amp;gt;3.0.0-SNAPSHOT&amp;lt;/version&amp;gt;
+  &amp;lt;/dependency&amp;gt;
+&amp;lt;/dependencies&amp;gt;
+&lt;/pre&gt;
+&lt;p&gt;And now we can change our code using an Utility-Class named &lt;code&gt;org.eclipse.fx.core.observable.FXObservableUtil&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&quot;brush: java; title: ; notranslate&quot;&gt;import org.eclipse.fx.core.observable.FXObservableUtil;
+
+private StringProperty p = ...;
+private Subscription s;
+
+void attachHandler() {
+   s = FXObservableUtil.onChange( p, this::handle );
+}
+
+void detachHandler() {
+   if( s != null ) {
+     s.dispose();
+     s = null;
+   }
+}
+
+void handle(Observable ob, String ol, String ne) {
+   System.out.println( ne );
+}
+&lt;/pre&gt;
+&lt;p&gt;But we can improve the code even more because:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;We can add static imports&lt;/li&gt;
+&lt;li&gt;Instead of using &lt;code&gt;FXObservableUtil#onChange(ObservableValue&amp;lt;T&amp;gt;, ChangeListener&amp;lt;T&amp;gt;)&lt;/code&gt; we can use the overloaded method with the signature &lt;code&gt;FXObservableUtil#onChange(ObservableValue&amp;lt;T&amp;gt;, Consumer&amp;lt;T&amp;gt;)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&quot;brush: java; title: ; notranslate&quot;&gt;import static org.eclipse.fx.core.observable.FXObservableUtil.*;
+
+private StringProperty p = ...;
+private Subscription s;
+
+void attachHandler() {
+   s = onChange( p, System.out::println );
+}
+
+void detachHandler() {
+   if( s != null ) {
+     s.dispose();
+     s = null;
+   }
+}
+&lt;/pre&gt;
+&lt;h1&gt;FXObservableUtil.onChange for ObservableList&lt;/h1&gt;
+&lt;p&gt;In general the JavaFX APIs is designed very well to work with &lt;code&gt;@FunctionalInterface&lt;/code&gt; types but IMHO there’s one big mistake that has happened when we look at the &lt;code&gt;Observable&lt;/code&gt;-API who strikes back in case of &lt;code&gt;ObservableList&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The class hierarchy in JavaFX looks like this:&lt;/p&gt;
+&lt;pre class=&quot;brush: plain; title: ; notranslate&quot;&gt;+ Observable
+  - addListener( InvalidationListener listener ) : void
+  + ObservableValue
+    - addListener( ChangeListener&amp;lt;? super T&amp;gt; listener )
+  + ObservableList
+    - addListener( ListChangeListener&amp;lt;? super E&amp;gt; listener )
+&lt;/pre&gt;
+&lt;p&gt;The overloading of &lt;code&gt;addListener()&lt;/code&gt; in case of &lt;code&gt;ObservableValue&lt;/code&gt; is fine as &lt;code&gt;ChangeListener#changed(ObservableValue&amp;lt;? extends T&amp;gt; , T , T )&lt;/code&gt; requires 3 arguments wherease &lt;code&gt;InvalidationListener#invalidated(Observable)&lt;/code&gt; takes only one.&lt;/p&gt;
+&lt;p&gt;In case of &lt;code&gt;ObservableList&lt;/code&gt; unfortunately &lt;code&gt;ListChangeListener#onChanged( Change&amp;lt;? extends E&amp;gt; c)&lt;/code&gt; like &lt;code&gt;InvalidationListener#invalidated(Observable)&lt;/code&gt; accepts one argument. Because of this it’s impossible to benefit of the automatic type inference done by the compiler to remove boilerplate code for lambda expressions and you need to fill in the correct type in the lambdas argument section:&lt;/p&gt;
+&lt;pre class=&quot;brush: java; title: ; notranslate&quot;&gt;ObservableList&amp;lt;String&amp;gt; l = ...
+
+l.addListener( (Change&amp;lt;? extends String&amp;gt; c) -&amp;gt; 
+  { while( c.next() ) { /* ... */ } } );
+// although you really wanted to write
+l.addListener( c -&amp;gt; { while( c.next() ) { /* ... */ } } );
+
+&lt;/pre&gt;
+&lt;p&gt;To make this usecase less type heavy &lt;code&gt;FXObservableUtil&lt;/code&gt; distinguishes between&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Invalidation: &lt;code&gt;FXObservableUtil.onInvalidate(Observable,InvalidationListener)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Change: &lt;code&gt;FXObservableUtil.onChange(ObservableList&amp;lt;E&amp;gt;,ListChangeListener&amp;lt;? super E&amp;gt;)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&quot;brush: java; title: ; notranslate&quot;&gt;import static org.eclipse.fx.core.observable.FXObservableUtil.*;
+
+ObservableList&amp;lt;String&amp;gt; l = ...
+Subscription s = 
+  onChange( l, c -&amp;gt; { while( c.next() ) { /* ... */ } } );
+&lt;/pre&gt;&lt;br /&gt;  &lt;a href=&quot;http://feeds.wordpress.com/1.0/gocomments/tomsondev.wordpress.com/4940/&quot; rel=&quot;nofollow&quot;&gt;&lt;img alt=&quot;&quot; border=&quot;0&quot; src=&quot;http://feeds.wordpress.com/1.0/comments/tomsondev.wordpress.com/4940/&quot; /&gt;&lt;/a&gt; &lt;img alt=&quot;&quot; border=&quot;0&quot; height=&quot;1&quot; src=&quot;https://pixel.wp.com/b.gif?host=tomsondev.bestsolution.at&amp;amp;blog=7995503&amp;amp;post=4940&amp;amp;subd=tomsondev&amp;amp;ref=&amp;amp;feed=1&quot; width=&quot;1&quot; /&gt;</description>
+	<pubDate>Tue, 31 Jan 2017 22:35:07 +0000</pubDate>
+</item>
+<item>
+	<title>vert.x project: An Introduction to the Vert.x Context Object</title>
+	<guid isPermaLink="true">http://vertx.io/blog/an-introduction-to-the-vert-x-context-object</guid>
+	<link>http://vertx.io/blog/an-introduction-to-the-vert-x-context-object</link>
+	<description>&lt;article&gt;&lt;p&gt;Under the hood, the vert.x Context class plays a critical part in maintaining the thread-safety guarantees of verticles. Most of the time, vert.x coders don’t need to make use of Context objects directly. However, sometimes you may need to. This article provides a brief introduction to the vert.x Context class, which covers why it’s important, and why and when you might wish to make use of the Context directly, based on the author’s experience of building a generic async library which can be used with vert.x.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;&lt;div class=&quot;admonition-block note&quot;&gt;&lt;table&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;admonition-icon&quot;&gt;&lt;i class=&quot;admonition-icon fa fa-comment&quot;&gt;&lt;/i&gt;&lt;/td&gt;&lt;td class=&quot;content&quot;&gt;&lt;span class=&quot;content&quot;&gt;this is a re-publication of the following &lt;a href=&quot;http://www.millross-consultants.com/vertx_context_object.html&quot;&gt;blog post&lt;/a&gt;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;
+&lt;h2 id=&quot;the-context-object-in-vert-x-a-brief-introduction&quot;&gt;The Context object in Vert.x - a brief introduction&lt;/h2&gt;
+&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;Recently I’ve been looking at the possibility of building an asynchronous version of the &lt;a href=&quot;http://www.pac4j.org&quot;&gt;pac4j&lt;/a&gt; library, with a view to then migrating the &lt;a href=&quot;https://github.com/pac4j/vertx-pac4j&quot;&gt;vertx-pac4j&lt;/a&gt; implementation to use the asynchronous version of pac4j by default.&lt;/p&gt;
+&lt;p&gt;I’m keen (for obvious reasons) that the async version of pac4j is not tightly coupled to  one particular asynchronous/non-blocking framework, I decided to expose the API via the &lt;a href=&quot;http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html&quot;&gt;CompletableFuture&lt;/a&gt; class, using this to wrap values which will be determined in the future. However, I opted to use the &lt;a href=&quot;http://vertx.io&quot;&gt;vert.x&lt;/a&gt; framework for my asynchronous testing as a way of testing the API as it emerged. This in turn has led me to learn some aspects of the vert.x &lt;a href=&quot;http://vertx.io/docs/apidocs/io/vertx/core/Context.html&quot;&gt;Context&lt;/a&gt; class which I didn’t really understand before.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;&lt;div class=&quot;admonition-block note&quot;&gt;&lt;table&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;admonition-icon&quot;&gt;&lt;i class=&quot;admonition-icon fa fa-comment&quot;&gt;&lt;/i&gt;&lt;/td&gt;&lt;td class=&quot;content&quot;&gt;&lt;span class=&quot;content&quot;&gt;The information presented relates to Vert.x version 3.3.3. It is conceivable that later versions of vert.x could render aspects of this article incorrect.&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;
+&lt;h3 id=&quot;introduction-to-the-context-class&quot;&gt;Introduction to the Context class&lt;/h3&gt;
+&lt;p&gt;Whenever a vert.x &lt;a href=&quot;http://vertx.io/docs/apidocs/io/vertx/core/Handler.html&quot;&gt;Handler&lt;/a&gt; is executed, or the start or step method of a verticle is called, then that execution is associated with a specific context. Generally a context is an event-loop context and is therefore associated with an event loop thread (exceptions are covered in the Further Reading referenced below). Contexts are propagated. When a handler is set by code running on a specific context, then that handler will also be executed on the same context. This means for example, that if the start method of a verticle instance sets a number of event bus handlers (as many do), then they will all run on the same context as the start method for that verticle (so all handlers for that verticle instance will share a common context). &lt;/p&gt;
+&lt;p&gt;A schematic of the relationships between non-worker verticles, contexts and eventloop threads is shown in Figure 1. &lt;/p&gt;
+&lt;p&gt;&lt;img alt=&quot;Vertx Context/Thread/Verticle Relationships&quot; src=&quot;http://vertx.io/assets/blog/vertx3-intro-to-context-object/VertxContextRelationships.png&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Note that each verticle effectively has only one context for handlers created by its start method, and each context is bound to a single event-loop thread. A given event-loop thread can, however, have multiple contexts bound to it. &lt;/p&gt;
+&lt;h3 id=&quot;when-are-contexts-not-propagated-&quot;&gt;When are contexts not propagated?&lt;/h3&gt;
+&lt;p&gt;When a verticle’s start method is called, a new context is created. If 4 identical verticles are deployed via the instances parameter on DeploymentOptions, the start method of each will be on a new context. This is logical as we may not want all non-worker verticles to be bound to a single eventloop thread when multiple eventloop threads are available. &lt;/p&gt;
+&lt;h3 id=&quot;threading-guarantees&quot;&gt;Threading Guarantees&lt;/h3&gt;
+&lt;p&gt;There are certain consequences of the propagation of contexts to handlers as mentioned above. The most important one is that since all handlers in a given eventloop verticle run on the same context (the one on which its start method ran), they all run on the same eventloop thread. This gives rise to the threading guarantee within vert.x, that as long as a given verticle is the only one to ever access a piece of state, then that state is being accessed by only one thread, so no synchronization will be necessary. &lt;/p&gt;
+&lt;h3 id=&quot;exception-handling&quot;&gt;Exception Handling&lt;/h3&gt;
+&lt;p&gt;Each context can have its own exception handler attached for handling exceptions which occur during event loop processing.&lt;/p&gt;
+&lt;h4 id=&quot;why-might-you-not-want-the-default-exception-handler-&quot;&gt;Why might you not want the default exception handler?&lt;/h4&gt;
+&lt;p&gt;As one example, you might have some verticles running whose job it is to monitor other verticles, and if something appears to go wrong with them, undeploy and restart them, a frequent pattern in an actor- or microservices- style archictecture. So one option could be that when a supervised verticle encounters an unrecoverable error, it could simply notify its supervisor that it has gone wrong via an eventbus message, and its supervisor could then undeploy and redeploy (and after a number of failures in rapid succession possibly give up hope or escalate to its own supervisor.&lt;/p&gt;
+&lt;h3 id=&quot;going-off-context-and-getting-back-onto-a-particular-context&quot;&gt;Going off-context and getting back onto a particular context&lt;/h3&gt;
+&lt;p&gt;There are several reasons why you might execute code off-context and then want to operate back on a vert.x context when complete. I’ll outline a couple of scenarios below&lt;/p&gt;
+&lt;h4 id=&quot;running-code-on-a-separate-thread&quot;&gt;Running code on a separate thread&lt;/h4&gt;
+&lt;p&gt;Firstly you might be using an asynchronous driver which is entirely vertx-unaware. Its code will run on non-eventloop threads but it’s possible you may then want to use the results of that code to update information within your verticle. If you don’t get back onto the correct context, you can’t make any guarantees about thread-safety, so your subsequent processing needs to be run back on the correct eventloop thread.&lt;/p&gt;
+&lt;h4 id=&quot;using-asynchronous-java-8-apis&quot;&gt;Using asynchronous Java 8 APIs&lt;/h4&gt;
+&lt;p&gt;APIs such as CompletableFuture are context-unaware. In one example, I created an already completed future on the vert.x event loop in a test. I then attached subsequent processing to it via thenRun:-&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;hljs java&quot;&gt;&lt;span class=&quot;hljs-annotation&quot;&gt;@RunWith&lt;/span&gt;(VertxUnitRunner.class)
+&lt;span class=&quot;hljs-keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;hljs-class&quot;&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;hljs-title&quot;&gt;ImmediateCompletionTest&lt;/span&gt; &lt;/span&gt;{
+    &lt;span class=&quot;hljs-annotation&quot;&gt;@Rule&lt;/span&gt;
+    &lt;span class=&quot;hljs-keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;hljs-keyword&quot;&gt;final&lt;/span&gt; RunTestOnContext rule = &lt;span class=&quot;hljs-keyword&quot;&gt;new&lt;/span&gt; RunTestOnContext();
+
+    &lt;span class=&quot;hljs-annotation&quot;&gt;@Test&lt;/span&gt;
+    &lt;span class=&quot;hljs-function&quot;&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;hljs-keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;hljs-title&quot;&gt;testImmediateCompletion&lt;/span&gt;&lt;span class=&quot;hljs-params&quot;&gt;(TestContext context)&lt;/span&gt; &lt;/span&gt;{
+
+        &lt;span class=&quot;hljs-keyword&quot;&gt;final&lt;/span&gt; Async async = context.async();
+        &lt;span class=&quot;hljs-keyword&quot;&gt;final&lt;/span&gt; Vertx vertx = rule.vertx();
+        &lt;span class=&quot;hljs-keyword&quot;&gt;final&lt;/span&gt; CompletableFuture toComplete = &lt;span class=&quot;hljs-keyword&quot;&gt;new&lt;/span&gt; CompletableFuture&lt;span&gt;();
+        &lt;span class=&quot;hljs-comment&quot;&gt;// delay future completion by 500 ms&lt;/span&gt;
+        &lt;span class=&quot;hljs-keyword&quot;&gt;final&lt;/span&gt; String threadName = Thread.currentThread().getName();
+        toComplete.complete(&lt;span class=&quot;hljs-number&quot;&gt;100&lt;/span&gt;);
+        toComplete.thenRun(() -&amp;gt; {
+            assertThat(Thread.currentThread().getName(), is(threadName));
+            async.complete();
+        });
+    }
+}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;  Naively one might expect this to automatically run on the context, since it hasn’t left the eventloop thread on which the future was completed, and indeed it’s provable that it is on the correct thread. However, it will not be on the correct context. This would mean that it wouldn’t, for example, invoke any modified exception handler attached to the context.&lt;/p&gt;
+&lt;h4 id=&quot;getting-back-on-context&quot;&gt;Getting back on context&lt;/h4&gt;
+&lt;p&gt;Fortunately, once we’ve left the context, it’s quite straightforward to return to it. Prior to definition of the code block within thenRun, we can use Vertx.currentContext() or vertx.getOrCreateContext() to get a handle to the context on which our eventloop code is running, We can then execute the code block inside a call to Context::runOnContext, similar to&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;&lt;pre&gt;&lt;code class=&quot;hljs java&quot;&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;final&lt;/span&gt; Context currentContext = vertx.getOrCreateContext();
+toComplete.thenRun(() -&amp;gt; {
+        currentContext.runOnContext(v -&amp;gt; {
+        assertThat(Thread.currentThread().getName(), is(threadName));
+        async.complete();
+    }
+});&lt;/code&gt;&lt;/pre&gt;
+While getting back onto the correct context may not be critical if you have remained on the event loop thread throughout, it is critical if you are going to invoke subsequent vert.x handlers, update verticle state or anything similar, so it’s a sensible general approach.&lt;p&gt;&lt;/p&gt;
+&lt;h3 id=&quot;further-reading&quot;&gt;Further Reading&lt;/h3&gt;
+&lt;p&gt;The vert.x team themselves offer an excellent blog about the Vert.x eventloop, with excellent material on the context, on &lt;a href=&quot;https://github.com/vietj/vertx-materials/blob/master/src/main/asciidoc/Demystifying_the_event_loop.adoc&quot;&gt;Github&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;thanks&quot;&gt;Thanks&lt;/h3&gt;
+&lt;p&gt;Thanks very much to the vert.x core team for their clear github pages on the eventloop, and also to &lt;a href=&quot;https://twitter.com/alexlehm?lang=en&quot;&gt;Alexander Lehmann&lt;/a&gt; for his answers to my stupid and naive questions on the &lt;a href=&quot;https://groups.google.com/forum/#!forum/vertx&quot;&gt;Vert.x google group&lt;/a&gt;.&lt;/p&gt;
+&lt;/article&gt;</description>
+	<pubDate>Tue, 31 Jan 2017 00:00:00 +0000</pubDate>
+</item>
+<item>
+	<title>Eclipse Announcements: Keynotes for Devoxx US Announced</title>
+	<guid isPermaLink="true">http://feedproxy.google.com/~r/eclipse/fnews/~3/49_scA5uE0w/20170130devoxxuskeynotes.php</guid>
+	<link>http://feedproxy.google.com/~r/eclipse/fnews/~3/49_scA5uE0w/20170130devoxxuskeynotes.php</link>
+	<description>Industry experts will present topics about identity, deep learning, and design at Devoxx US 2017.&lt;img alt=&quot;&quot; height=&quot;1&quot; src=&quot;http://feeds.feedburner.com/~r/eclipse/fnews/~4/49_scA5uE0w&quot; width=&quot;1&quot; /&gt;</description>
+	<pubDate>Mon, 30 Jan 2017 14:00:00 +0000</pubDate>
+</item>
+<item>
+	<title>itemis: Bewirb dich bei itemis und werde Teil unseres Xtext-Teams</title>
+	<guid isPermaLink="true">https://blogs.itemis.com/de/bewirb-dich-bei-itemis</guid>
+	<link>https://blogs.itemis.com/de/bewirb-dich-bei-itemis</link>
+	<description>&lt;p&gt;&lt;span&gt;&lt;a href=&quot;https://hosting.itemis.de/author/holger-schill&quot;&gt;Holger Schill&lt;/a&gt; und &lt;a href=&quot;https://hosting.itemis.de/author/Karsten-Thoms&quot;&gt;Karsten Thoms&lt;/a&gt; sind Softwarearchitekten und entwickeln neue Programmiersprachen. Beide sind Committer im &lt;a href=&quot;http://www.eclipse.org/Xtext/&quot;&gt;Eclipse Xtext-Projekt&lt;/a&gt; und suchen dringend gute Leute zur Verstärkung ihres Teams. Schau dir doch mal an, was die beiden in ihrem Video zu sagen haben. Vielleicht hast du ja Lust mit ihnen zusammenzuarbeiten.&lt;/span&gt;&lt;/p&gt; 
+&lt;p&gt;&lt;span&gt; &lt;/span&gt;&lt;/p&gt;
+&lt;div class=&quot;wistia_responsive_padding&quot; style=&quot;padding: 56.25% 0 0 0;&quot;&gt;
+ &lt;div class=&quot;wistia_responsive_wrapper&quot; style=&quot;height: 100%; width: 100%;&quot;&gt;
+  &lt;span class=&quot;wistia_embed wistia_async_44u1f1ayde  videoFoam=true&quot; style=&quot;display: inline-block; height: 100%; width: 100%;&quot;&gt;undefined&lt;/span&gt;
+ &lt;/div&gt;
+&lt;/div&gt; 
+&lt;p&gt;&lt;/p&gt; 
+&lt;p&gt;&lt;span&gt;Wenn wir dein Interesse geweckt haben, hinterlass uns einfach und unverbindlich eine Nachricht am Ende des Videos. Wir nehmen dann gerne Kontakt mit dir auf.&lt;/span&gt;&lt;/p&gt; 
+&lt;p&gt;&lt;span&gt;Natürlich kannst du dich auch gerne offziell bewerben. Besuch dazu einfach unsere &lt;a href=&quot;https://www.itemis.com/de/jobs/bewerben/&quot;&gt;Karriereseiten&lt;/a&gt;.&lt;/span&gt;&lt;/p&gt; 
+&lt;p&gt;&lt;span&gt;Liebe Grüße&lt;/span&gt;&lt;/p&gt; 
+&lt;p&gt;&lt;span&gt;Sandra&lt;/span&gt;&lt;/p&gt;  
+&lt;img alt=&quot;&quot; height=&quot;1&quot; src=&quot;http://track.hubspot.com/__ptq.gif?a=761475&amp;amp;k=14&amp;amp;r=https%3A%2F%2Fblogs.itemis.com%2Fde%2Fbewirb-dich-bei-itemis&amp;amp;bu=https%253A%252F%252Fblogs.itemis.com&amp;amp;bvt=rss&quot; style=&quot;width: 1px!important;&quot; width=&quot;1&quot; /&gt;</description>
+	<pubDate>Sat, 28 Jan 2017 11:54:26 +0000</pubDate>
+	<author>rennemann@itemis.de (Sandra Rennemann)</author>
+</item>
+<item>
+	<title>Chris Aniszczyk: Open Container Initiative in 2017</title>
+	<guid isPermaLink="false">http://aniszczyk.org/?p=4115</guid>
+	<link>http://aniszczyk.org/2017/01/27/open-container-initiative-in-2017/</link>
+	<description>&lt;p&gt;Last year I had the opportunity to help build out/run the Open Container Initiative (OCI) and I wanted to take some time to reflect back on what the OCI community accomplished in 2016 and how far we’ve come in a short time since we were founded a little over a year ago.&lt;/p&gt;
+&lt;blockquote class=&quot;twitter-tweet&quot;&gt;
+&lt;p dir=&quot;ltr&quot; lang=&quot;en&quot;&gt;New &lt;a href=&quot;https://twitter.com/hashtag/OCI?src=hash&quot;&gt;#OCI&lt;/a&gt; blog post highlights 2016 milestones and what's to come in 2017 &lt;a href=&quot;https://t.co/EOdxcfNMs5&quot;&gt;https://t.co/EOdxcfNMs5&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;— OCI (@OCI_ORG) &lt;a href=&quot;https://twitter.com/OCI_ORG/status/823628292465053697&quot;&gt;January 23, 2017&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;The community has been busy! The project saw &lt;a href=&quot;https://oci.biterg.io/&quot;&gt;3000+ commits from 128 different authors across 36 different organizations&lt;/a&gt;. With the addition of the &lt;a href=&quot;https://github.com/opencontainers/image-spec&quot;&gt;Image Format specification project&lt;/a&gt;, we expanded our initial scope from just the &lt;a href=&quot;https://github.com/opencontainers/runc&quot;&gt;runtime specification&lt;/a&gt;. Our membership grew to nearly 50 members and we also added new developer tools projects —&lt;a href=&quot;https://github.com/opencontainers/tob/blob/master/proposals/tools.md&quot;&gt;runtime-tools and image-tools&lt;/a&gt;— which serve as repositories for conformance testing tools and have been instrumental in gearing up for the upcoming v1.0 release.&lt;/p&gt;
+&lt;p&gt;We’ve also recently created a new project within OCI called &lt;a href=&quot;https://github.com/opencontainers/go-digest&quot;&gt;go-digest&lt;/a&gt; (which was donated and migrated from docker/go-digest). This provides a strong hash-identity implementation in Go and services as a common digest package to be used across the container ecosystem.&lt;/p&gt;
+&lt;p&gt;In terms of early adoption, we have seen Docker support the OCI technology in its container runtime (libcontainer) and contribute it to the OCI project (as runc). Additionally, Docker has committed to adopting OCI technology in its latest &lt;a href=&quot;https://blog.docker.com/2016/12/introducing-containerd/&quot;&gt;containerd announcement&lt;/a&gt;. The Cloud Foundry community has been an early consumer of OCI by &lt;a href=&quot;https://blog.pivotal.io/pivotal-cloud-foundry/products/how-cloud-foundry-gives-developers-a-reliable-container-runtime&quot;&gt;embedding runc via Garden&lt;/a&gt; as the cornerstone of its container runtime technology. The Kubernetes project is incubating a new &lt;a href=&quot;https://github.com/kubernetes-incubator/cri-o&quot;&gt;Container Runtime Interface&lt;/a&gt; (CRI) that adopts OCI components via implementations like &lt;a href=&quot;https://github.com/kubernetes-incubator/cri-o&quot;&gt;CRI-O&lt;/a&gt; and &lt;a href=&quot;https://github.com/kubernetes-incubator/rktlet&quot;&gt;rklet&lt;/a&gt;. The rkt community is adopting OCI technology already and is planning to &lt;a href=&quot;https://coreos.com/blog/containers-to-clusters.html&quot;&gt;leverage the reference OCI container runtime runc&lt;/a&gt; in 2017. The Apache Mesos community is currently building out support for the &lt;a href=&quot;https://issues.apache.org/jira/browse/MESOS-5011&quot;&gt;OCI image specification&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Speaking of the v1.0 release, we are getting close to launch! The milestone release of the OCI &lt;a href=&quot;https://github.com/opencontainers/runtime-spec&quot;&gt;Runtime &lt;/a&gt;and &lt;a href=&quot;https://github.com/opencontainers/image-spec&quot;&gt;Image Format&lt;/a&gt; Specifications version 1.0 will hopefully be available this first quarter of 2017 or shortly the following quarter, drawing the industry that much closer to standardization and true portability. To that end, we’ll be launching an official OCI Certification program once the v1.0 release is out. With OCI certification, folks can be confident that their OCI-certified solutions meet a high set of criteria that deliver agile, interoperable solutions.&lt;/p&gt;
+&lt;p&gt;We’ll be looking into the possibility of adding more projects in the coming year, and we hope to showcase even more demonstrations of the specs in action under different scenarios. We’ll be onsite at several industry events, so please be on the lookout and check out &lt;a href=&quot;https://www.opencontainers.org/events&quot;&gt;events page&lt;/a&gt; for details.&lt;/p&gt;
+&lt;p&gt;There is still much work to be done!  The success of our community depends on a wide array of contributions from all across the industry; the door is always open, so please come join us in shaping the future of container technology! In particular, if you’re interested in contributing to the technology, we recommend joining the &lt;a href=&quot;https://www.opencontainers.org/community&quot;&gt;OCI developer community&lt;/a&gt; which is open to everyone. If you’re building products on OCI technology, we recommend joining as a member and participating in the &lt;a href=&quot;https://www.opencontainers.org/join&quot;&gt;upcoming certification program&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Note: This was cross-posted to the OCI community &lt;a href=&quot;https://www.opencontainers.org/blog/2017/01/23/oci-moves-into-2017&quot;&gt;blog&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;</description>
+	<pubDate>Fri, 27 Jan 2017 13:14:10 +0000</pubDate>
+</item>
+<item>
+	<title>Jeremie Bresson: Ressource filter at project level in Eclipse IDE</title>
+	<guid isPermaLink="true">http://jmini.github.io/blog/2017/2017-01-27_ressource-filter.html</guid>
+	<link>http://jmini.github.io/blog/2017/2017-01-27_ressource-filter.html</link>
+	<description>&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;If you follow the maven convention in multi-modules maven project, your directory structure will looks like this:&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;listingblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;\---parent
+    |   .project
+    |   pom.xml
+    |
+    +---project1
+    |   |   .classpath
+    |   |   .project
+    |   |   pom.xml
+    |   |
+    |   \---src/main/java
+    |       \---...
+    |
+    \---project2
+        |   .classpath
+        |   .project
+        |   pom.xml
+        |
+        \---src/main/java
+            \---...&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;When the projects are imported in Eclipse IDE, the parent project looks not nice in the &lt;em&gt;Package Explorer&lt;/em&gt;. The child modules &lt;code&gt;project1&lt;/code&gt; and &lt;code&gt;project2&lt;/code&gt; appear twice: as sub-folder of the &lt;code&gt;parent&lt;/code&gt; project and as separated java project. In my opinion this is not really user-friendly.&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;imageblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;img alt=&quot;Package Explorer&quot; src=&quot;http://jmini.github.io/blog/2017/2017-01-27_package-explorer.png&quot; /&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;A solution was suggested by Ed Merks: in the parent project, the child folders can be filtered. Use the &lt;em&gt;Ressource Filters&lt;/em&gt; at project level. Select the &lt;span class=&quot;menu&quot;&gt;Properties&lt;/span&gt; context menu on the parent project and select &quot;Ressource Filters&quot; under &quot;Ressource&quot; in the tree. Click on the &lt;b class=&quot;button&quot;&gt;Add Filter…​&lt;/b&gt; button. In the Dialog configure your filter to exclude all folders with a name that matches &lt;code&gt;*&lt;/code&gt;.&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;imageblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;img alt=&quot;Add a Ressource Filter for project parent&quot; src=&quot;http://jmini.github.io/blog/2017/2017-01-27_add-resource-filter.png&quot; /&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;The configuration should look like this:&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;imageblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;img alt=&quot;Ressource Filters - project configuration page&quot; src=&quot;http://jmini.github.io/blog/2017/2017-01-27_resource-filters.png&quot; /&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;If you have a look at the xml content in the &lt;code&gt;.project&lt;/code&gt; file of the &lt;code&gt;parent&lt;/code&gt; project, you should see something like this:&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;listingblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-xml&quot;&gt;	&amp;lt;filteredResources&amp;gt;
+		&amp;lt;filter&amp;gt;
+			&amp;lt;id&amp;gt;1485436062166&amp;lt;/id&amp;gt;
+			&amp;lt;name&amp;gt;&amp;lt;/name&amp;gt;
+			&amp;lt;type&amp;gt;10&amp;lt;/type&amp;gt;
+			&amp;lt;matcher&amp;gt;
+				&amp;lt;id&amp;gt;org.eclipse.ui.ide.multiFilter&amp;lt;/id&amp;gt;
+				&amp;lt;arguments&amp;gt;1.0-name-matches-false-false-*&amp;lt;/arguments&amp;gt;
+			&amp;lt;/matcher&amp;gt;
+		&amp;lt;/filter&amp;gt;
+	&amp;lt;/filteredResources&amp;gt;&lt;/code&gt;&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;With this new project configuration, the &lt;em&gt;Package Explorer&lt;/em&gt; now hides its child folders. This means that you no longer see the modules &lt;code&gt;project1&lt;/code&gt; and &lt;code&gt;project2&lt;/code&gt; in the &lt;code&gt;parent&lt;/code&gt; project:&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;imageblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;img alt=&quot;Package Explorer with hidden child modules&quot; src=&quot;http://jmini.github.io/blog/2017/2017-01-27_package-explorer_nice.png&quot; /&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;I hope this will helps projects that have similar needs.&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;hr /&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;There is also an easier way to display this standard maven structure in Eclipse IDE: use the &lt;em&gt;Project Explorer&lt;/em&gt; instead of the &lt;em&gt;Package Explorer&lt;/em&gt;.&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;With the menu item &lt;span class=&quot;menuseq&quot;&gt;&lt;span class=&quot;menu&quot;&gt;Projects Presentation&lt;/span&gt; ▸ &lt;span class=&quot;menuitem&quot;&gt;Hierarchical&lt;/span&gt;&lt;/span&gt; the display behavior in the &lt;em&gt;Project Explorer&lt;/em&gt; can be modified.&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;imageblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;img alt=&quot;Switch the Projects Presentation configuration in the Project Explorer&quot; src=&quot;http://jmini.github.io/blog/2017/2017-01-27_project-explorer-configuration.png&quot; /&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;With this new configuration, the maven structure is reflected in the IDE:&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;imageblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;img alt=&quot;Project Explorer displaying the maven structure&quot; src=&quot;http://jmini.github.io/blog/2017/2017-01-27_project-explorer.png&quot; /&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;This works even with the resource filter configuration approach presented in this blog post.&lt;/p&gt; 
+&lt;/div&gt;</description>
+	<pubDate>Thu, 26 Jan 2017 23:00:00 +0000</pubDate>
+</item>
+<item>
+	<title>Ian Skerrett: Eclipse IoT Day in San Jose</title>
+	<guid isPermaLink="false">http://ianskerrett.wordpress.com/?p=3966</guid>
+	<link>http://feedproxy.google.com/~r/IanSkerrett/~3/bco00yAxY8U/</link>
+	<description>&lt;p&gt;&lt;img alt=&quot;redblack&quot; class=&quot;aligncenter size-medium wp-image-4002&quot; height=&quot;169&quot; src=&quot;https://ianskerrett.files.wordpress.com/2017/01/redblack.png?w=300&amp;amp;h=169&quot; width=&quot;300&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;We are planning another &lt;a href=&quot;https://iot.eclipse.org/eclipse-iot-day-san-jose/&quot;&gt;Eclipse IoT Day&lt;/a&gt;, this time in San Jose, CA on March 20. It will be co-located with Eclipse Converge and Devoxx US.&lt;/p&gt;
+&lt;p&gt;In San Jose, the &lt;a href=&quot;https://iot.eclipse.org/eclipse-iot-day-san-jose/#schedule&quot;&gt;schedule will be highlighting many of the new projects and participants&lt;/a&gt; in the Eclipse IoT community, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A session on Eclipse hawkBit from Michael Hirsch from Bosch SI. hawkBit solves the problem of how to do a software update to hundreds of thousands of IoT devices. This is a critical feature for IoT at scale and something hawkBit uniquely solves.&lt;/li&gt;
+&lt;li&gt;Samsung’s Dan Gross will be talking about the Samsung Artik platform and how Samsung is embracing open source in their platform.&lt;/li&gt;
+&lt;li&gt;Laurent Lagosanto from MicroEJ will talk about using Java for small IoT devices and how Eclipse Edje is providing the framework and apis to make Java portable across different MCU and hardware platforms.&lt;/li&gt;
+&lt;li&gt;Eclipse ioFog is a new project led by Kilton Hopkins from IOTRACKS. A lot of people are talking about Fog computing but I am excited to have Kilton talk about how Eclipse ioFog implements fog computing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Industrial IoT is where the serious and significant IoT use cases can be found.  For this reason, I am thrilled we have a number of sessions focused on Industrial IoT, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;An introduction to Eclipse Milo, which is an implementation of OPC-UA. Milo also just had it’s first release.&lt;/li&gt;
+&lt;li&gt;Intel will be talking about their work on industrial use cases with Eclipse Kura and Intel Data Analytics Acceleration. Analytics at the edge is a key trend in 2017.&lt;/li&gt;
+&lt;li&gt;There will also be a presentation on how Eclipse Kura acts as the gateway for Industry 4.0 use cases.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We will also have session on Eclipse Smarthome and IoT Cloud Platforms, featuring Eclipse Kapua.&lt;/p&gt;
+&lt;p&gt;If you are interested in IoT, open source and the Eclipse IoT community, then I hope you will attend. It will be a great opportunity to meet some of the IoT experts and learn about the Eclipse IoT technology.  The cost to register is $275. I hope you &lt;a href=&quot;https://www.regonline.com/register/checkin.aspx?EventId=1845425&amp;amp;RegTypeID=648137&quot;&gt;register&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;We will also be hosting an &lt;a href=&quot;https://wiki.eclipse.org/EclipseIoT_SanJose2017&quot;&gt;Eclipse IoT Working Group meeting &lt;/a&gt;the next day. This will be a more technical meeting that focuses on the specific projects. This will be an open meeting so feel free to attend.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;&lt;br /&gt;  &lt;a href=&quot;http://feeds.wordpress.com/1.0/gocomments/ianskerrett.wordpress.com/3966/&quot; rel=&quot;nofollow&quot;&gt;&lt;img alt=&quot;&quot; border=&quot;0&quot; src=&quot;http://feeds.wordpress.com/1.0/comments/ianskerrett.wordpress.com/3966/&quot; /&gt;&lt;/a&gt; &lt;img alt=&quot;&quot; border=&quot;0&quot; height=&quot;1&quot; src=&quot;https://pixel.wp.com/b.gif?host=ianskerrett.wordpress.com&amp;amp;blog=405862&amp;amp;post=3966&amp;amp;subd=ianskerrett&amp;amp;ref=&amp;amp;feed=1&quot; width=&quot;1&quot; /&gt;&lt;img alt=&quot;&quot; height=&quot;1&quot; src=&quot;http://feeds.feedburner.com/~r/IanSkerrett/~4/bco00yAxY8U&quot; width=&quot;1&quot; /&gt;</description>
+	<pubDate>Thu, 26 Jan 2017 18:59:01 +0000</pubDate>
+</item>
+<item>
+	<title>Tom Schindl: Make it easy to consume e(fx)clipse libraries in maven (or gradle)</title>
+	<guid isPermaLink="false">http://tomsondev.bestsolution.at/?p=4905</guid>
+	<link>https://tomsondev.bestsolution.at/2017/01/26/make-it-easy-to-consume-efxclipse-libraries-in-maven-or-gradle/</link>
+	<description>&lt;p&gt;In the past we now and then published some of our artifacts on &lt;a href=&quot;http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22at.bestsolution.eclipse%22&quot;&gt;maven central&lt;/a&gt; but because this was a manual process we’ve often been too lazy leading to do it on each release. This leads frustration because while we’ve released &lt;a href=&quot;http://projects.eclipse.org/projects/technology.efxclipse/releases/2.5.0&quot;&gt;e(fx)clipse 2.5.0&lt;/a&gt; already, the maven bits are stuck on 2.2.0.&lt;/p&gt;
+&lt;p&gt;I think not being able to consume our code outside the OSGi world has led to the &lt;a href=&quot;http://www.slideshare.net/aalmiray/vjug-the-javafx-ecosystem&quot;&gt;false impression&lt;/a&gt; that e(fx)clipse runtime is just about OSGi although central parts of our framework happily run outside OSGi and so can be used like any other library:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;We have additional &lt;a href=&quot;http://git.eclipse.org/c/efxclipse/org.eclipse.efxclipse.git/tree/bundles/runtime/org.eclipse.fx.ui.panes/src/org/eclipse/fx/ui/panes&quot;&gt;layout containers&lt;/a&gt; like RowLayoutPane, FillLayoutPane, GridLayoutPane, SashPane&lt;/li&gt;
+&lt;li&gt;We have additional &lt;a href=&quot;http://git.eclipse.org/c/efxclipse/org.eclipse.efxclipse.git/tree/bundles/runtime/org.eclipse.fx.ui.controls/src/org/eclipse/fx/ui/controls/&quot;&gt;controls&lt;/a&gt; like FileSystemViewers, StyledTextArea, FontIconNode&lt;/li&gt;
+&lt;li&gt;We have a complete code editor framework with syntax highlighting, auto-complete, line/error markers, hover-support, navigation support, …&lt;/li&gt;
+&lt;li&gt;A Service Registry supporting a subset of the OSGi-Declarative-Service Framework outside the OSGi world in plain Java – say good bye to ServiceLoader once you used our service stuff&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Solving this problem was at the top of my list for the Q1/2017 and I’m happy to announce that the &lt;strong&gt;complete&lt;/strong&gt; &lt;em&gt;e(fx)clipse runtime target platform&lt;/em&gt; is available from a maven-repository starting from today.&lt;/p&gt;
+&lt;p&gt;We’ve chose to publish the artifacts to one of our own public servers (&lt;a href=&quot;http://maven.bestsolution.at/&quot;&gt;http://maven.bestsolution.at/&lt;/a&gt;) instead of maven-central and there are multiple reasons for that:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;We need to get confidence that our OSGi-To-Maven-Dependency translation is correct&lt;/li&gt;
+&lt;li&gt;We need to extract more meta-information to publish accurate informations like Developers, SCM-URLs&lt;/li&gt;
+&lt;li&gt;We need to refine how we deal with none Eclipse dependencies like apache-commons, …&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It’s a nice coincidence that &lt;a href=&quot;https://objectteams.wordpress.com/2017/01/09/eclipse-neon-2-is-on-maven-central/&quot;&gt;Stephan Herrmann did the same for the Eclipse Platform, JDT and PDE&lt;/a&gt; but there are some differences (today) from what I read on his blog entry (don’t shoot me Stephan if I got it wrong):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Stephan uses some &lt;a href=&quot;https://wiki.eclipse.org/CBI/aggregator&quot;&gt;CBI-stuff&lt;/a&gt; to translate the OSGi-Dependencies to maven pom dependencies, we use a simple helper library to do the same thing&lt;/li&gt;
+&lt;li&gt;Stephan replaces OSS-Dependencies like Apache-Commons through the direct maven substitutions, we are republishing the dependencies as we publish them from the &lt;a href=&quot;http://www.eclipse.org/orbit/&quot;&gt;Eclipse Orbit Project&lt;/a&gt; or any other Eclipse project.&lt;br /&gt;
+The reason is that we want the maven artifact repository to contain &lt;strong&gt;100%&lt;/strong&gt; the same bits as our p2-update-site and r5-repository. That’s the current state and it might change in future!&lt;/li&gt;
+&lt;/ul&gt;&lt;br /&gt;  &lt;a href=&quot;http://feeds.wordpress.com/1.0/gocomments/tomsondev.wordpress.com/4905/&quot; rel=&quot;nofollow&quot;&gt;&lt;img alt=&quot;&quot; border=&quot;0&quot; src=&quot;http://feeds.wordpress.com/1.0/comments/tomsondev.wordpress.com/4905/&quot; /&gt;&lt;/a&gt; &lt;img alt=&quot;&quot; border=&quot;0&quot; height=&quot;1&quot; src=&quot;https://pixel.wp.com/b.gif?host=tomsondev.bestsolution.at&amp;amp;blog=7995503&amp;amp;post=4905&amp;amp;subd=tomsondev&amp;amp;ref=&amp;amp;feed=1&quot; width=&quot;1&quot; /&gt;</description>
+	<pubDate>Thu, 26 Jan 2017 11:45:01 +0000</pubDate>
+</item>
+<item>
+	<title>Dave Carver: Andmore 0.5.1</title>
+	<guid isPermaLink="false">http://intellectualcramps.wordpress.com/?p=949</guid>
+	<link>https://intellectualcramps.wordpress.com/2017/01/25/andmore-0-5-1/</link>
+	<description>&lt;p&gt;A &lt;a href=&quot;https://github.com/eclipse/andmore/blob/develop/CHANGES.md&quot;&gt;small maintenance release&lt;/a&gt; for the Andmore project has been released. This release contains a handful of bug fixes that have been provided entirely by the community. So if you have the will and desire to help move Android development for eclipse along, you just need to submit a pull request to the project and it will more than likely be included.&lt;/p&gt;
+&lt;p&gt;If you really, want to become a committer. The barrier to entry is pretty low. Just submit some quality pull requests to the project, and if you have the desire to work on the project more we will probably ask. Andmore is what the community makes it.&lt;/p&gt;
+&lt;p&gt;The maintenance release is available through the &lt;a href=&quot;https://marketplace.eclipse.org/content/andmore-development-tools-android%E2%84%A2&quot;&gt;eclipse marketplace&lt;/a&gt;.&lt;/p&gt;&lt;br /&gt;  &lt;a href=&quot;http://feeds.wordpress.com/1.0/gocomments/intellectualcramps.wordpress.com/949/&quot; rel=&quot;nofollow&quot;&gt;&lt;img alt=&quot;&quot; border=&quot;0&quot; src=&quot;http://feeds.wordpress.com/1.0/comments/intellectualcramps.wordpress.com/949/&quot; /&gt;&lt;/a&gt; &lt;img alt=&quot;&quot; border=&quot;0&quot; height=&quot;1&quot; src=&quot;https://pixel.wp.com/b.gif?host=intellectualcramps.wordpress.com&amp;amp;blog=20154979&amp;amp;post=949&amp;amp;subd=intellectualcramps&amp;amp;ref=&amp;amp;feed=1&quot; width=&quot;1&quot; /&gt;</description>
+	<pubDate>Thu, 26 Jan 2017 02:40:15 +0000</pubDate>
+</item>
+<item>
+	<title>Eclipse Announcements: Diversity at Eclipse</title>
+	<guid isPermaLink="true">http://feedproxy.google.com/~r/eclipse/fnews/~3/s-Zq787sUWQ/</guid>
+	<link>http://feedproxy.google.com/~r/eclipse/fnews/~3/s-Zq787sUWQ/</link>
+	<description>Thea Aldrich, Diversity Champion at the Eclipse Foundation, outlines plans for fostering diversity in the Eclipse Community.&lt;img alt=&quot;&quot; height=&quot;1&quot; src=&quot;http://feeds.feedburner.com/~r/eclipse/fnews/~4/s-Zq787sUWQ&quot; width=&quot;1&quot; /&gt;</description>
+	<pubDate>Wed, 25 Jan 2017 17:00:00 +0000</pubDate>
+</item>
+
+</channel>
+</rss>
