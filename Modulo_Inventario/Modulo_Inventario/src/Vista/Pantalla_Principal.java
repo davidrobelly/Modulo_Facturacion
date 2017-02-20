@@ -122,6 +122,18 @@ public class Pantalla_Principal extends JFrame implements ActionListener{
 			inventario.setVisible(true);	
 		}
 		
+		if (evento.getSource() == menuItemProcesoKardex){
+			Pantalla_Kardex kardex;
+			kardex = new Pantalla_Kardex();
+			kardex.setVisible(true);	
+		}
+		
+		if (evento.getSource() == menuItemProcesoEstPro){
+			Pantalla_Cambio_Estado_Producto cambioEstadoPro;
+			cambioEstadoPro = new Pantalla_Cambio_Estado_Producto();
+			cambioEstadoPro.setVisible(true);	
+		}
+		
 		if (evento.getSource() == menuItemCerrarSesion) {
 			Pantalla_Ingreso ingreso;
 			ingreso = new Pantalla_Ingreso();

@@ -1,0 +1,57 @@
+package Vista;
+
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+@SuppressWarnings("serial")
+public class Pantalla_Cambio_Estado_Producto extends JFrame{
+	
+	public ImageIcon ico_aplicacion;
+	public JPanel pnl_central, pnl_botones;
+	public JLabel lbl_marca, lbl_modelo;
+	public JTextField txt_marca, txt_modelo;
+	public JButton btn_buscarMarca, btn_buscarModelo, btn_activar, btn_desactivar;
+	
+	Pantalla_Cambio_Estado_Producto () {
+		
+		super("Kardex - Entradas y Salidas");
+		setSize(500, 300);
+		setLocation(500, 300);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		//Icono de la Aplicacion
+		ico_aplicacion = new ImageIcon("src/Imagenes/icono.gif");
+		setIconImage(ico_aplicacion.getImage());
+		
+		//PANEL CENTRAL
+		pnl_central = new JPanel();
+		getContentPane().add(panelCentral, BorderLayout.CENTER);
+		
+		GridBagLayout gridCentral = new GridBagLayout();
+		panelCentral.setLayout(gridCentral);
+		
+		GridBagConstraints gridConCentral = new GridBagConstraints();
+		gridConCentral.fill = GridBagConstraints.BOTH;
+		gridConCentral.insets = new Insets(3, 3, 3, 3);
+		
+		gridConCentral.gridx = 0;
+		gridConCentral.gridy = 0;
+		gridConCentral.gridheight = 2;
+		gridConCentral.gridwidth = 5;
+		txt_resultado = new JTextField();
+		panelCentral.add(txt_resultado);
+		gridCentral.setConstraints(txt_resultado, gridConCentral);
+		
+	}
+	
+
+}

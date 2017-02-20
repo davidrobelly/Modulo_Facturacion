@@ -1,0 +1,305 @@
+package MisPantallas;
+
+import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+@SuppressWarnings("serial")
+public class Calculadora extends JFrame{
+	
+	//Declaracion de Componentes
+	JMenuBar barraMenu;
+	
+	JMenu menuVer, menuEdicion, menuAyuda;
+	
+	JPanel panelCentral;
+	
+	JTextField txt_resultado;
+	
+	JButton btn_MC, btn_MR, btn_MS, btn_Mpos, btn_Mneg,
+	 		btn_delete, btn_CE, btn_C, btn_masMenos, btn_raiz,
+	 		btn_7, btn_8, btn_9, btn_division, btn_porcentaje,
+	 		btn_4, btn_5, btn_6, btn_multiplicacion, btn_fraccion,
+	 		btn_1, btn_2, btn_3, btn_resta, btn_igual,
+	 		btn_0, btn_sigDecimal, btn_suma;
+	
+		
+	Calculadora () {
+	
+		//Atributos de la Ventana
+		setTitle("Calculadora");
+		setSize(235, 325);
+		setLocation(500, 300);
+		setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		//Menus
+		barraMenu = new JMenuBar();
+		setJMenuBar(barraMenu);
+		
+		menuVer = new JMenu("Ver");
+		menuEdicion = new JMenu("Edicion");
+		menuAyuda = new JMenu("Ayuda");
+		
+		barraMenu.add(menuVer);
+		barraMenu.add(menuEdicion);
+		barraMenu.add(menuAyuda);
+		
+		//Panel Central
+		panelCentral = new JPanel();
+		getContentPane().add(panelCentral, BorderLayout.CENTER);
+		
+		GridBagLayout gridCentral = new GridBagLayout();
+		panelCentral.setLayout(gridCentral);
+		
+		GridBagConstraints gridConCentral = new GridBagConstraints();
+		gridConCentral.fill = GridBagConstraints.BOTH;
+		gridConCentral.insets = new Insets(3, 3, 3, 3);
+		
+		gridConCentral.gridx = 0;
+		gridConCentral.gridy = 0;
+		gridConCentral.gridheight = 2;
+		gridConCentral.gridwidth = 5;
+		txt_resultado = new JTextField();
+		panelCentral.add(txt_resultado);
+		gridCentral.setConstraints(txt_resultado, gridConCentral);
+		
+		gridConCentral.gridx = 0;
+		gridConCentral.gridy = 2;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		btn_MC = new JButton("MC");		
+		panelCentral.add(btn_MC);
+		gridCentral.setConstraints(btn_MC, gridConCentral);
+		
+		gridConCentral.gridx = 1;
+		gridConCentral.gridy = 2;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		btn_MR = new JButton("MR");		
+		panelCentral.add(btn_MR);
+		gridCentral.setConstraints(btn_MR, gridConCentral);
+		
+		gridConCentral.gridx = 2;
+		gridConCentral.gridy = 2;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		btn_MS = new JButton("MS");		
+		panelCentral.add(btn_MS);
+		gridCentral.setConstraints(btn_MS, gridConCentral);
+		
+		gridConCentral.gridx = 3;
+		gridConCentral.gridy = 2;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		btn_Mpos = new JButton("M+");		
+		panelCentral.add(btn_Mpos);
+		gridCentral.setConstraints(btn_Mpos, gridConCentral);
+		
+		gridConCentral.gridx = 4;
+		gridConCentral.gridy = 2;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		btn_Mneg = new JButton("M-");		
+		panelCentral.add(btn_Mneg);
+		gridCentral.setConstraints(btn_Mneg, gridConCentral);
+		
+		gridConCentral.gridx = 0;
+		gridConCentral.gridy = 3;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		btn_delete = new JButton("←");		
+		panelCentral.add(btn_delete);
+		gridCentral.setConstraints(btn_delete, gridConCentral);
+		
+		gridConCentral.gridx = 1;
+		gridConCentral.gridy = 3;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		btn_CE = new JButton("CE");		
+		panelCentral.add(btn_CE);
+		gridCentral.setConstraints(btn_CE, gridConCentral);
+		
+		gridConCentral.gridx = 2;
+		gridConCentral.gridy = 3;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		btn_C = new JButton("C");		
+		panelCentral.add(btn_C);
+		gridCentral.setConstraints(btn_C, gridConCentral);
+		
+		gridConCentral.gridx = 3;
+		gridConCentral.gridy = 3;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		btn_masMenos = new JButton("±");		
+		panelCentral.add(btn_masMenos);
+		gridCentral.setConstraints(btn_masMenos, gridConCentral);
+		
+		gridConCentral.gridx = 4;
+		gridConCentral.gridy = 3;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		btn_raiz = new JButton("√");		
+		panelCentral.add(btn_raiz);
+		gridCentral.setConstraints(btn_raiz, gridConCentral);
+		
+		gridConCentral.gridx = 0;
+		gridConCentral.gridy = 4;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		btn_7 = new JButton("7");		
+		panelCentral.add(btn_7);
+		gridCentral.setConstraints(btn_7, gridConCentral);
+		
+		gridConCentral.gridx = 1;
+		gridConCentral.gridy = 4;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		btn_8 = new JButton("8");		
+		panelCentral.add(btn_8);
+		gridCentral.setConstraints(btn_8, gridConCentral);
+		
+		gridConCentral.gridx = 2;
+		gridConCentral.gridy = 4;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		btn_9 = new JButton("9");		
+		panelCentral.add(btn_9);
+		gridCentral.setConstraints(btn_9, gridConCentral);
+		
+		gridConCentral.gridx = 3;
+		gridConCentral.gridy = 4;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		btn_division = new JButton("/");		
+		panelCentral.add(btn_division);
+		gridCentral.setConstraints(btn_division, gridConCentral);
+		
+		gridConCentral.gridx = 4;
+		gridConCentral.gridy = 4;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		btn_porcentaje = new JButton("%");		
+		panelCentral.add(btn_porcentaje);
+		gridCentral.setConstraints(btn_porcentaje, gridConCentral);
+		
+		gridConCentral.gridx = 0;
+		gridConCentral.gridy = 5;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		btn_4 = new JButton("4");		
+		panelCentral.add(btn_4);
+		gridCentral.setConstraints(btn_4, gridConCentral);
+		
+		gridConCentral.gridx = 1;
+		gridConCentral.gridy = 5;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		btn_5 = new JButton("5");		
+		panelCentral.add(btn_5);
+		gridCentral.setConstraints(btn_5, gridConCentral);
+		
+		gridConCentral.gridx = 2;
+		gridConCentral.gridy = 5;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		btn_6 = new JButton("6");		
+		panelCentral.add(btn_6);
+		gridCentral.setConstraints(btn_6, gridConCentral);
+				
+		gridConCentral.gridx = 3;
+		gridConCentral.gridy = 5;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		btn_multiplicacion = new JButton("*");		
+		panelCentral.add(btn_multiplicacion);
+		gridCentral.setConstraints(btn_multiplicacion, gridConCentral);
+		
+		gridConCentral.gridx = 4;
+		gridConCentral.gridy = 5;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		btn_fraccion = new JButton("1/x");		
+		panelCentral.add(btn_fraccion);
+		gridCentral.setConstraints(btn_fraccion, gridConCentral);
+		
+		gridConCentral.gridx = 0;
+		gridConCentral.gridy = 6;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		btn_1 = new JButton("1");		
+		panelCentral.add(btn_1);
+		gridCentral.setConstraints(btn_1, gridConCentral);
+		
+		gridConCentral.gridx = 1;
+		gridConCentral.gridy = 6;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		btn_2 = new JButton("2");		
+		panelCentral.add(btn_2);
+		gridCentral.setConstraints(btn_2, gridConCentral);
+		
+		gridConCentral.gridx = 2;
+		gridConCentral.gridy = 6;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		btn_3 = new JButton("3");		
+		panelCentral.add(btn_3);
+		gridCentral.setConstraints(btn_3, gridConCentral);
+				
+		gridConCentral.gridx = 3;
+		gridConCentral.gridy = 6;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		btn_resta = new JButton("-");		
+		panelCentral.add(btn_resta);
+		gridCentral.setConstraints(btn_resta, gridConCentral);
+		
+		gridConCentral.gridx = 4;
+		gridConCentral.gridy = 6;
+		gridConCentral.gridheight = 2;
+		gridConCentral.gridwidth = 1;
+		btn_igual = new JButton("=");		
+		panelCentral.add(btn_igual);
+		gridCentral.setConstraints(btn_igual, gridConCentral);
+		
+		gridConCentral.gridx = 0;
+		gridConCentral.gridy = 7;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 2;
+		btn_0 = new JButton("0");		
+		panelCentral.add(btn_0);
+		gridCentral.setConstraints(btn_0, gridConCentral);
+		
+		gridConCentral.gridx = 2;
+		gridConCentral.gridy = 7;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		btn_sigDecimal = new JButton(",");		
+		panelCentral.add(btn_sigDecimal);
+		gridCentral.setConstraints(btn_sigDecimal, gridConCentral);
+		
+		gridConCentral.gridx = 3;
+		gridConCentral.gridy = 7;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		btn_suma = new JButton("+");		
+		panelCentral.add(btn_suma);
+		gridCentral.setConstraints(btn_suma, gridConCentral);
+		
+		//((JComponent)getContentPane()).setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		pack();
+		
+	}
+
+	public static void main(String[] args) {
+		new Calculadora();
+
+	}
+
+}

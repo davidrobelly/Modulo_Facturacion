@@ -1,0 +1,18 @@
+package Vista;
+
+import javax.swing.JFrame;
+
+@SuppressWarnings("serial")
+public class Pantalla_Kardex extends JFrame{
+	
+	public Pantalla_Kardex (){
+		
+		super("Kardex - Entradas y Salidas");
+		setSize(235, 325);
+		setLocation(500, 300);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+	}
+	
+
+}

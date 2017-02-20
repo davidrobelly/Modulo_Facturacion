@@ -1,0 +1,38 @@
+package Vista;
+
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+@SuppressWarnings("serial")
+public class Pantalla_Kardex extends JFrame{
+	
+	JPanel pnl_central, pnl_botones;
+	JLabel lbl_tipo, lbl_;
+	
+	public Pantalla_Kardex (){
+		
+		super("Kardex - Entradas y Salidas");
+		setSize(500, 300);
+		setLocation(500, 300);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		//PANEL CENTRAL
+		pnl_central = new JPanel(new GridLayout(6, 2));
+		
+		
+		
+		getContentPane().add(pnl_central, BorderLayout.CENTER);
+		
+
+	}
+	
+
+}

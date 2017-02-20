@@ -1,0 +1,7 @@
+package Vista;
+
+import javax.swing.JFrame;
+
+public class Pantalla_Cambio_Estado_Producto extends JFrame{
+
+}
