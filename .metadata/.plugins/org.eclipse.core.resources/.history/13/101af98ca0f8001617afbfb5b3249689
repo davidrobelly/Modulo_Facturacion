@@ -10,7 +10,6 @@ import DBClases.ConexionDB;
 
 public class Sucursal {
 	
-	private int idsucursal;
 	private String nombre;
 	private String direccion;
 	private String ciudad;
@@ -20,16 +19,6 @@ public class Sucursal {
 	CallableStatement procedure;
 	ResultSet result = null;
 	ConexionDB conexion;
-	
-	public Sucursal(int idsucursal, String nombre, String direccion, String ciudad, String estado) {
-		super();
-		this.setIdsucursal(idsucursal);
-		this.setNombre(nombre);
-		this.setDireccion(direccion);
-		this.setCiudad(ciudad);
-		this.setEstado(estado);
-		conexion = new ConexionDB ();
-	}
 	
 	
 	public Sucursal(String nombre, String direccion, String ciudad, String estado) {
@@ -55,16 +44,6 @@ public class Sucursal {
 		conexion = new ConexionDB ();
 	}
 
-	
-	public int getIdsucursal() {
-		return idsucursal;
-	}
-
-
-	public void setIdsucursal(int idsucursal) {
-		this.idsucursal = idsucursal;
-	}
-	
 
 	public String getCiudad() {
 		return ciudad;
@@ -155,12 +134,12 @@ public class Sucursal {
 	}
 	
 
-	public void modificarSucursal(int term, Sucursal cliente){
+	public void modificarSucursal(String term, Sucursal cliente){
 		 conexion.conectar();
 			try {
-				sentencia = "call modificarsucursal(?,?,?,?,?)";
+				sentencia = "call modificarsucursal(?,?,?,?)";
 				procedure = conexion.conn.prepareCall(sentencia);
-				procedure.setInt(1, cliente.getIdsucursal());
+				procedure.setString(1, term);
 				procedure.setString(2, cliente.getNombre());
 				procedure.setString(3, cliente.getDireccion());
 				procedure.setString(4, cliente.getCiudad());
@@ -187,35 +166,6 @@ public class Sucursal {
 				while (result.next()) {
 					Sucursal cliente = new Sucursal();
 					cliente.setNombre(result.getString("nombre"));
-					 cliente.setDireccion(result.getString("direccion"));
-					 cliente.setCiudad(result.getString("ciudad"));
-					 cliente.setEstado(result.getString("estado"));
-					if (cliente.getNombre() != null) {
-						lista.add(cliente);
-					}
-	             }
-				procedure.close();
-				conexion.cerrarConexion();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		 return lista;
-	 }
-	 
-	 public ArrayList<Sucursal> listaLocalxCiudadid(String nombre){
-		 ArrayList<Sucursal> lista = new ArrayList<>();
-		 conexion = new ConexionDB();
-		 conexion.conectar();
-			try {
-				sentencia = "call consulta_local_ciudad(?)";
-				procedure = conexion.conn.prepareCall(sentencia);
-				procedure.setString(1, nombre);
-				procedure.execute();
-				result = (ResultSet) procedure.executeQuery();
-				while (result.next()) {
-					Sucursal cliente = new Sucursal();
-					 cliente.setIdsucursal(result.getInt("idsucursal"));
-					 cliente.setNombre(result.getString("nombre"));
 					 cliente.setDireccion(result.getString("direccion"));
 					 cliente.setCiudad(result.getString("ciudad"));
 					 cliente.setEstado(result.getString("estado"));

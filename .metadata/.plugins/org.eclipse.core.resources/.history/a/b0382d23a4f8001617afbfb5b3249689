@@ -64,7 +64,6 @@ public class Control_Modificar_Locales implements ActionListener{
 				
 				vista.txtnombre.setText("");  
 				vista.txtdireccion.setText(""); 
-				vista.txtciudad.setText(""); 
 			}
 	
 		}

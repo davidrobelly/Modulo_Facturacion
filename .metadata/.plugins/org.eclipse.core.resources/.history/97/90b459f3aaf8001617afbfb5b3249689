@@ -21,9 +21,9 @@ public class Sucursal {
 	ResultSet result = null;
 	ConexionDB conexion;
 	
-	public Sucursal(int idsucursal, String nombre, String direccion, String ciudad, String estado) {
+	public Sucursal(int idlocal, String nombre, String direccion, String ciudad, String estado) {
 		super();
-		this.setIdsucursal(idsucursal);
+		this.setIdlocal(idlocal);
 		this.setNombre(nombre);
 		this.setDireccion(direccion);
 		this.setCiudad(ciudad);

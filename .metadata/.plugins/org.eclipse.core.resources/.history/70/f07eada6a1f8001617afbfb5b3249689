@@ -83,16 +83,7 @@ public class Control_Consultar_Locales implements ActionListener, MouseListener,
         modificar.txtnombre.setText(vista.tableLocales.getValueAt(fila, 0).toString());
         modificar.txtdireccion.setText(vista.tableLocales.getValueAt(fila, 1).toString());
         modificar.txtciudad.setText(vista.tableLocales.getValueAt(fila, 2).toString());
-        
-        String valor = vista.tableLocales.getValueAt(fila, 3).toString();
-        
-        if (valor.equals("i"))
-        {
-        	modificar.cmbestado.setSelectedItem("Inactivo");
-        }
-        else {
-    		modificar.cmbestado.setSelectedItem("Activo");
-    	}
+        modificar.cmbestado.setSelectedItem(vista.tableLocales.getValueAt(fila, 3).toString());
         
        modificar.remove(modificar.PanelBotones);
        modificar.setTitle("Información del Local");

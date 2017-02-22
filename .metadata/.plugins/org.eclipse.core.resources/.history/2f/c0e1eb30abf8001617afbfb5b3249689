@@ -89,7 +89,6 @@ public class Modificar_Locales extends JFrame {
 		btnborrar = new JButton("Borrar");
 		
 		txtid = new JTextField ();
-		txtid.setEditable(false);
 		txtnombre = new JTextField();
 		txtdireccion = new JTextField();
 		txtciudad = new JTextField();

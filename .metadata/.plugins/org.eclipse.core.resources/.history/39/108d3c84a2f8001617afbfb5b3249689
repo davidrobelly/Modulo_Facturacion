@@ -14,7 +14,6 @@ import modelo_clases.Sucursal;
 import pantallas.Consultar_Local_Modificar;
 import pantallas.Modificar_Locales;
 import pantallas.Tabla_Locales;
-import pantallas.Tabla_Locales_Id;
 import pantallas.Ventana_Ingreso_Sucursal;
 
 public class Control_Modif_Consultar_Locales implements ActionListener,KeyListener, MouseListener {
@@ -36,20 +35,11 @@ public class Control_Modif_Consultar_Locales implements ActionListener,KeyListen
 		
 		modificar = new Modificar_Locales();
 		int fila = vista.tableLocales.rowAtPoint(e.getPoint());
-        modificar.txtid.setText(vista.tableLocales.getValueAt(fila, 0).toString());
-        modificar.txtnombre.setText(vista.tableLocales.getValueAt(fila, 1).toString());
-        modificar.txtdireccion.setText(vista.tableLocales.getValueAt(fila, 2).toString());
-        modificar.txtciudad.setText(vista.tableLocales.getValueAt(fila, 3).toString());
-        
-        String valor = vista.tableLocales.getValueAt(fila, 4).toString();
-        
-        if (valor.equals("i"))
-        {
-        	modificar.cmbestado.setSelectedItem("Inactivo");
-        }
-        else {
-    		modificar.cmbestado.setSelectedItem("Activo");
-    	}
+        modificar.txtnombre.setText(vista.tableLocales.getValueAt(fila, 0).toString());
+        modificar.txtdireccion.setText(vista.tableLocales.getValueAt(fila, 1).toString());
+        modificar.txtciudad.setText(vista.tableLocales.getValueAt(fila, 2).toString());
+        modificar.cmbestado.setSelectedItem(vista.tableLocales.getValueAt(fila, 3).toString());
+  
 	}
 
 	@Override
@@ -104,7 +94,7 @@ public class Control_Modif_Consultar_Locales implements ActionListener,KeyListen
 			vista.txtCiudad.setEnabled(true);
 			vista.btnCiudad.setEnabled(true);
 			vista.txtCiudad.setText("");
-			Tabla_Locales_Id tLocales = new Tabla_Locales_Id();
+			Tabla_Locales tLocales = new Tabla_Locales();
 			vista.tableLocales.setModel(tLocales);
 			vista.tableLocales.updateUI();
 		}
@@ -117,8 +107,8 @@ public class Control_Modif_Consultar_Locales implements ActionListener,KeyListen
 				vista.txtCiudad.setText("");
 			}else{
 				local = new Sucursal();
-				ArrayList<Sucursal> lisLocal = local.listaLocalxCiudadid(numero);
-				Tabla_Locales_Id tlocal = new Tabla_Locales_Id(lisLocal);
+				ArrayList<Sucursal> lisLocal = local.listaLocalxCiudad(numero);
+				Tabla_Locales tlocal = new Tabla_Locales(lisLocal);
 				vista.tableLocales.removeAll();
 				vista.tableLocales.setModel(tlocal);
 				vista.tableLocales.updateUI();

@@ -29,20 +29,17 @@ public class Control_Modificar_Locales implements ActionListener{
 		{
 			vista.txtnombre.setText("");
 			vista.txtdireccion.setText("");
-			vista.txtciudad.setText("");
 		}
 		
 		if (boton == vista.btnregistrar)
 		{
-			if (vista.txtnombre.getText().equals("") || vista.txtdireccion.getText().equals("")
-					|| vista.txtciudad.getText().equals("")) 
+			if (vista.txtnombre.getText().equals("") || vista.txtdireccion.getText().equals("")) 
 			{
 				
 				JOptionPane.showMessageDialog(null, "faltan campos de llenar");
 			}
 			
-			if (vista.txtnombre.getText().length() >= 1 && vista.txtdireccion.getText().length() >= 1
-					&& vista.txtciudad.getText().length() >= 1) 
+			if (vista.txtnombre.getText().length() >= 3 && vista.txtdireccion.getText().length() >= 5) 
 			{
 				if( (String) vista.cmbestado.getSelectedItem() == "Inactivo")
 				{
@@ -53,18 +50,14 @@ public class Control_Modificar_Locales implements ActionListener{
 					estado ="a";
 				}
 				
-				local = new Sucursal (Integer.parseInt(vista.txtid.getText()), vista.txtnombre.getText(), 
-						vista.txtdireccion.getText(), vista.txtciudad.getText(), estado);
+				local = new Sucursal (vista.txtnombre.getText(), vista.txtdireccion.getText(), estado);
 				
-				int term = Integer.parseInt(vista.txtid.getText());
-				
-				local.modificarSucursal(term, local);
+				//local.modificarLocal(term, local);
 				
 				JOptionPane.showMessageDialog(null, "Registro Exitoso");
 				
 				vista.txtnombre.setText("");  
 				vista.txtdireccion.setText(""); 
-				vista.txtciudad.setText(""); 
 			}
 	
 		}

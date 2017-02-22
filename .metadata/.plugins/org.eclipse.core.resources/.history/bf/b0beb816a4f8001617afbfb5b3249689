@@ -53,18 +53,14 @@ public class Control_Modificar_Locales implements ActionListener{
 					estado ="a";
 				}
 				
-				local = new Sucursal (Integer.parseInt(vista.txtid.getText()), vista.txtnombre.getText(), 
-						vista.txtdireccion.getText(), vista.txtciudad.getText(), estado);
+				local = new Sucursal (vista.txtnombre.getText(), vista.txtdireccion.getText(), estado);
 				
-				int term = Integer.parseInt(vista.txtid.getText());
-				
-				local.modificarSucursal(term, local);
+				local.modificarLocal(term, local);
 				
 				JOptionPane.showMessageDialog(null, "Registro Exitoso");
 				
 				vista.txtnombre.setText("");  
 				vista.txtdireccion.setText(""); 
-				vista.txtciudad.setText(""); 
 			}
 	
 		}

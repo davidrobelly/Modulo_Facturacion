@@ -25,7 +25,7 @@ public class Consultar_Local_Modificar extends JFrame{
 	public JTextField txtCiudad;
 	public JButton btnCiudad;
 	public ButtonGroup grupo;
-	public Tabla_Locales_Id locales;
+	public Tabla_Locales locales;
 	public JTable tableLocales;
 	public JScrollPane scrollPro;
 	
@@ -93,7 +93,7 @@ public class Consultar_Local_Modificar extends JFrame{
 		con = new GridBagConstraints();
 		
 	
-		locales = new Tabla_Locales_Id();
+		locales = new Tabla_Locales();
 		panelNorte = new JPanel();
 		panelCentro = new JPanel();
 		
@@ -106,7 +106,7 @@ public class Consultar_Local_Modificar extends JFrame{
 		btnCiudad.setEnabled(false);
 		
 		//esta es la parte de tabla
-		locales = new Tabla_Locales_Id ();
+		locales = new Tabla_Locales ();
 		tableLocales = new JTable (locales);
 		tableLocales.getTableHeader().setReorderingAllowed(false);
 		scrollPro = new JScrollPane(tableLocales);

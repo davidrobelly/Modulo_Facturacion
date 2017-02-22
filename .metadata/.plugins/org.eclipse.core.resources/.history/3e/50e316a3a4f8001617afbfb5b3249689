@@ -14,7 +14,6 @@ import modelo_clases.Sucursal;
 import pantallas.Consultar_Local_Modificar;
 import pantallas.Modificar_Locales;
 import pantallas.Tabla_Locales;
-import pantallas.Tabla_Locales_Id;
 import pantallas.Ventana_Ingreso_Sucursal;
 
 public class Control_Modif_Consultar_Locales implements ActionListener,KeyListener, MouseListener {
@@ -104,7 +103,7 @@ public class Control_Modif_Consultar_Locales implements ActionListener,KeyListen
 			vista.txtCiudad.setEnabled(true);
 			vista.btnCiudad.setEnabled(true);
 			vista.txtCiudad.setText("");
-			Tabla_Locales_Id tLocales = new Tabla_Locales_Id();
+			Tabla_Locales tLocales = new Tabla_Locales();
 			vista.tableLocales.setModel(tLocales);
 			vista.tableLocales.updateUI();
 		}
@@ -117,8 +116,8 @@ public class Control_Modif_Consultar_Locales implements ActionListener,KeyListen
 				vista.txtCiudad.setText("");
 			}else{
 				local = new Sucursal();
-				ArrayList<Sucursal> lisLocal = local.listaLocalxCiudadid(numero);
-				Tabla_Locales_Id tlocal = new Tabla_Locales_Id(lisLocal);
+				ArrayList<Sucursal> lisLocal = local.listaLocalxCiudad(numero);
+				Tabla_Locales tlocal = new Tabla_Locales(lisLocal);
 				vista.tableLocales.removeAll();
 				vista.tableLocales.setModel(tlocal);
 				vista.tableLocales.updateUI();

@@ -22,8 +22,8 @@ public class Modificar_Locales extends JFrame {
 	
 	public JPanel PanelCentral, PanelBotones;
 	public JButton btnregistrar, btnborrar;
-	public JLabel lblid, lblnombre, lbldireccion, lblciudad, lblestado;
-	public JTextField txtid, txtnombre, txtdireccion, txtciudad;  
+	public JLabel lblnombre, lbldireccion, lblciudad, lblestado;
+	public JTextField txtnombre, txtdireccion, txtciudad;  
 	public JComboBox cmbestado;
 	
 	public Modificar_Locales () {
@@ -32,7 +32,7 @@ public class Modificar_Locales extends JFrame {
 		ventana();
 		control = new Control_Modificar_Locales(this);
 		
-		PanelCentral.setLayout(new GridLayout(5,2));
+		PanelCentral.setLayout(new GridLayout(4,2));
 		PanelBotones.setLayout(new GridLayout(0,2));
 		
 		//panel de Botones
@@ -40,8 +40,6 @@ public class Modificar_Locales extends JFrame {
 		PanelBotones.add(btnborrar);
 		
 		//panel de formulario
-		PanelCentral.add(lblid);
-		PanelCentral.add(txtid);
 		PanelCentral.add(lblnombre);
 		PanelCentral.add(txtnombre);
 		PanelCentral.add(lbldireccion);
@@ -88,8 +86,6 @@ public class Modificar_Locales extends JFrame {
 		btnregistrar = new JButton("Modificar");
 		btnborrar = new JButton("Borrar");
 		
-		txtid = new JTextField ();
-		txtid.setEditable(false);
 		txtnombre = new JTextField();
 		txtdireccion = new JTextField();
 		txtciudad = new JTextField();
@@ -99,7 +95,6 @@ public class Modificar_Locales extends JFrame {
 		cmbestado.addItem("Inactivo");
 		
 		
-		lblid = new JLabel ("Id: ");
 		lblnombre = new JLabel("Nombre: ");
 		lbldireccion = new JLabel("Direccion: ");
 		lblestado = new JLabel ("Estado: ");
