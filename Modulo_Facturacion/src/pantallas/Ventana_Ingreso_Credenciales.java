@@ -96,7 +96,7 @@ private void initcomponents () {
 	cmbestado = new JComboBox ();
 	cmbestado.addItem("Activo");
 	cmbestado.addItem("Inactivo");
-	cmbestado.setEditable(false);
+	cmbestado.setEnabled(false);
 	
 	
 	lblempleado = new JLabel("Empleado: ");

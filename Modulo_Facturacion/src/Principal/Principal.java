@@ -1,5 +1,6 @@
 package Principal;
 import DBClases.ConexionDB;
+import pantallas.Consultar_Clientes;
 import pantallas.Pantalla_Ingreso;
 import pantallas.Ventana_Ingreso_Clientes;
 import pantallas.Ventana_Ingreso_Cotizacion;

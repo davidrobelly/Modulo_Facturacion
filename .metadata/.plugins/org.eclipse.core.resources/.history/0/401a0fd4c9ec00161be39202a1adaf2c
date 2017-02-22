@@ -1,7 +1,0 @@
-package pantallas;
-
-public class Consultar_Clientes extends JFrame{
-	
-	
-
-}

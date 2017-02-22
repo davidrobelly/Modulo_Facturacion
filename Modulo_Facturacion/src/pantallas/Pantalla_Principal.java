@@ -106,12 +106,17 @@ public class Pantalla_Principal extends JFrame {
 		
 		//adicion de eventos
 		menuRegCliente.addActionListener(control);
+		menuConsulCliente.addActionListener(control);
+		menuModifCliente.addActionListener(control);
 		menuRegEmpleado.addActionListener(control);
+		menuConsulEmpleado.addActionListener(control);
+		menuModifEmpleado.addActionListener(control);
+		menuUser.addActionListener(control);
 		menuRegLocal.addActionListener(control);
+		menuConsulLocal.addActionListener(control);
+		menuModifLocal.addActionListener(control);
 		menuCerrar.addActionListener(control);
 		menuSalirSistema.addActionListener(control);
-		menuConsulCliente.addActionListener(control);
-		
 	}
 	
 	private void initcomponents() {
@@ -157,7 +162,7 @@ public class Pantalla_Principal extends JFrame {
 		menuLocal = new JMenu ("Locales");
 		menuRegLocal = new JMenuItem ("Registrar Local", KeyEvent.VK_P);
 		menuConsulLocal = new JMenuItem ("Consultar Locales" , KeyEvent.VK_R);
-		menuModifLocal = new JMenuItem ("Editar Locales" , KeyEvent.VK_E);
+		menuModifLocal = new JMenuItem ("Modificar Locales" , KeyEvent.VK_E);
 	}
 
 	private void ventana() {
@@ -165,7 +170,7 @@ public class Pantalla_Principal extends JFrame {
 		this.setSize(1000, 70);
 		this.setLocation(100, 50);
 		this.setVisible(true);
-		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 	}
 

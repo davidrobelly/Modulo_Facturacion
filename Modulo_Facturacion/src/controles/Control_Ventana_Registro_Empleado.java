@@ -32,7 +32,7 @@ public class Control_Ventana_Registro_Empleado implements ActionListener {
 			vista.txttelefono.setText(""); 
 			vista.txtdireccion.setText(""); 
 			vista.txtcedula.setText(""); 
-			vista.txtfecha.setText("");
+			vista.txtedad.setText("");
 			vista.txtapellido.setText("");
 		}
 		
@@ -41,7 +41,7 @@ public class Control_Ventana_Registro_Empleado implements ActionListener {
 
 			if (vista.txtnombre.getText().equals("") || vista.txtdireccion.getText().equals("")
 					|| vista.txttelefono.getText().equals("") || vista.txtcedula.getText().equals("")
-					|| vista.txtfecha.getText().equals("") || vista.txtapellido.equals("")) 
+					|| vista.txtedad.getText().equals("") || vista.txtapellido.equals("")) 
 			{
 				
 				JOptionPane.showMessageDialog(null, "faltan campos de llenar");
@@ -52,12 +52,12 @@ public class Control_Ventana_Registro_Empleado implements ActionListener {
 					&& vista.txtcedula.getText().length() == 10 && vista.txttelefono.getText().length() <= 10 &&
 					vista.txtdireccion.getText().length() >= 1 ) 
 			{
-				if (Integer.parseInt(vista.txtfecha.getText()) >= 18)
+				if (Integer.parseInt(vista.txtedad.getText()) >= 18)
 				{
 				
 				empleado = new Empleado (vista.txtnombre.getText(), vista.txtapellido.getText(), 
 						vista.txtcedula.getText(), vista.txttelefono.getText(), vista.txtdireccion.getText(), 
-						Integer.parseInt(vista.txtfecha.getText()),(String) vista.cmbtipo.getSelectedItem());
+						Integer.parseInt(vista.txtedad.getText()),(String) vista.cmbtipo.getSelectedItem());
 				
 				empleado.ingresarEmpleado(empleado);
 			
@@ -67,14 +67,14 @@ public class Control_Ventana_Registro_Empleado implements ActionListener {
 				vista.txttelefono.setText(""); 
 				vista.txtdireccion.setText(""); 
 				vista.txtcedula.setText(""); 
-				vista.txtfecha.setText("");
+				vista.txtedad.setText("");
 				vista.txtapellido.setText("");
 				}
 				
 				else {
 					
 					JOptionPane.showMessageDialog(null, "debe ser mayor de edad");
-					vista.txtfecha.setText("");
+					vista.txtedad.setText("");
 			}
 			
 			

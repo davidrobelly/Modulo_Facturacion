@@ -1,2 +1,21 @@
 1486421849409	Delete element
 1486427272325	Rename field 'radioRuc'
+1486498409094	Rename local variable 'pro'
+1486509658562	Rename field 'txtOpNom'
+1486509667938	Rename field 'txtOpRuc'
+1486509680171	Rename field 'OpNom'
+1486509691373	Rename field 'OpCed'
+1486523027547	Rename local variable 'tPro'
+1486523692825	Rename local variable 'pro'
+1486527168369	Rename field 'tablePro'
+1486531276629	Rename field 'btnregistrar'
+1486531708225	Rename field 'btncancelar'
+1486746671046	Delete element
+1486747071334	Delete element
+1486755085547	Rename type 'Modificar_Empleado'
+1486755323647	Rename type 'Modificar_Empleados_C'
+1486755980589	Delete element
+1486761006114	Rename field 'txtcorreo'
+1486761052909	Rename field 'lblcorreo'
+1486761469325	Rename field 'lblfecha'
+1486761501572	Rename field 'txtfecha'

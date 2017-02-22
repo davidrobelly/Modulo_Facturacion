@@ -1,5 +1,6 @@
 package DBClases;
 
+import java.io.InputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -57,8 +58,10 @@ public class ConexionDB {
 		   Properties propiedades = new Properties();
 		    
 		   //Cargamos el archivo desde la ruta especificada//
-		   propiedades.load(new FileInputStream("D:/eclipse/Secutel-ERP/Modelo_Facturacion/src/archivo.properties"));
-		 
+		   
+		   //InputStream pin = getClass().getClassLoader().getResourceAsStream("archivo.properties");
+		   propiedades.load(new FileInputStream("D:/eclipse/Secutel-ERP/Modulo_Facturacion/src/archivo.properties"));
+		   
 		   //Obtenemos los parametros definidos en el archivo//
 		   usu = propiedades.getProperty("usu");
 		   pass = propiedades.getProperty("pass");
@@ -67,7 +70,7 @@ public class ConexionDB {
 		   //Imprimimos los valores// 
 		  } catch (FileNotFoundException e) {
 		  
-			  System.out.println("Error, El archivo no exite");
+			  System.out.println("Error, El archivo no existe");
 		  } catch (IOException e) {
 			  System.out.println("Error, No se puede leer el archivo");
 		  

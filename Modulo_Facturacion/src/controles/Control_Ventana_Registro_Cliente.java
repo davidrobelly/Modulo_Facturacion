@@ -42,7 +42,6 @@ public class Control_Ventana_Registro_Cliente implements ActionListener {
 		if (boton == vista.btnregistrar)
 		{
 			
-			
 			if (vista.txtnombre.getText().equals("") || vista.txtapellido.getText().equals("") || 
 					vista.txtdireccion.getText().equals("")
 					|| vista.txttelefono.getText().equals("") || vista.txtcedula.getText().equals("")

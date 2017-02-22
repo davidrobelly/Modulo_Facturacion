@@ -22,8 +22,8 @@ Control_Ventana_Registro_Empleado control;
 	
 	public JPanel PanelCentral, PanelBotones;
 	public JButton btnregistrar, btncancelar, btnborrar;
-	public JLabel lblnombre, lbldireccion, lbltelefono, lblcedula, lblestado, lbltipo, lblfecha, lblapellido;  
-	public JTextField txtfecha, txtnombre, txttelefono, txtcedula, txtdireccion, txtapellido;
+	public JLabel lblnombre, lbldireccion, lbltelefono, lblcedula, lblestado, lbltipo, lbledad, lblapellido;  
+	public JTextField txtedad, txtnombre, txttelefono, txtcedula, txtdireccion, txtapellido;
 	public JComboBox<String> cmbtipo, cmbestado;
 	
 
@@ -49,12 +49,12 @@ Control_Ventana_Registro_Empleado control;
 		PanelCentral.add(txtapellido);
 		PanelCentral.add(lblcedula);
 		PanelCentral.add(txtcedula);
-		PanelCentral.add(lbldireccion);
-		PanelCentral.add(txtdireccion);
 		PanelCentral.add(lbltelefono);
 		PanelCentral.add(txttelefono);
-		PanelCentral.add(lblfecha);
-		PanelCentral.add(txtfecha);
+		PanelCentral.add(lbldireccion);
+		PanelCentral.add(txtdireccion);
+		PanelCentral.add(lbledad);
+		PanelCentral.add(txtedad);
 		PanelCentral.add(lbltipo);
 		PanelCentral.add(cmbtipo);
 		PanelCentral.add(lblestado);
@@ -103,7 +103,7 @@ Control_Ventana_Registro_Empleado control;
 		txtdireccion = new JTextField();
 		txttelefono = new JTextField();
 		txtcedula = new JTextField();
-		txtfecha = new JTextField();
+		txtedad = new JTextField();
 		txtapellido = new JTextField();
 		
 		
@@ -119,9 +119,9 @@ Control_Ventana_Registro_Empleado control;
 		
 		lblnombre = new JLabel("Nombre: ");
 		lblcedula = new JLabel("Cédula: ");
-		lbldireccion = new JLabel("Teléfono: ");
-		lbltelefono = new JLabel("Dirección: ");
-		lblfecha = new JLabel("Edad: ");
+		lbldireccion = new JLabel("Dirección: ");
+		lbltelefono = new JLabel("Teléfono: ");
+		lbledad = new JLabel("Edad: ");
 		lbltipo = new JLabel ("Tipo: ");
 		lblestado = new JLabel ("Estado: ");
 		lblapellido = new JLabel ("Apellido: ");

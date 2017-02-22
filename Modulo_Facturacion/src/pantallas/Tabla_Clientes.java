@@ -9,8 +9,10 @@ import modelo_clases.Cliente;
 
 public class Tabla_Clientes extends AbstractTableModel{
 
-	private final String[] titulo= {"Nombre","Apellido","Nro Cedula"};
-	ArrayList<Cliente> lista = new ArrayList<>();
+	private final String[] titulo= {"Nombre","Apellido","Nro Cedula", 
+			"Telefono", "Correo", "Direccion", "Tipo", "Estado"};
+	
+	ArrayList<Cliente> lista = new ArrayList<>(); 
 	
 	public Tabla_Clientes() {
 		super();
@@ -51,6 +53,16 @@ public class Tabla_Clientes extends AbstractTableModel{
 			return lista.get(x).getApellido();
 		case 2:
 			return lista.get(x).getCedula();
+		case 3:
+			return lista.get(x).getTelefono();
+		case 4:
+			return lista.get(x).getCorreo();
+		case 5:
+			return lista.get(x).getDireccion();
+		case 6:
+			return lista.get(x).getTipo();
+		case 7:
+			return lista.get(x).getEstado();
 		default:
 			return null;
 		}

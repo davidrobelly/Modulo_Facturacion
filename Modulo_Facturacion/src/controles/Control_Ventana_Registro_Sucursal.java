@@ -32,19 +32,23 @@ public class Control_Ventana_Registro_Sucursal implements ActionListener {
 		if (boton == vista.btnborrar)
 			{
 				vista.txtnombre.setText(""); 
-				vista.txtdireccion.setText(""); 
+				vista.txtdireccion.setText("");
+				vista.txtciudad.setText("");
 			}
 	
 		if (boton == vista.btnregistrar)
 		{	
-			if (vista.txtnombre.getText().equals("") || vista.txtdireccion.getText().equals("")) 
+			if (vista.txtnombre.getText().equals("") || vista.txtdireccion.getText().equals("")
+					|| vista.txtciudad.getText().equals("")) 
 			{
 				JOptionPane.showMessageDialog(null, "faltan campos de llenar");
 			}
 			
-			if (vista.txtnombre.getText().length() > 5 && vista.txtdireccion.getText().length() > 5) 
+			if (vista.txtnombre.getText().length() > 1 && vista.txtdireccion.getText().length() > 1
+					&& vista.txtciudad.getText().length() > 1) 
 			{
-				sucursal = new Sucursal (vista.txtnombre.getText(), vista.txtdireccion.getText());
+				sucursal = new Sucursal (vista.txtnombre.getText(), vista.txtdireccion.getText(),
+						vista.txtciudad.getText());
 				
 				sucursal.ingresarSucursal(sucursal);
 				

@@ -22,8 +22,8 @@ public class Ventana_Ingreso_Sucursal extends JFrame {
 	
 	public JPanel PanelCentral, PanelBotones;
 	public JButton btnregistrar, btncancelar, btnborrar;
-	public JLabel lblnombre, lbldireccion, lblestado;
-	public JTextField txtnombre, txtdireccion, txttelefono, txtcedula, txtcorreo;  
+	public JLabel lblnombre, lbldireccion, lblestado, lblciudad;
+	public JTextField txtnombre, txtdireccion, txtciudad;  
 	public JComboBox cmbestado;
 	
 	public Ventana_Ingreso_Sucursal () {
@@ -32,7 +32,7 @@ public class Ventana_Ingreso_Sucursal extends JFrame {
 		ventana();
 		control = new Control_Ventana_Registro_Sucursal(this);
 		
-		PanelCentral.setLayout(new GridLayout(3,2));
+		PanelCentral.setLayout(new GridLayout(4,2));
 		PanelBotones.setLayout(new GridLayout(0,3));
 		
 		//panel de Botones
@@ -45,6 +45,8 @@ public class Ventana_Ingreso_Sucursal extends JFrame {
 		PanelCentral.add(txtnombre);
 		PanelCentral.add(lbldireccion);
 		PanelCentral.add(txtdireccion);
+		PanelCentral.add(lblciudad);
+		PanelCentral.add(txtciudad);
 		PanelCentral.add(lblestado);
 		PanelCentral.add(cmbestado);
 		
@@ -89,6 +91,7 @@ public class Ventana_Ingreso_Sucursal extends JFrame {
 		
 		txtnombre = new JTextField();
 		txtdireccion = new JTextField();
+		txtciudad = new JTextField();
 		
 		cmbestado = new JComboBox ();
 		cmbestado.addItem("Activo");
@@ -99,6 +102,7 @@ public class Ventana_Ingreso_Sucursal extends JFrame {
 		lblnombre = new JLabel("Nombre: ");
 		lbldireccion = new JLabel("Direccion: ");
 		lblestado = new JLabel ("Estado: ");
+		lblciudad = new JLabel ("Ciudad");
 		
 	}
 	
