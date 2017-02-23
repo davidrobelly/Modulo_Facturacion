@@ -1,0 +1,224 @@
+package Vista;
+
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+
+import Modelo.Producto;
+
+@SuppressWarnings("serial")
+public class Pantalla_Modificar_Producto extends JFrame implements ActionListener, MouseListener{
+	
+	public ImageIcon ico_aplicacion;
+	public JPanel pnl_datos, pnl_tabla, pnl_botones;
+	public JLabel lbl_marca, lbl_modelo;
+	public JTextField txt_marca, txt_modelo, txt_codProducto;
+	public JButton btn_actualizar, btn_limpiar, btn_buscarMarca, btn_buscarModelo;
+	public Tabla_Producto_Consulta jtproducto;
+	public JTable tabla;
+	public JScrollPane scrollProducto;
+	
+	public Producto producto;
+	public Tabla_Producto_Estado estadoProducto;
+
+	public Pantalla_Modificar_Producto (){
+		
+		super("Producto - Modificar");
+		setSize(500, 300);
+		setLocation(400, 25);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		//Icono de la Aplicacion
+		ico_aplicacion = new ImageIcon("src/Imagenes/icono.gif");
+		setIconImage(ico_aplicacion.getImage());
+		
+		pnl_datos = new JPanel();
+		getContentPane().add(pnl_datos, BorderLayout.NORTH);
+		
+		GridBagLayout gridCentral = new GridBagLayout();
+		pnl_datos.setLayout(gridCentral);
+		
+		GridBagConstraints gridConCentral = new GridBagConstraints();
+		gridConCentral.fill = GridBagConstraints.BOTH;
+		gridConCentral.insets = new Insets(3, 3, 3, 3);
+		
+		gridConCentral.gridx = 0;
+		gridConCentral.gridy = 0;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		lbl_marca = new JLabel("Marca : ");
+		pnl_datos.add(lbl_marca);
+		gridCentral.setConstraints(lbl_marca, gridConCentral);
+		
+		gridConCentral.gridx = 1;
+		gridConCentral.gridy = 0;
+		txt_marca = new JTextField(20);
+		pnl_datos.add(txt_marca);
+		gridCentral.setConstraints(txt_marca, gridConCentral);
+
+		gridConCentral.gridx = 2;
+		gridConCentral.gridy = 0;
+		btn_buscarMarca = new JButton(new ImageIcon("src/Imagenes/buscarP.jpeg"));
+		btn_buscarMarca.setBorder(null);
+		pnl_datos.add(btn_buscarMarca);
+		gridCentral.setConstraints(btn_buscarMarca, gridConCentral);
+		
+		gridConCentral.gridx = 0;
+		gridConCentral.gridy = 1;
+		lbl_modelo = new JLabel("Modelo : ");
+		pnl_datos.add(lbl_modelo);
+		gridCentral.setConstraints(lbl_modelo, gridConCentral);
+		
+		gridConCentral.gridx = 1;
+		gridConCentral.gridy = 1;
+		txt_modelo = new JTextField(20);
+		pnl_datos.add(txt_modelo);
+		gridCentral.setConstraints(txt_modelo, gridConCentral);
+
+		gridConCentral.gridx = 2;
+		gridConCentral.gridy = 1;
+		btn_buscarModelo = new JButton(new ImageIcon("src/Imagenes/buscarP.jpeg"));
+		btn_buscarModelo.setBorder(null);
+		pnl_datos.add(btn_buscarModelo);
+		gridCentral.setConstraints(btn_buscarModelo, gridConCentral);
+		
+		//PANEL CENTRAL
+		pnl_tabla = new JPanel();
+		
+		estadoProducto = new Tabla_Producto_Estado();
+		tabla  = new JTable(estadoProducto);
+		scrollProducto = new JScrollPane(tabla);
+		pnl_tabla.add(scrollProducto);
+		
+		//PANEL BOTONES
+		pnl_botones = new JPanel();
+		
+		btn_actualizar = new JButton(new ImageIcon("src/Imagenes/activar.jpeg"));
+		btn_actualizar.setBorder(null);
+		btn_limpiar = new JButton(new ImageIcon("src/Imagenes/limpiar.jpeg"));
+		btn_limpiar.setBorder(null);
+		
+		pnl_botones.add(btn_actualizar);
+		pnl_botones.add(btn_limpiar);
+		
+		getContentPane().add(pnl_tabla, BorderLayout.CENTER);
+		getContentPane().add(pnl_botones, BorderLayout.SOUTH);
+		
+		((JComponent)getContentPane()).setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		
+	}
+
+	public void actionPerformed(ActionEvent evento) {
+		
+		if (evento.getSource() == btn_buscarMarca) {
+			
+			String marca;
+			marca = txt_marca.getText();
+			
+			if ("".equals(marca)){
+				JOptionPane.showMessageDialog(null, "Llenar el campo de busqueda");
+				txt_marca.setText("");
+			} else{
+				Producto producto = new Producto();
+				ArrayList<Producto> listaProductoMarca = producto.listarProductosxMarca(marca);
+				Tabla_Producto_Consulta tablaProMarca = new Tabla_Producto_Consulta(listaProductoMarca);
+				tabla.removeAll();
+				tabla.setModel(tablaProMarca);
+				tabla.updateUI();
+			}
+
+		}
+		
+		if(evento.getSource() == btn_actualizar){	
+			if (cbx_categoria.getSelectedItem().equals("") || txt_nombre.getText().equals("") 
+					|| txt_marca.getText().equals("") || txt_modelo.getText().equals("")
+					|| txt_valor.getText().equals("") || txt_minimo.getText().equals("")
+					|| txt_maximo.getText().equals("")){
+				
+				JOptionPane.showMessageDialog(null, "Llenar todos los campos");
+			}
+			
+			if (txt_nombre.getText().length() >= 1 && txt_marca.getText().length() >= 1 
+					&& txt_modelo.getText().length() >= 1 && txt_valor.getText().length() <= 10  
+					&& txt_minimo.getText().length() == 10 && txt_maximo.getText().length() >= 10) {
+				
+				producto = new Producto (Integer.parseInt(txt_codProducto.getText()), txt_nombre.getText(), txt_marca.getText(), txt_modelo.getText(),
+						Double.parseDouble(txt_valor.getText()), Integer.parseInt(txt_minimo.getText()),
+
+						Integer.parseInt(txt_minimo.getText()));
+
+				idproducto = Integer.parseInt(txt_codProducto.getText());
+
+				producto.modificarProducto(idproducto, producto);
+
+				JOptionPane.showMessageDialog(null, "Registro Exitoso");
+				
+				limpiarPantalla();
+			}
+		}
+		
+	}
+
+	public void mouseClicked(MouseEvent evento) {
+		
+		int fila = tabla.rowAtPoint(evento.getPoint());
+
+		txt_codProducto.setText(tabla.getValueAt(fila, 0).toString());
+
+        txtnombre.setText(vista.tableEmpleado.getValueAt(fila, 1).toString());
+
+        modificar.txtapellido.setText(vista.tableEmpleado.getValueAt(fila, 2).toString());
+
+        modificar.txtcedula.setText(vista.tableEmpleado.getValueAt(fila, 3).toString());
+
+        modificar.txttelefono.setText(vista.tableEmpleado.getValueAt(fila, 4).toString());
+
+        modificar.txtdireccion.setText(vista.tableEmpleado.getValueAt(fila, 5).toString());
+
+        modificar.txtedad.setText(vista.tableEmpleado.getValueAt(fila, 6).toString());
+
+        modificar.cmbtipo.setSelectedItem(vista.tableEmpleado.getValueAt(fila, 7).toString());
+
+     
+
+        String tipo = vista.tableEmpleado.getValueAt(fila, 7).toString();
+
+        String valor = vista.tableEmpleado.getValueAt(fila, 8).toString();
+		
+	}
+
+	public void mouseEntered(MouseEvent e) {
+		
+	}
+
+	public void mouseExited(MouseEvent e) {
+		
+	}
+
+	public void mousePressed(MouseEvent e) {
+		
+	}
+
+	public void mouseReleased(MouseEvent e) {
+		
+	}
+
+}

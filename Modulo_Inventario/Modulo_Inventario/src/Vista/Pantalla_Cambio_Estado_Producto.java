@@ -16,6 +16,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import Tablas.Tabla_Producto_Estado;
+
 @SuppressWarnings("serial")
 public class Pantalla_Cambio_Estado_Producto extends JFrame{
 	

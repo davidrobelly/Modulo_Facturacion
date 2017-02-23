@@ -17,7 +17,7 @@ public class Pantalla_Principal extends JFrame implements ActionListener{
 	public JMenuBar barraMenu;
 	public JMenu menuInventario, menuCompras, menuVentas, menuOpciones, menuProcesosInv, menuReportesInv, menuProcesosCom, menuReportesCom,
 				 menuProcesosVen, menuReportesVen;
-	public JMenuItem menuItemProcesoIngPro, menuItemProcesoKardex, menuItemProcesoEstPro, 
+	public JMenuItem menuItemProcesoIngPro, menuItemProcesoKardex, menuItemProcesoEstPro, menuItemProcesoModPro, 
 					 menuItemReportCategoria, menuItemReportProProvee, menuItemReportStockPro,
 					 menuItemCerrarSesion, menuItemSalir;
 	
@@ -51,6 +51,10 @@ public class Pantalla_Principal extends JFrame implements ActionListener{
 		menuItemProcesoIngPro = new JMenuItem("Ingreso de Producto", KeyEvent.VK_I);
 		menuProcesosInv.add(menuItemProcesoIngPro);
 		menuItemProcesoIngPro.addActionListener(this);
+		
+		menuItemProcesoModPro = new JMenuItem("Modificacion de Producto", KeyEvent.VK_M);
+		menuProcesosInv.add(menuItemProcesoModPro);
+		menuItemProcesoModPro.addActionListener(this);
 		
 		menuItemProcesoKardex = new JMenuItem("Kardex - Entradas y Salidas", KeyEvent.VK_K);
 		menuProcesosInv.add(menuItemProcesoKardex);
@@ -133,6 +137,14 @@ public class Pantalla_Principal extends JFrame implements ActionListener{
 			cambioEstadoPro = new Pantalla_Cambio_Estado_Producto();
 			cambioEstadoPro.setVisible(true);	
 		}
+		
+		if (evento.getSource() == menuItemProcesoModPro){
+			Pantalla_Modificar_Producto modProducto;
+			modProducto = new Pantalla_Modificar_Producto();
+			modProducto.setVisible(true);	
+		}
+		
+		
 		
 		if (evento.getSource() == menuItemCerrarSesion) {
 			Pantalla_Ingreso ingreso;

@@ -1,0 +1,6 @@
+package Tablas;
+
+public class Snippet {
+	final int limite = 10;
+}
+

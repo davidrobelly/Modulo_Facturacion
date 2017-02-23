@@ -1,0 +1,28 @@
+package Vista;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+
+import Modelo.Producto;
+
+@SuppressWarnings("serial")
+public class Pantalla_Modificar_Producto extends JFrame{
+	
+	public ImageIcon ico_aplicacion;
+	public JPanel pnl_datos, pnl_tabla, pnl_botones;
+	public JLabel lbl_marca, lbl_modelo;
+	public JTextField txt_marca, txt_modelo, txt_codProducto;
+	public JButton btn_actualizar, btn_limpiar, btn_buscarMarca, btn_buscarModelo;
+	public Tabla_Producto_Consulta jtproducto;
+	public JTable tabla;
+	public JScrollPane scrollProducto;
+	
+	public Producto producto;
+
+}

@@ -1,0 +1,129 @@
+package Vista;
+
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+
+import Modelo.Producto;
+
+@SuppressWarnings("serial")
+public class Pantalla_Modificar_Producto extends JFrame implements ActionListener{
+	
+	public ImageIcon ico_aplicacion;
+	public JPanel pnl_datos, pnl_tabla, pnl_botones;
+	public JLabel lbl_marca, lbl_modelo;
+	public JTextField txt_marca, txt_modelo, txt_codProducto;
+	public JButton btn_actualizar, btn_limpiar, btn_buscarMarca, btn_buscarModelo;
+	public Tabla_Producto_Consulta jtproducto;
+	public JTable tabla;
+	public JScrollPane scrollProducto;
+	
+	public Producto producto;
+	public Tabla_Producto_Estado estadoProducto;
+
+	public Pantalla_Modificar_Producto (){
+		
+		super("Producto - Modificar");
+		setSize(500, 300);
+		setLocation(400, 25);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		//Icono de la Aplicacion
+		ico_aplicacion = new ImageIcon("src/Imagenes/icono.gif");
+		setIconImage(ico_aplicacion.getImage());
+		
+		pnl_datos = new JPanel();
+		getContentPane().add(pnl_datos, BorderLayout.NORTH);
+		
+		GridBagLayout gridCentral = new GridBagLayout();
+		pnl_datos.setLayout(gridCentral);
+		
+		GridBagConstraints gridConCentral = new GridBagConstraints();
+		gridConCentral.fill = GridBagConstraints.BOTH;
+		gridConCentral.insets = new Insets(3, 3, 3, 3);
+		
+		gridConCentral.gridx = 0;
+		gridConCentral.gridy = 0;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		lbl_marca = new JLabel("Marca : ");
+		pnl_datos.add(lbl_marca);
+		gridCentral.setConstraints(lbl_marca, gridConCentral);
+		
+		gridConCentral.gridx = 1;
+		gridConCentral.gridy = 0;
+		txt_marca = new JTextField(20);
+		pnl_datos.add(txt_marca);
+		gridCentral.setConstraints(txt_marca, gridConCentral);
+
+		gridConCentral.gridx = 2;
+		gridConCentral.gridy = 0;
+		btn_buscarMarca = new JButton(new ImageIcon("src/Imagenes/buscarP.jpeg"));
+		btn_buscarMarca.setBorder(null);
+		pnl_datos.add(btn_buscarMarca);
+		gridCentral.setConstraints(btn_buscarMarca, gridConCentral);
+		
+		gridConCentral.gridx = 0;
+		gridConCentral.gridy = 1;
+		lbl_modelo = new JLabel("Modelo : ");
+		pnl_datos.add(lbl_modelo);
+		gridCentral.setConstraints(lbl_modelo, gridConCentral);
+		
+		gridConCentral.gridx = 1;
+		gridConCentral.gridy = 1;
+		txt_modelo = new JTextField(20);
+		pnl_datos.add(txt_modelo);
+		gridCentral.setConstraints(txt_modelo, gridConCentral);
+
+		gridConCentral.gridx = 2;
+		gridConCentral.gridy = 1;
+		btn_buscarModelo = new JButton(new ImageIcon("src/Imagenes/buscarP.jpeg"));
+		btn_buscarModelo.setBorder(null);
+		pnl_datos.add(btn_buscarModelo);
+		gridCentral.setConstraints(btn_buscarModelo, gridConCentral);
+		
+		//PANEL CENTRAL
+		pnl_tabla = new JPanel();
+		
+		estadoProducto = new Tabla_Producto_Estado();
+		tabla  = new JTable(estadoProducto);
+		scrollProducto = new JScrollPane(tabla);
+		pnl_tabla.add(scrollProducto);
+		
+		//PANEL BOTONES
+		pnl_botones = new JPanel();
+		
+		btn_actualizar = new JButton(new ImageIcon("src/Imagenes/activar.jpeg"));
+		btn_actualizar.setBorder(null);
+		btn_limpiar = new JButton(new ImageIcon("src/Imagenes/limpiar.jpeg"));
+		btn_limpiar.setBorder(null);
+		
+		pnl_botones.add(btn_actualizar);
+		pnl_botones.add(btn_limpiar);
+		
+		getContentPane().add(pnl_tabla, BorderLayout.CENTER);
+		getContentPane().add(pnl_botones, BorderLayout.SOUTH);
+		
+		((JComponent)getContentPane()).setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		
+	}
+
+}
