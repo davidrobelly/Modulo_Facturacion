@@ -66,7 +66,8 @@ public class Pantalla_Cambio_Estado_Producto extends JFrame{
 
 		gridConCentral.gridx = 2;
 		gridConCentral.gridy = 0;
-		btn_buscarMarca = new JButton("..");
+		btn_buscarMarca = new JButton(new ImageIcon("src/Imagenes/buscarP.jpeg"));
+		btn_buscarMarca.setBorder(null);
 		pnl_superior.add(btn_buscarMarca);
 		gridCentral.setConstraints(btn_buscarMarca, gridConCentral);
 		
@@ -84,7 +85,8 @@ public class Pantalla_Cambio_Estado_Producto extends JFrame{
 
 		gridConCentral.gridx = 2;
 		gridConCentral.gridy = 1;
-		btn_buscarModelo = new JButton("..");
+		btn_buscarModelo = new JButton(new ImageIcon("src/Imagenes/buscarP.jpeg"));
+		btn_buscarModelo.setBorder(null);
 		pnl_superior.add(btn_buscarModelo);
 		gridCentral.setConstraints(btn_buscarModelo, gridConCentral);
 		
@@ -99,8 +101,10 @@ public class Pantalla_Cambio_Estado_Producto extends JFrame{
 		//PANEL BOTONES
 		pnl_botones = new JPanel();
 		
-		btn_activar = new JButton("ACTIVAR");
-		btn_desactivar = new JButton("DESACTIVAR");
+		btn_activar = new JButton(new ImageIcon("src/Imagenes/activar.jpeg"));
+		btn_activar.setBorder(null);
+		btn_desactivar = new JButton(new ImageIcon("src/Imagenes/desactivar.jpeg"));
+		btn_desactivar.setBorder(null);
 		
 		pnl_botones.add(btn_activar);
 		pnl_botones.add(btn_desactivar);

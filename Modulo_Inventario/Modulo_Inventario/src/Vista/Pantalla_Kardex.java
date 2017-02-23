@@ -153,21 +153,15 @@ public class Pantalla_Kardex extends JFrame implements ActionListener{
 		gridConCentral.gridx = 1;
 		gridConCentral.gridy = 6;
 		calendario = new JCalendar();	
-//		calendario.setBorder();
 		pnl_central.add(calendario);
 		gridCentral.setConstraints(calendario, gridConCentral);
-		
-		//JCalendar calEjemplo1=new  JCalendar();
-		//      JCalendarCombo calEjemplo2=new  JCalendarCombo();
-		// 
-		//      this.add(calEjemplo1);
-		//      this.add(calEjemplo2);
-		//      this.setLayout(new FlowLayout());
+
 		
 		//PANEL BOTONES
 		pnl_botones = new JPanel(new GridLayout(1, 1));
 		
-		btn_agregar = new JButton("AGREGAR");
+		btn_agregar = new JButton(new ImageIcon("src/Imagenes/agregar.jpeg"));
+		btn_agregar.setBorder(null);
 		btn_agregar.addActionListener(this);
 		
 		pnl_botones.add(btn_agregar);	

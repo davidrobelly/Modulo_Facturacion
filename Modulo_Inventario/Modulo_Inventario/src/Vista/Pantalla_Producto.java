@@ -1,6 +1,6 @@
 package Vista;
 
-import java.awt.BorderLayout;  
+import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -37,13 +37,17 @@ public class Pantalla_Producto extends JFrame implements ActionListener, MouseLi
 				  lbl_minimo, lbl_maximo, lbl_existencia, lbl_serie, lbl_color, lbl_detalle;
 	public JComboBox<String> cbx_categoria;
 	public JTextField txt_nombre, txt_marca, txt_modelo, txt_valor, txt_minimo, 
-					  txt_maximo, txt_existencia, txt_serie, txt_color;
+					  txt_maximo, txt_existencia, txt_serie, txt_color, txt_codProducto;
 	public JTextArea txta_detalle;
 	public JButton btn_agregar, btn_actualizar, btn_limpiar, btn_salir, btn_buscarMarca, 
 				   btn_buscarModelo, btn_buscarNumSerie, btn_buscarColor;
 	public Tabla_Producto_Consulta jtproducto;
 	public JTable tabla;
-	public JScrollPane scrollProductoEstado;
+	public JScrollPane scrollProducto;
+	
+	public Producto producto;
+	
+	int idproducto;
 
 	public Pantalla_Producto (){
 		
@@ -52,6 +56,7 @@ public class Pantalla_Producto extends JFrame implements ActionListener, MouseLi
 		setLocation(400,25);
 		this.setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
 		
 		//Icono de la Aplicacion
 		ico_aplicacion = new ImageIcon("src/Imagenes/icono.gif");
@@ -116,7 +121,8 @@ public class Pantalla_Producto extends JFrame implements ActionListener, MouseLi
 
 		gridConSuperior1.gridx = 2;
 		gridConSuperior1.gridy = 2;
-		btn_buscarMarca = new JButton("..");
+		btn_buscarMarca = new JButton(new ImageIcon("src/Imagenes/buscarP.jpeg"));
+		btn_buscarMarca.setBorder(null);
 		btn_buscarMarca.addActionListener(this);
 		pnl_datGenPro.add(btn_buscarMarca);
 		gridSuperior1.setConstraints(btn_buscarMarca, gridConSuperior1);
@@ -135,7 +141,8 @@ public class Pantalla_Producto extends JFrame implements ActionListener, MouseLi
 
 		gridConSuperior1.gridx = 2;
 		gridConSuperior1.gridy = 3;
-		btn_buscarModelo = new JButton("..");
+		btn_buscarModelo = new JButton(new ImageIcon("src/Imagenes/buscarP.jpeg"));
+		btn_buscarModelo.setBorder(null);
 		pnl_datGenPro.add(btn_buscarModelo);
 		gridSuperior1.setConstraints(btn_buscarModelo, gridConSuperior1);
 		
@@ -217,7 +224,8 @@ public class Pantalla_Producto extends JFrame implements ActionListener, MouseLi
 		
 		gridConSuperior2.gridx = 2;
 		gridConSuperior2.gridy = 0;
-		btn_buscarNumSerie = new JButton("..");
+		btn_buscarNumSerie = new JButton(new ImageIcon("src/Imagenes/buscarP.jpeg"));
+		btn_buscarNumSerie.setBorder(null);
 		pnl_datEspePro.add(btn_buscarNumSerie);
 		gridSuperior2.setConstraints(btn_buscarNumSerie, gridConSuperior2);
 		
@@ -235,7 +243,8 @@ public class Pantalla_Producto extends JFrame implements ActionListener, MouseLi
 		
 		gridConSuperior2.gridx = 2;
 		gridConSuperior2.gridy = 1;
-		btn_buscarColor = new JButton("..");
+		btn_buscarColor = new JButton(new ImageIcon("src/Imagenes/buscarP.jpeg"));
+		btn_buscarColor.setBorder(null);
 		pnl_datEspePro.add(btn_buscarColor);
 		gridSuperior2.setConstraints(btn_buscarColor, gridConSuperior2);
 		
@@ -247,13 +256,20 @@ public class Pantalla_Producto extends JFrame implements ActionListener, MouseLi
 		
 		gridConSuperior2.gridx = 1;
 		gridConSuperior2.gridy = 2;
-		txta_detalle = new JTextArea(10, 5);
+		txta_detalle = new JTextArea(9, 5);
 		txta_detalle.setLineWrap(true);
 		txta_detalle.setWrapStyleWord(true);
 		JScrollPane scroll = new JScrollPane();
 		scroll.setViewportView(txta_detalle);		
 		pnl_datEspePro.add(scroll);
 		gridSuperior2.setConstraints(scroll, gridConSuperior2);
+		
+		gridConSuperior2.gridx = 0;
+		gridConSuperior2.gridy = 3;
+		txt_codProducto = new JTextField();	
+		txt_codProducto.setVisible(false);
+		pnl_datEspePro.add(txt_codProducto);
+		gridSuperior2.setConstraints(txt_codProducto, gridConSuperior2);
 		
 		//PANEL TABLA
 		pnl_tabla = new JPanel();
@@ -262,28 +278,53 @@ public class Pantalla_Producto extends JFrame implements ActionListener, MouseLi
 		tabla  = new JTable(jtproducto);
 		tabla.addMouseListener(this);
 		tabla.getTableHeader().setReorderingAllowed(false);
-		scrollProductoEstado = new JScrollPane(tabla);
-		pnl_tabla.add(scrollProductoEstado);
+		scrollProducto = new JScrollPane(tabla);
+		pnl_tabla.add(scrollProducto, BorderLayout.CENTER);
 		
 		anchoColumnaTabla();
 		
-		pnl_datos.add(pnl_tabla);
-		
 		//PANEL BOTONES
 		pnl_botones = new JPanel();
-		pnl_botones.setLayout(new GridLayout(1, 4, 10, 10));
 		
-		btn_agregar = new JButton("AGREGAR");
+		GridBagLayout gridInferior = new GridBagLayout();
+		pnl_botones.setLayout(gridInferior);
+		
+		GridBagConstraints gridConInferior= new GridBagConstraints();
+		gridConInferior.fill = GridBagConstraints.BOTH;
+		gridConInferior.insets = new Insets(3, 3, 3, 3);
+		
+		gridConInferior.gridx = 0;
+		gridConInferior.gridy = 0;
+		gridConInferior.gridheight = 1;
+		gridConInferior.gridwidth = 1;		
+		btn_agregar = new JButton(new ImageIcon("src/Imagenes/limpiar.jpeg"));
+		btn_agregar.setBorder(null);
 		btn_agregar.addActionListener(this);
-		btn_actualizar = new JButton("MODIFICAR");
-		btn_limpiar = new JButton("LIMPIAR");
-		btn_salir = new JButton("SALIR");
-		btn_salir.addActionListener(this);
-		
 		pnl_botones.add(btn_agregar);
+		gridInferior.setConstraints(btn_agregar, gridConInferior);
+	
+		gridConInferior.gridx = 1;
+		gridConInferior.gridy = 0;
+		btn_actualizar = new JButton(new ImageIcon("src/Imagenes/limpiar.jpeg"));
+		btn_actualizar.setBorder(null);
 		pnl_botones.add(btn_actualizar);
+		gridInferior.setConstraints(btn_actualizar, gridConInferior);
+	
+		
+		gridConInferior.gridx = 2;
+		gridConInferior.gridy = 0;
+		btn_limpiar = new JButton(new ImageIcon("src/Imagenes/limpiar.jpeg"));
+		btn_limpiar.setBorder(null);
+		btn_limpiar.addActionListener(this);
 		pnl_botones.add(btn_limpiar);
-		pnl_botones.add(btn_salir);	
+		gridInferior.setConstraints(btn_limpiar, gridConInferior);
+		
+		gridConInferior.gridx = 3;
+		gridConInferior.gridy = 0;
+		btn_salir = new JButton(new ImageIcon("src/Imagenes/limpiar.jpeg"));
+		btn_salir.setBorder(null);
+		pnl_botones.add(btn_salir);
+		gridInferior.setConstraints(btn_salir, gridConInferior);
 		
 		getContentPane().add(pnl_datos, BorderLayout.NORTH);
 		getContentPane().add(pnl_tabla, BorderLayout.CENTER);
@@ -301,15 +342,17 @@ public class Pantalla_Producto extends JFrame implements ActionListener, MouseLi
 		txt_valor.setText("");
 		txt_minimo.setText("");
 		txt_maximo.setText("");
-		
+		tabla.setModel(jtproducto);
 	}
 	
 	public void anchoColumnaTabla(){
 		
-		tabla.getColumnModel().getColumn(0).setPreferredWidth(70);
-		tabla.getColumnModel().getColumn(1).setPreferredWidth(70);
-		tabla.getColumnModel().getColumn(2).setPreferredWidth(70);
+		tabla.getColumnModel().getColumn(0).setPreferredWidth(30);
+		tabla.getColumnModel().getColumn(1).setPreferredWidth(30);
+		tabla.getColumnModel().getColumn(2).setPreferredWidth(30);
 		tabla.getColumnModel().getColumn(3).setPreferredWidth(30);
+		tabla.getColumnModel().getColumn(4).setPreferredWidth(30);
+		tabla.getColumnModel().getColumn(5).setPreferredWidth(30);
 		
 	}
 
@@ -343,9 +386,9 @@ public class Pantalla_Producto extends JFrame implements ActionListener, MouseLi
 			marca = txt_marca.getText();
 			
 			if ("".equals(marca)){
-				JOptionPane.showMessageDialog(null, "Llenar el campo de busqueda");
-				txt_marca.setText("");				
-			}else{
+				JOptionPane.showMessageDialog(null, "Llenar todos los campos");
+				txt_marca.setText("");
+			} else{
 				Producto producto = new Producto();
 				ArrayList<Producto> listaProductoMarca = producto.listarProductosxMarca(marca);
 				Tabla_Producto_Consulta tablaProMarca = new Tabla_Producto_Consulta(listaProductoMarca);
@@ -356,8 +399,32 @@ public class Pantalla_Producto extends JFrame implements ActionListener, MouseLi
 		
 		}
 		
-		if(evento.getSource() == btn_actualizar){			
+		if(evento.getSource() == btn_actualizar){	
+			if (cbx_categoria.getSelectedItem().equals("") || txt_nombre.getText().equals("") 
+					|| txt_marca.getText().equals("") || txt_modelo.getText().equals("")
+					|| txt_valor.getText().equals("") || txt_minimo.getText().equals("")
+					|| txt_maximo.getText().equals("")){
+				
+				JOptionPane.showMessageDialog(null, "Llenar todos los campos");
+			}
+			
+			if (txt_nombre.getText().length() >= 1 && txt_marca.getText().length() >= 1 
+					&& txt_modelo.getText().length() >= 1 && txt_valor.getText().length() <= 8 
+					&& txt_minimo.getText().length() == 10 && txt_maximo.getText().length() >= 10) {
+				
+				producto = new Producto (Integer.parseInt(txt_codProducto.getText()), txt_nombre.getText(), txt_marca.getText(), txt_modelo.getText(),
+						Double.parseDouble(txt_valor.getText()), Integer.parseInt(txt_minimo.getText()),
 
+						Integer.parseInt(txt_minimo.getText()));
+
+				idproducto = Integer.parseInt(txt_codProducto.getText());
+
+				producto.modificarProducto(idproducto, producto);
+
+				
+
+				JOptionPane.showMessageDialog(null, "Registro Exitoso");
+			}
 		}
 		
 		if(evento.getSource() == btn_limpiar){			
@@ -367,6 +434,7 @@ public class Pantalla_Producto extends JFrame implements ActionListener, MouseLi
 		}
 		
 		if(evento.getSource() == btn_salir){
+			setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		}
 		
@@ -380,6 +448,8 @@ public class Pantalla_Producto extends JFrame implements ActionListener, MouseLi
         txt_marca.setText(tabla.getValueAt(fila, 1).toString());
         txt_modelo.setText(tabla.getValueAt(fila, 2).toString());
         txt_valor.setText(tabla.getValueAt(fila, 3).toString());
+        txt_minimo.setText(tabla.getValueAt(fila, 4).toString());
+        txt_maximo.setText(tabla.getValueAt(fila, 5).toString());
         
 	}
 
