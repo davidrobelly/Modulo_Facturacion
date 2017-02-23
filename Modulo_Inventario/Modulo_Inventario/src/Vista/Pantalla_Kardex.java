@@ -1,10 +1,14 @@
 package Vista;
 
-import java.awt.BorderLayout;
+import java.awt.BorderLayout; 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.util.Calendar;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -13,28 +17,36 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import org.freixas.jcalendar.DateEvent;
+import org.freixas.jcalendar.DateListener;
+import org.freixas.jcalendar.JCalendar;
+
+
 @SuppressWarnings("serial")
-public class Pantalla_Kardex extends JFrame{
+public class Pantalla_Kardex extends JFrame implements ActionListener{
 	
 	public ImageIcon ico_aplicacion;
 	public JPanel pnl_central, pnl_botones;
-	public JLabel lbl_tipo, lbl_fecha, lbl_producto, lbl_cantidad, lbl_preCompra, lbl_detalle;
+	public JLabel lbl_tipo, lbl_fecha, lbl_producto, lbl_cantidad, lbl_preCompra, lbl_detalle, lbl_calendario;
 	public JComboBox<String> cbx_tipo;
 	public JTextField txt_fecha, txt_producto, txt_cantidad, txt_preCompra;
 	public JTextArea txta_detalle;;
 	public JButton btn_agregar;
 	public JScrollPane scroll;
+	public JCalendar calendario;
+	
 	
 	public Pantalla_Kardex (){
 		
 		super("Kardex - Entradas y Salidas");
-		setSize(400, 300);
-		setLocation(500, 300);
+		setSize(500, 450);
+		setLocation(400, 25);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		//Icono de la Aplicacion
@@ -68,17 +80,17 @@ public class Pantalla_Kardex extends JFrame{
 		pnl_central.add(cbx_tipo);
 		gridCentral.setConstraints(cbx_tipo, gridConCentral);
 		
-		gridConCentral.gridx = 0;
-		gridConCentral.gridy = 1;
-		lbl_fecha = new JLabel("Fecha : ");
-		pnl_central.add(lbl_fecha);
-		gridCentral.setConstraints(lbl_fecha, gridConCentral);
-		
-		gridConCentral.gridx = 1;
-		gridConCentral.gridy = 1;
-		txt_fecha = new JTextField(20);
-		pnl_central.add(txt_fecha);
-		gridCentral.setConstraints(txt_fecha, gridConCentral);
+//		gridConCentral.gridx = 0;
+//		gridConCentral.gridy = 1;
+//		lbl_fecha = new JLabel("Fecha : ");
+//		pnl_central.add(lbl_fecha);
+//		gridCentral.setConstraints(lbl_fecha, gridConCentral);
+//		
+//		gridConCentral.gridx = 1;
+//		gridConCentral.gridy = 1;
+//		calendario = new JCalendar();		
+//		pnl_central.add(calendario);
+//		gridCentral.setConstraints(calendario, gridConCentral);
 		
 		gridConCentral.gridx = 0;
 		gridConCentral.gridy = 2;
@@ -132,10 +144,31 @@ public class Pantalla_Kardex extends JFrame{
 		pnl_central.add(scroll);
 		gridCentral.setConstraints(scroll, gridConCentral);
 		
+		gridConCentral.gridx = 0;
+		gridConCentral.gridy = 6;
+		lbl_calendario = new JLabel("Calendario : ");
+		pnl_central.add(lbl_calendario);
+		gridCentral.setConstraints(lbl_calendario, gridConCentral);
+		
+		gridConCentral.gridx = 1;
+		gridConCentral.gridy = 6;
+		calendario = new JCalendar();	
+//		calendario.setBorder();
+		pnl_central.add(calendario);
+		gridCentral.setConstraints(calendario, gridConCentral);
+		
+		//JCalendar calEjemplo1=new  JCalendar();
+		//      JCalendarCombo calEjemplo2=new  JCalendarCombo();
+		// 
+		//      this.add(calEjemplo1);
+		//      this.add(calEjemplo2);
+		//      this.setLayout(new FlowLayout());
+		
 		//PANEL BOTONES
 		pnl_botones = new JPanel(new GridLayout(1, 1));
 		
 		btn_agregar = new JButton("AGREGAR");
+		btn_agregar.addActionListener(this);
 		
 		pnl_botones.add(btn_agregar);	
 		
@@ -145,5 +178,63 @@ public class Pantalla_Kardex extends JFrame{
 		((JComponent)getContentPane()).setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 	}
 	
+	public void limpiarPantalla(){
+		
+		txt_fecha.setText("");
+		txt_producto.setText("");
+		txt_cantidad.setText("");
+		txt_preCompra.setText("");
+		txta_detalle.setText("");
+		
+	}
+
+	public void actionPerformed(ActionEvent evento) {
+		
+		if(evento.getSource() == btn_agregar){	
+			
+			String tipo, detalle;
+			Date fecha;
+			double valor;
+			int producto, cantidad;
+			
+			tipo = (String) cbx_tipo.getSelectedItem();
+			producto = Integer.parseInt(txt_producto.getText());
+			cantidad = Integer.parseInt(txt_cantidad.getText());
+			valor = Double.parseDouble(txt_preCompra.getText());
+			detalle = txta_detalle.getText();			
+			
+//			Kardex kardexIE = new Kardex(tipo, producto, cantidad, valor, detalle);
+
+//			kardexIE.ingresarKardex(kardexIE);
+			JOptionPane.showMessageDialog(null, "Registro exitoso");			
+			limpiarPantalla();
+			
+		}
+		
+	}
+	
+	@SuppressWarnings("unused")
+	private class MyDateListener implements DateListener {
+
+		@Override
+		public void dateChanged(DateEvent evento) {
+
+			Calendar c = evento.getSelectedDate();
+			  if (c != null) {
+				System.out.println(c.getTime());
+			  }
+			  else {
+				System.out.println("No selecciono fecha");
+			  }
+			
+		}
 
 }
+
+
+	
+
+}
+
+
+

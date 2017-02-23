@@ -1,7 +1,0 @@
-package Vista;
-
-import javax.swing.JFrame;
-
-public class Pantalla_Kardex extends JFrame{
-
-}

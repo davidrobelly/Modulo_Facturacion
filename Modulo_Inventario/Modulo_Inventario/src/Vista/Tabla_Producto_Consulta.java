@@ -8,7 +8,7 @@ import javax.swing.table.AbstractTableModel;
 	
 	public class Tabla_Producto_Consulta extends AbstractTableModel{
 
-		private final String[] titulo = {"Nombre","Marca","Modelo","Valor","Min","Max"};
+		private final String[] titulo = {"Nombre","Marca","Modelo","Valor"};
 		
 		ArrayList<Producto> listaProductos = new ArrayList<>();
 		
@@ -51,10 +51,6 @@ import javax.swing.table.AbstractTableModel;
 				return listaProductos.get(x).getModelo();
 			case 3:
 				return listaProductos.get(x).getValor();
-			case 4:
-				return listaProductos.get(x).getMinimo();
-			case 5:
-				return listaProductos.get(x).getMaximo();
 			default:
 				return null;
 			}

@@ -4,3 +4,5 @@
 1487531424995	Rename type 'Tabla_Consulta_Producto'
 1487531524613	Rename type 'Tablas'
 1487627001096	Delete element
+1487634728531	Encapsulate field 'codigoProducto'
+1487797455698	Delete element
