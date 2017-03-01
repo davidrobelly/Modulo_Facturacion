@@ -1,0 +1,58 @@
+package pantallas;
+
+import java.awt.GridLayout;
+
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class Pantalla_Sucursal extends JFrame{
+	
+	public JPanel panelNorte, panelSur, panelCentral;
+	public JLabel lblempleado, lblSucursal;
+	public JComboBox cmbSucursal;
+	public JTextField txtempleado;
+	
+	public Pantalla_Sucursal (){
+		
+		ventana();
+		initcomponents();
+		
+		this.getContentPane().add(panelCentral,"Center");
+		panelCentral.setLayout(new GridLayout(2,2));
+		panelCentral.add(lblempleado);
+		panelCentral.add(txtempleado);
+		panelCentral.add(lblSucursal);
+		panelCentral.add(cmbSucursal);
+	}
+
+	private void initcomponents() {
+		
+		panelNorte = new JPanel();
+		panelSur = new JPanel();
+		panelCentral = new JPanel();
+		
+		lblempleado = new JLabel ("Empleado: ");
+		lblSucursal = new JLabel ("Sucursal: ");
+		
+		cmbSucursal = new JComboBox();
+		
+		txtempleado = new JTextField();
+		txtempleado.setEditable(false);
+	}
+
+	private void ventana() {
+		this.setLocationRelativeTo(null);
+		this.pack();
+		this.setTitle("Seleccione Local");
+		this.setVisible(true);
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.setSize(300, 150);
+		this.setLocation(500, 200);
+		this.setResizable(false);
+		
+	}
+
+}

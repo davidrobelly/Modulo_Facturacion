@@ -1,0 +1,59 @@
+package pantallas;
+
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
+
+public class Pantalla_Facturas extends JFrame{
+	
+	JPanel panelBotones, panelgrafico;
+	JButton btnreg, btnmodif, btnconsul, btnimg;
+	GridBagLayout grid;
+	GridBagConstraints con;
+	
+	public Pantalla_Facturas () {
+		
+		ventana();
+		initcomponents();
+		
+		this.getContentPane().add(panelBotones, "East");
+		this.getContentPane().add(panelgrafico, "West");
+	}
+	
+	private void ventana() {
+		
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.setLocationRelativeTo(null);
+		this.pack();
+		this.setTitle("Control de Facturas");
+		this.setVisible(true);
+		
+		this.setBounds(100, 100, 600, 450);
+		this.setResizable(false);
+		
+	}
+	
+	private void initcomponents () {
+		
+		panelBotones = new JPanel ();
+		panelgrafico = new JPanel ();
+		btnreg = new JButton("Registrar Factura");
+		btnconsul = new JButton ("Consultar Facturas");
+		btnmodif = new JButton ("Modificar Facturas");
+		
+		panelBotones.setBorder(new TitledBorder(null, "Control de Facturas", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelgrafico.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+	}
+
+	void buildConstraints (GridBagConstraints gbc, int gx, int gy, int gw, int gh) {
+		gbc.gridx 					= gx;
+		gbc.gridy 					= gy;
+		gbc.gridwidth 				= gw;
+		gbc.gridheight 				= gh;
+	}
+	
+}

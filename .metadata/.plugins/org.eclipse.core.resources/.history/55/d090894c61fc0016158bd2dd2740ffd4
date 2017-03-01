@@ -1,0 +1,24 @@
+package pantallas;
+
+import javax.swing.JFrame;
+
+public class Pantalla_Sucursal extends JFrame{
+	
+	
+	public Pantalla_Sucursal (){
+		
+		ventana();
+		initcomponents();
+	}
+
+	private void initcomponents() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void ventana() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

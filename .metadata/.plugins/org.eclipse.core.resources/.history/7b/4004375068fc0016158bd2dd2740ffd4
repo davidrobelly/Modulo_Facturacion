@@ -1,0 +1,25 @@
+package controles;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import pantallas.Pantalla_Sucursal;
+
+public class Control_Pantalla_Sucursal implements ActionListener {
+
+	Pantalla_Sucursal vista;
+	
+	
+	public Control_Pantalla_Sucursal (Pantalla_Sucursal vista){
+		this.vista = vista;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object boton = e.getSource();
+		
+	}
+	
+	
+
+}

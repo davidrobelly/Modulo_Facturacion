@@ -1,0 +1,105 @@
+package controles;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
+import modelo_clases.Cliente;
+import modelo_clases.Cotizacion;
+import modelo_clases.Factura;
+import pantallas.Pantalla_Consulta;
+import pantallas.Tabla_Clientes_Id;
+import pantallas.Ventana_Detalle_Cotizacion;
+import pantallas.Ventana_Detalle_Factura;
+import pantallas.Ventana_Ingreso_Cotizacion;
+import pantallas.Ventana_Ingreso_Factura;
+
+public class Control_Ventana_Factura implements ActionListener, KeyListener, MouseListener{
+
+	Ventana_Ingreso_Factura vista;
+	Factura factura;
+	Ventana_Detalle_Factura detallefactura;
+	
+	public Control_Ventana_Factura(Ventana_Ingreso_Factura vista) {
+		super();
+		this.vista = vista;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+	
+		Object boton = e.getSource();
+		
+		if (boton == vista.btncliente) {
+			
+			Pantalla_Consulta pantalla = new Pantalla_Consulta ();
+			Cliente cliente = new Cliente();
+			ArrayList<Cliente> lisCliente = cliente.listaClientesId();
+			Tabla_Clientes_Id tcliente = new Tabla_Clientes_Id(lisCliente);
+			pantalla.tableConsulta.removeAll();
+			pantalla.tableConsulta.setModel(tcliente);
+			pantalla.tableConsulta.updateUI();
+		}
+		
+		if (boton == vista.btnvendedor) {
+			
+		}
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
+

@@ -1,0 +1,40 @@
+package controles;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JOptionPane;
+
+import pantallas.Consultar_Clientes;
+import pantallas.Modificar_Clientes;
+import pantallas.Pantalla_Ingreso;
+import pantallas.Pantalla_Principal;
+import pantallas.Ventana_Ingreso_Clientes;
+import pantallas.Ventana_Ingreso_Credenciales;
+import pantallas.Ventana_Ingreso_Empleado;
+import pantallas.Ventana_Ingreso_Sucursal;
+
+public class Control_PPrincipal implements ActionListener{
+
+	Pantalla_Principal vista;
+	
+	
+	public Control_PPrincipal (Pantalla_Principal vista)
+	{
+		this.vista = vista;
+	}
+	
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		Object boton = e.getSource();
+		
+		if (boton == vista.menuRegCliente)
+		{
+			Ventana_Ingreso_Clientes cliente = new Ventana_Ingreso_Clientes();
+		}
+		
+	}
+
+}

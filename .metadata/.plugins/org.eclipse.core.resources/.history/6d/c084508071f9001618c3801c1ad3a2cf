@@ -1,0 +1,18 @@
+package pantallas;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class Pantalla_Facturas extends JFrame{
+	
+	JPanel panelBotones, panelgrafico;
+	JButton btnreg, btnmodif, btnconsul, btnimg;
+	
+	public Pantalla_Facturas () {
+		
+		
+	}
+	
+
+}
