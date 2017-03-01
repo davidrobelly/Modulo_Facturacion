@@ -1,0 +1,110 @@
+package pantallas;
+
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
+import controles.Control_Pantalla_Consulta;
+import controles.Control_Ventana_Factura;
+
+@SuppressWarnings("serial")
+public class Pantalla_Consulta extends JFrame {
+	
+	public JPanel panelCentral;
+	public Tabla_Clientes_Id clientes;
+	public Tabla_Empleados_Id vendedor;
+	public Tabla_Locales_Id local;
+	public JTable tableConsulta;
+	public JTable tableVendedor;
+	public JTable tableLocal;
+	public JScrollPane scrollPro;
+	GridBagLayout grid;
+	GridBagConstraints con;
+	
+	public Control_Pantalla_Consulta control;
+	
+	public Pantalla_Consulta () {
+		
+		ventana();
+		initcomponents();
+		cliente();
+	}
+	
+	public void cliente () {
+		
+		control = new Control_Pantalla_Consulta (this);
+		
+		this.getContentPane().add(panelCentral, "Center");
+		
+		con.weightx = 1;
+		con.weighty = 1;
+		
+		panelCentral.setLayout(grid);
+		con.anchor = GridBagConstraints.CENTER;
+		con.insets = new Insets(5, 5, 5, 5);
+		con.fill = GridBagConstraints.BOTH;
+		buildConstraints(con, 0, 1, 1, 1);
+		
+		grid.setConstraints(panelCentral, con);
+        tableConsulta.getTableHeader().setReorderingAllowed(false) ;
+		scrollPro = new JScrollPane(tableConsulta);
+		buildConstraints(con, 0, 0, 1, 1);
+		grid.setConstraints(scrollPro, con);
+		panelCentral.add(scrollPro);
+		
+		tableConsulta.addMouseListener(control);
+	}
+
+	
+	public void initcomponents () {
+		
+		grid = new GridBagLayout();
+		con = new GridBagConstraints();
+		
+		panelCentral = new JPanel();
+		
+		clientes = new Tabla_Clientes_Id();
+		vendedor = new Tabla_Empleados_Id();
+		local = new Tabla_Locales_Id();
+		
+		tableConsulta = new JTable (clientes);
+		tableVendedor = new JTable (vendedor);
+		tableLocal = new JTable (local);
+		
+		tableConsulta.getTableHeader().setReorderingAllowed(false);
+		scrollPro = new JScrollPane(tableConsulta);
+		
+		tableVendedor.getTableHeader().setReorderingAllowed(false);
+		scrollPro = new JScrollPane(tableVendedor);
+		
+		tableLocal.getTableHeader().setReorderingAllowed(false);
+		scrollPro = new JScrollPane(tableLocal);
+		
+	}
+	
+	public void ventana() {
+		
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.setLocationRelativeTo(null);
+		this.pack();
+		this.setTitle("Consultar Clientes");
+		this.setVisible(true);
+		
+		this.setBounds(600, 300, 500, 150);
+		this.setResizable(false);
+		
+	}
+	
+	void buildConstraints (GridBagConstraints gbc, int gx, int gy, int gw, int gh) {
+		gbc.gridx 					= gx;
+		gbc.gridy 					= gy;
+		gbc.gridwidth 				= gw;
+		gbc.gridheight 				= gh;
+	}
+
+}

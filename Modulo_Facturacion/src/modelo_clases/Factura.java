@@ -21,8 +21,8 @@ public class Factura {
 	public double metodo_pago;
 	ConexionDB conexion;
 	
-	public Factura(String num_factura, int local, int cliente, int vendedor, Date fecha, String estado,
-			int cantidad_total_productos, double sub_total, double iva, double total_pagar, double metodo_pago) {
+	public Factura(String num_factura, int local, int cliente, int vendedor, Date fecha, 
+			String estado, double metodo_pago) {
 		super();
 		this.setNum_factura(num_factura);
 		this.setLocal(local);
@@ -30,14 +30,19 @@ public class Factura {
 		this.setVendedor(vendedor);
 		this.setFecha(fecha);
 		this.setEstado(estado);
-		this.setCantidad_total_productos(cantidad_total_productos);
-		this.setSub_total(sub_total);
-		this.setIva(iva);
-		this.setTotal_pagar(total_pagar);
 		this.setMetodo_pago(metodo_pago);
+		conexion = new ConexionDB();
 	}
 	
 	
+	public Factura() {
+		super();
+		conexion = new ConexionDB ();
+	}
+
+
+
+
 	public String getNum_factura() {
 		return num_factura;
 	}
@@ -104,7 +109,6 @@ public class Factura {
 	public void setMetodo_pago(double metodo_pago) {
 		this.metodo_pago = metodo_pago;
 	}
-	
 	
 	//metodos
 	

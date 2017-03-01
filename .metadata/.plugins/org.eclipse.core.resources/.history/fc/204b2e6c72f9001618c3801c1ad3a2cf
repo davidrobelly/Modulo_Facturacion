@@ -1,0 +1,44 @@
+package pantallas;
+
+import java.awt.GridBagConstraints;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class Pantalla_Facturas extends JFrame{
+	
+	JPanel panelBotones, panelgrafico;
+	JButton btnreg, btnmodif, btnconsul, btnimg;
+	
+	public Pantalla_Facturas () {
+		
+		
+	}
+	
+	private void ventana() {
+		
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.setLocationRelativeTo(null);
+		this.pack();
+		this.setTitle("Control de Facturas");
+		this.setVisible(true);
+		
+		this.setBounds(100, 100, 600, 450);
+		this.setResizable(false);
+		
+	}
+	
+	private void initcomponents () {
+		
+		
+	}
+
+	void buildConstraints (GridBagConstraints gbc, int gx, int gy, int gw, int gh) {
+		gbc.gridx 					= gx;
+		gbc.gridy 					= gy;
+		gbc.gridwidth 				= gw;
+		gbc.gridheight 				= gh;
+	}
+	
+}

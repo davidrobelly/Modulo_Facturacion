@@ -11,20 +11,22 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import modelo_clases.Cliente;
+import modelo_clases.Credenciales;
 import modelo_clases.Empleado;
 import pantallas.Consultar_Clientes;
 import pantallas.Consultar_Empleados;
 import pantallas.Modificar_Clientes;
 import pantallas.Modificar_Empleados;
 import pantallas.Tabla_Clientes;
-import pantallas.Tabla_Empleados;
+import pantallas.Tabla_Empleados_Id;
+import pantallas.Ventana_Ingreso_Credenciales;
 import pantallas.Ventana_Ingreso_Empleado;
 
 public class Control_Consulta_Empleados implements ActionListener,KeyListener,MouseListener{
 
 	final int limite = 10;
 	Consultar_Empleados vista;
-	Ventana_Ingreso_Empleado modificar;
+	Modificar_Empleados modificar;
 	Empleado empleado;
 	String nombre;
 	String numero;
@@ -50,7 +52,7 @@ public class Control_Consulta_Empleados implements ActionListener,KeyListener,Mo
 			vista.txtapellido.setEnabled(true);
 			vista.btnapellido.setEnabled(true);
 			vista.txtapellido.setText("");
-			Tabla_Empleados tEmpleado = new Tabla_Empleados();
+			Tabla_Empleados_Id tEmpleado = new Tabla_Empleados_Id();
 			vista.tableEmpleado.setModel(tEmpleado);
 			vista.tableEmpleado.updateUI();
 		}
@@ -66,7 +68,7 @@ public class Control_Consulta_Empleados implements ActionListener,KeyListener,Mo
 			vista.txtnombre.setEnabled(true);
 			vista.btnnombre.setEnabled(true);
 			vista.txtnombre.setText("");
-			Tabla_Empleados tEmpleado = new Tabla_Empleados();
+			Tabla_Empleados_Id tEmpleado = new Tabla_Empleados_Id();
 			vista.tableEmpleado.setModel(tEmpleado);
 			vista.tableEmpleado.updateUI();
 		}
@@ -82,7 +84,7 @@ public class Control_Consulta_Empleados implements ActionListener,KeyListener,Mo
 			vista.txtapellido.setEnabled(false);
 			vista.btnapellido.setEnabled(false);
 			vista.txtapellido.setText("");
-			Tabla_Empleados tEmpleado = new Tabla_Empleados();
+			Tabla_Empleados_Id tEmpleado = new Tabla_Empleados_Id();
 			vista.tableEmpleado.setModel(tEmpleado);
 			vista.tableEmpleado.updateUI();
 		}
@@ -94,8 +96,8 @@ public class Control_Consulta_Empleados implements ActionListener,KeyListener,Mo
 				vista.txtnombre.setText("");
 			}else{
 				empleado = new Empleado();
-				ArrayList<Empleado> lisEmpleado = empleado.listaEmpleadoxNombre(nombre);
-				Tabla_Empleados templeado = new Tabla_Empleados(lisEmpleado);
+				ArrayList<Empleado> lisEmpleado = empleado.listaEmpleadoxNombreid(nombre);
+				Tabla_Empleados_Id templeado = new Tabla_Empleados_Id(lisEmpleado);
 				vista.tableEmpleado.removeAll();
 				vista.tableEmpleado.setModel(templeado);
 				vista.tableEmpleado.updateUI();
@@ -109,8 +111,8 @@ public class Control_Consulta_Empleados implements ActionListener,KeyListener,Mo
 				vista.txtcedula.setText("");
 			}else{
 				empleado = new Empleado();
-				ArrayList<Empleado> lisEmpleado = empleado.listaEmpleadosxCedula(numero);
-				Tabla_Empleados templeado = new Tabla_Empleados(lisEmpleado);
+				ArrayList<Empleado> lisEmpleado = empleado.listaEmpleadosxCedulaid(numero);
+				Tabla_Empleados_Id templeado = new Tabla_Empleados_Id(lisEmpleado);
 				vista.tableEmpleado.removeAll();
 				vista.tableEmpleado.setModel(templeado);
 				vista.tableEmpleado.updateUI();
@@ -124,8 +126,8 @@ public class Control_Consulta_Empleados implements ActionListener,KeyListener,Mo
 				vista.txtapellido.setText("");
 			}else{
 				empleado = new Empleado();
-				ArrayList<Empleado> lisEmpleado = empleado.listaEmpeladosxApellido(nombre);
-				Tabla_Empleados templeado = new Tabla_Empleados(lisEmpleado);
+				ArrayList<Empleado> lisEmpleado = empleado.listaEmpeladosxApellidoid(nombre);
+				Tabla_Empleados_Id templeado = new Tabla_Empleados_Id(lisEmpleado);
 				vista.tableEmpleado.removeAll();
 				vista.tableEmpleado.setModel(templeado);
 				vista.tableEmpleado.updateUI();
@@ -135,8 +137,8 @@ public class Control_Consulta_Empleados implements ActionListener,KeyListener,Mo
 		if (boton == vista.btngenerar) 
 			{
 				empleado = new Empleado();
-				ArrayList<Empleado> lisEmpleado = empleado.listaEmpleados();
-				Tabla_Empleados templeado = new Tabla_Empleados(lisEmpleado);
+				ArrayList<Empleado> lisEmpleado = empleado.listaEmpleadosId();
+				Tabla_Empleados_Id templeado = new Tabla_Empleados_Id(lisEmpleado);
 				vista.tableEmpleado.removeAll();
 				vista.tableEmpleado.setModel(templeado);
 				vista.tableEmpleado.updateUI();
@@ -149,15 +151,17 @@ public class Control_Consulta_Empleados implements ActionListener,KeyListener,Mo
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		modificar = new Ventana_Ingreso_Empleado();
+		
+		modificar = new Modificar_Empleados();
 		int fila = vista.tableEmpleado.rowAtPoint(e.getPoint());
-        modificar.txtnombre.setText(vista.tableEmpleado.getValueAt(fila, 0).toString());
-        modificar.txtapellido.setText(vista.tableEmpleado.getValueAt(fila, 1).toString());
-        modificar.txtcedula.setText(vista.tableEmpleado.getValueAt(fila, 2).toString());
-        modificar.txttelefono.setText(vista.tableEmpleado.getValueAt(fila, 3).toString());
-        modificar.txtedad.setText(vista.tableEmpleado.getValueAt(fila, 4).toString());
-        modificar.txtdireccion.setText(vista.tableEmpleado.getValueAt(fila, 5).toString());
-        modificar.cmbtipo.setSelectedItem(vista.tableEmpleado.getValueAt(fila, 6).toString());
+		modificar.txtid.setText(vista.tableEmpleado.getValueAt(fila, 0).toString());
+        modificar.txtnombre.setText(vista.tableEmpleado.getValueAt(fila, 1).toString());
+        modificar.txtapellido.setText(vista.tableEmpleado.getValueAt(fila, 2).toString());
+        modificar.txtcedula.setText(vista.tableEmpleado.getValueAt(fila, 3).toString());
+        modificar.txttelefono.setText(vista.tableEmpleado.getValueAt(fila, 4).toString());
+        modificar.txtedad.setText(vista.tableEmpleado.getValueAt(fila, 5).toString());
+        modificar.txtdireccion.setText(vista.tableEmpleado.getValueAt(fila, 6).toString());
+        modificar.cmbtipo.setSelectedItem(vista.tableEmpleado.getValueAt(fila, 7).toString());
         
         String valor = vista.tableEmpleado.getValueAt(fila, 7).toString();
         
@@ -180,7 +184,53 @@ public class Control_Consulta_Empleados implements ActionListener,KeyListener,Mo
         modificar.cmbtipo.setEnabled(false);
        
         modificar.PanelBotones.removeAll();
-		
+        modificar.PanelBotones.setBorder(null);
+        
+        Credenciales credencial = new Credenciales ();
+        ArrayList<Credenciales> lisEmpleado = credencial.listaCredencialesxId(Integer.parseInt(vista.tableEmpleado.getValueAt(fila, 0).toString()));
+        Ventana_Ingreso_Credenciales user = new Ventana_Ingreso_Credenciales ();
+        user.txtempleado.setText(String.valueOf(lisEmpleado.get(0).getIdempleado()));
+        user.txtuser.setText(lisEmpleado.get(0).getUser());
+        user.txtkey.setText(lisEmpleado.get(0).getKey());
+        
+        String mod = lisEmpleado.get(0).getModulo();
+        
+        switch (mod)
+        {
+		case "Administrador":
+			user.cmbmodulo.setSelectedItem("Administrador");
+			break;
+		case "Compras":
+			user.cmbmodulo.setSelectedItem("Compras");
+			break;
+		case "Ventas":
+			user.cmbmodulo.setSelectedItem("Ventas");
+			break;
+		case "Inventario":
+			user.cmbmodulo.setSelectedItem("Inventario");
+			break;
+		default:
+			break;
+		}
+       
+        String est = lisEmpleado.get(0).getEstado();
+        if (est.equals("i"))
+        {
+        	user.cmbestado.setSelectedItem("Inactivo");
+        }
+        else {
+    		user.cmbestado.setSelectedItem("Activo");
+    	}
+        
+        user.setTitle("Datos Credenciales");
+        user.txtempleado.setEditable(false);
+        user.txtuser.setEditable(false);
+        user.txtkey.setEditable(false);
+        user.cmbmodulo.setEnabled(false);
+        user.cmbestado.setEnabled(false);
+        user.PanelBotones.removeAll();
+        user.PanelBotones.setBorder(null);
+        user.setBounds(500, 500, 500, 200);
 	}
 
 

@@ -2,21 +2,32 @@ package controles;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import modelo_clases.Cotizacion;
+import modelo_clases.Cliente;
+import modelo_clases.Empleado;
 import modelo_clases.Factura;
-import pantallas.Ventana_Detalle_Cotizacion;
+import modelo_clases.Sucursal;
+import pantallas.Consultar_Clientes;
+import pantallas.Tabla_Clientes;
+import pantallas.Tabla_Clientes_Id;
+import pantallas.Tabla_Empleados_Id;
+import pantallas.Tabla_Locales_Id;
 import pantallas.Ventana_Detalle_Factura;
-import pantallas.Ventana_Ingreso_Cotizacion;
+import pantallas.Ventana_Ingreso_Clientes;
 import pantallas.Ventana_Ingreso_Factura;
 
-public class Control_Ventana_Factura implements ActionListener{
+public class Control_Ventana_Factura implements ActionListener, KeyListener, MouseListener{
 
 	Ventana_Ingreso_Factura vista;
 	Factura factura;
-	Ventana_Detalle_Factura detallefactura;
+	
 	
 	public Control_Ventana_Factura(Ventana_Ingreso_Factura vista) {
 		super();
@@ -28,43 +39,68 @@ public class Control_Ventana_Factura implements ActionListener{
 	
 		Object boton = e.getSource();
 		
-		if (boton == vista.btnagregardetalle)
+		if (boton == vista.btnregprod) 
 		{
-			if (vista.txtcodigo.getText().length() > 1  && vista.txtcliente.getText().length() > 1
-					&& vista.txtfecha.getText().length() > 1 && vista.txtvendedor.getText().length() > 1 && vista.txtvigencia.getText().length() > 1) 
-			{
-				detallefactura = new Ventana_Detalle_Factura();
-				detallefactura.txtfactura.setText(vista.txtcodigo.getText());
-				vista.txtcodigo.setEditable(false);
-				
-				
-				
-			}
-			
-			else JOptionPane.showMessageDialog(null, "faltan campos de llenar");
-			
+			Ventana_Detalle_Factura detalle = new Ventana_Detalle_Factura ();
+			detalle.txtfactura.setText(vista.txtcodigo.getText());
 		}
 		
-		if (boton == vista.btnlimpiar)
-		{
-			vista.txtcantidad.setText("");
-			vista.txtcliente.setText("");
-			vista.txtfecha.setText("");
-			vista.txtiva.setText("");
-			vista.txtsubtotal.setText("");
-			vista.txttotal.setText("");
-			vista.txtvendedor.setText("");
-			vista.txtvigencia.setText("");
-			vista.txtlocal.setText("");
-			vista.txtcodigo.setEditable(true);
-			vista.txtcodigo.setText("");
-		}
 		
-		if (boton == vista.btngenerar) 
-		{
-			JOptionPane.showMessageDialog(null, "Reporte Generado");
-		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
 		
+		Object boton = e.getSource();
+		
+		if (boton == vista.txtcliente)
+		{
+			Consultar_Clientes cliente = new Consultar_Clientes (vista);
+			cliente.setBounds(200, 200, 600, 450);
+		}
+	
+	}
+
+	
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 

@@ -1,0 +1,113 @@
+package controles;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import DBClases.HashTextTest;
+import modelo_clases.Credenciales;
+import modelo_clases.Empleado;
+import pantallas.Pantalla_Ingreso;
+import pantallas.Pantalla_Principal;
+import pantallas.Pantalla_Sucursal;
+import pantallas.Tabla_Clientes;
+import pantallas.Tabla_Credenciales;
+
+public class Control_PIngreso implements ActionListener{
+
+	Pantalla_Ingreso vista;
+	Credenciales credencial;
+	Pantalla_Principal nuevaVentana;
+	
+	
+	public Control_PIngreso (Pantalla_Ingreso vista)
+	{
+		this.vista = vista;
+		credencial = new Credenciales();
+	}
+	
+	@SuppressWarnings("deprecation")
+	@Override
+	public void actionPerformed(ActionEvent e) 
+	{
+		
+		Object boton = e.getSource();
+		
+		if (boton == vista.btn_cancelar) 
+		{
+			vista.dispose();
+		}
+		
+		if(boton == vista.btn_ingresar)
+		{
+			if (vista.txt_usuario.getText().equals("Administrador") && 
+					vista.txt_contraseña.getText().equals("secutelespol"))
+			{
+				Pantalla_Principal principal = new Pantalla_Principal();
+				principal.setVisible(true);
+				principal.txtempleado.setText("Administrador del Sistema");
+				principal.txtmodulo.setText("Administrador");
+				principal.txtlocal.setText("Nulo");
+			}
+			
+			String user = vista.txt_usuario.getText();
+			String key = null;
+			
+			HashTextTest sh1 = new HashTextTest ();
+			
+			try {
+				key = sh1.sha1(vista.txt_contraseña.getText());
+			} catch (NoSuchAlgorithmException e1) {
+				
+				e1.printStackTrace();
+			}
+			
+			if (vista.txt_usuario.getText().equals("") || 
+					vista.txt_contraseña.getText().equals(""))
+			{
+				JOptionPane.showMessageDialog(null, "faltan campos de llenar");
+			}
+			
+			
+			if (vista.txt_usuario.getText().length() >=1 && 
+					vista.txt_contraseña.getText().length() >= 1)
+			{
+				Credenciales cliente = new Credenciales();
+				ArrayList<Credenciales> lisCliente = cliente.listaCredenciales();
+				
+				boolean estado = false;
+				
+				for (int i = 0; i < lisCliente.size(); i++) 
+				{
+					if(lisCliente.get(i).getUser().equals(user) && 
+							lisCliente.get(i).getKey().equals(key) &&
+							lisCliente.get(i).getEstado().equals("a"))
+					{
+						JOptionPane.showMessageDialog(null, "Acceso Exitoso");
+						int id = lisCliente.get(i).getIdempleado();
+						Pantalla_Sucursal principal = new Pantalla_Sucursal();
+						vista.dispose();
+						estado = true;
+						Empleado empleado = new Empleado ();
+						ArrayList<Empleado> lisEmpleado = empleado.empleadoxid(id);
+						principal.setEmpleado(lisEmpleado.get(0).getNombre());
+						principal.setModulo(lisCliente.get(i).getModulo());
+						break;
+					}
+				}
+				
+				if(estado == false)
+				{
+					JOptionPane.showMessageDialog(null, "Usuario y/o contraseña incorrectos");
+					vista.txt_usuario.setText("");
+					vista.txt_contraseña.setText("");
+				}
+		    }
+		}
+
+	}
+}

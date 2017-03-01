@@ -1,0 +1,37 @@
+package controles;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import pantallas.Pantalla_Principal;
+import pantallas.Pantalla_Sucursal;
+
+public class Control_Pantalla_Sucursal implements ActionListener {
+
+	Pantalla_Sucursal vista;
+	
+	
+	public Control_Pantalla_Sucursal (Pantalla_Sucursal vista){
+		this.vista = vista;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object boton = e.getSource();
+		
+		//otras ventanas
+		
+		if (boton == vista.btnescoger)
+			{
+				Pantalla_Principal principal = new Pantalla_Principal();
+				principal.setVisible(true);
+				principal.txtempleado.setText(vista.txtempleado.getText());
+				principal.txtlocal.setText((String)vista.cmbSucursal.getSelectedItem());
+				vista.dispose();
+			}
+		
+	}
+	
+	
+
+}

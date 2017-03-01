@@ -1,0 +1,82 @@
+package controles;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import modelo_clases.Credenciales;
+import pantallas.Pantalla_Ingreso;
+import pantallas.Pantalla_Principal;
+import pantallas.Tabla_Clientes;
+import pantallas.Tabla_Credenciales;
+
+public class Control_PIngreso implements ActionListener{
+
+	Pantalla_Ingreso vista;
+	Credenciales credencial;
+	Pantalla_Principal nuevaVentana;
+	
+	
+	public Control_PIngreso (Pantalla_Ingreso vista)
+	{
+		this.vista = vista;
+		credencial = new Credenciales();
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) 
+	{
+		
+		Object boton = e.getSource();
+		
+		if (boton == vista.btn_cancelar) 
+		{
+			vista.dispose();
+		}
+		
+		if(boton == vista.btn_ingresar)
+		{
+			String user = vista.txt_usuario.getText();
+			String key = vista.txt_contraseña.getText();
+			
+			if (vista.txt_usuario.getText().equals("") || 
+					vista.txt_contraseña.getText().equals(""))
+			{
+				JOptionPane.showMessageDialog(null, "faltan campos de llenar");
+			}
+			
+			
+			if (vista.txt_usuario.getText().length() >=1 && 
+					vista.txt_contraseña.getText().length() >= 1)
+			{
+				Credenciales cliente = new Credenciales();
+				ArrayList<Credenciales> lisCliente = cliente.listaCredenciales();
+				
+				for (int i = 0; i < lisCliente.size(); i++) 
+				{
+					if(lisCliente.get(i).getUser().equals(user) && 
+							lisCliente.get(i).getKey().equals(key) &&
+							lisCliente.get(i).getEstado().equals("a"))
+					{
+						JOptionPane.showMessageDialog(null, "Acceso Exitoso");
+						Pantalla_Principal principal = new Pantalla_Principal();
+						vista.dispose();
+						break;
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "Usuario y/o contraseña incorrectos");
+						vista.txt_usuario.setText("");
+						vista.txt_contraseña.setText("");
+						break;
+					}
+				}
+	
+		    }
+		}
+
+	}
+}

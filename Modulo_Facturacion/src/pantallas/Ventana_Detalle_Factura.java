@@ -25,7 +25,19 @@ public class Ventana_Detalle_Factura extends JFrame{
 	public JTextField txtfactura, txtproducto, txtvalor, txtcantidad;
 	public JButton btnregistrar, btnlimpiar, btnbuscar;
 	
+	public int idproducto;
 	
+	
+	public int getIdproducto() {
+		return idproducto;
+	}
+
+
+	public void setIdproducto(int idproducto) {
+		this.idproducto = idproducto;
+	}
+
+
 	public Ventana_Detalle_Factura () {
 		
 		initcomponents();
@@ -54,6 +66,7 @@ public class Ventana_Detalle_Factura extends JFrame{
 		btnregistrar.addActionListener(control);
 		btnlimpiar.addActionListener(control);
 		btnbuscar.addActionListener(control);
+		txtproducto.addMouseListener(control);
 		
 	}
 
@@ -65,7 +78,7 @@ public class Ventana_Detalle_Factura extends JFrame{
 		this.setVisible(true);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setSize(500, 180);
-		this.setLocation(100, 200);
+		this.setLocation(300, 400);
 		this.setResizable(false);
 		
 	}

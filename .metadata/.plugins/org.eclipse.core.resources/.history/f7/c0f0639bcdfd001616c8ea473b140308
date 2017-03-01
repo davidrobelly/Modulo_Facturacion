@@ -1,0 +1,35 @@
+package controles;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import pantallas.Pantalla_Facturas;
+import pantallas.Pantalla_Principal;
+import pantallas.Ventana_Ingreso_Factura;
+
+public class Control_Facturas implements ActionListener{
+
+	Pantalla_Facturas vista;
+	Pantalla_Principal principal;
+	
+	
+	public Control_Facturas (Pantalla_Facturas vista) {
+		this.vista = vista;
+	}
+	
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		 
+		Object boton = e.getSource();
+		
+		if (boton == vista.btnreg) 
+		{	
+			Ventana_Ingreso_Factura ingreso = new Ventana_Ingreso_Factura ();
+		}
+		
+	}
+
+	
+	
+}

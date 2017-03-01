@@ -1,0 +1,87 @@
+package controles;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import modelo_clases.Credenciales;
+import pantallas.Pantalla_Ingreso;
+import pantallas.Pantalla_Principal;
+import pantallas.Tabla_Clientes;
+import pantallas.Tabla_Credenciales;
+
+public class Control_PIngreso implements ActionListener{
+
+	Pantalla_Ingreso vista;
+	Credenciales credencial;
+	Pantalla_Principal nuevaVentana;
+	
+	
+	public Control_PIngreso (Pantalla_Ingreso vista)
+	{
+		this.vista = vista;
+		credencial = new Credenciales();
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		Object boton = e.getSource();
+		
+		if (boton == vista.btn_cancelar) 
+		{
+			vista.dispose();
+		}
+		
+		if(boton == vista.btn_ingresar)
+		{
+			String user = vista.txt_usuario.getText();
+			String key = vista.txt_contraseña.getText();
+			
+			if (vista.txt_usuario.getText().equals("") || 
+					vista.txt_contraseña.getText().equals(""))
+			{
+				JOptionPane.showMessageDialog(null, "faltan campos de llenar");
+			}
+			
+			
+			if (vista.txt_usuario.getText().length() >=1 && 
+					vista.txt_contraseña.getText().length() >= 1)
+			{
+				Credenciales cliente = new Credenciales();
+				ArrayList<Credenciales> lisCliente = cliente.listaCredenciales();
+				
+				for  (Credenciales usuario : lisCliente) 
+				{
+					if (usuario.getUser().equals(user) && usuario.getKey().equals(key) 
+							&& usuario.getEstado().equals("a"))
+					{
+						JOptionPane.showMessageDialog(null, "Acceso Exitoso");
+						nuevaVentana = new Pantalla_Principal();
+						vista.dispose();
+						break;
+					}
+				}
+						else if (usuario.getUser() != user || usuario.getKey() != key)
+						{
+							JOptionPane.showMessageDialog(null, "Usuario y/o Contraseña erróneas ");
+							vista.txt_usuario.setText("");
+							vista.txt_contraseña.setText("");
+						}
+							
+						else if (usuario.getUser().equals("i")) 
+							{
+								JOptionPane.showMessageDialog(null, "Usuario No Autorizado");
+								vista.txt_usuario.setText("");
+								vista.txt_contraseña.setText("");
+							}
+					}
+				}
+					
+		}
+	}
+
+}

@@ -13,6 +13,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import controles.Control_PIngreso;
@@ -21,7 +22,8 @@ public class Pantalla_Ingreso extends JFrame {
 	
 	public ImageIcon ico_aplicacion;
 	public JLabel lbl_logo, lbl_usuario, lbl_contraseña;
-	public JTextField txt_usuario, txt_contraseña;
+	public JTextField txt_usuario;
+	public JPasswordField txt_contraseña;
 	public JButton btn_ingresar, btn_cancelar;
 	public JPanel pnl_logo, pnl_datos, pnl_botones;
 	
@@ -82,11 +84,9 @@ public class Pantalla_Ingreso extends JFrame {
 		lbl_contraseña = new JLabel("Contraseña");
 		
 		txt_usuario = new JTextField(5);
-		txt_contraseña = new JTextField(5);
+		txt_contraseña = new JPasswordField(5);
 		
 		btn_ingresar = new JButton("Ingresar");
-		
-		
 		btn_cancelar = new JButton("Cancelar");
 		
 	}

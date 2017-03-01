@@ -1,0 +1,88 @@
+package pantallas;
+
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
+import controles.Control_Pantalla_Consulta;
+
+public class Pantalla_Consulta extends Ventana_Ingreso_Factura{
+	
+	public JPanel panelCentral;
+	public Tabla_Clientes_Id clientes;
+	public JTable tableConsulta;
+	public JScrollPane scrollPro;
+	GridBagLayout grid;
+	GridBagConstraints con;
+	
+	Control_Pantalla_Consulta control;
+	
+	public Pantalla_Consulta () {
+		
+//		ventana();
+//		initcomponents();
+//		proceso();
+		
+	}
+	
+	
+	public void proceso() {
+		
+		control = new Control_Pantalla_Consulta (this);
+		
+		this.getContentPane().add(panelCentral, "Center");
+		
+		con.weightx = 1;
+		con.weighty = 1;
+		
+		panelCentral.setLayout(grid);
+		con.anchor = GridBagConstraints.CENTER;
+		con.insets = new Insets(5, 5, 5, 5);
+		con.fill = GridBagConstraints.BOTH;
+		buildConstraints(con, 0, 1, 1, 1);
+		
+		grid.setConstraints(panelCentral, con);
+        tableConsulta.getTableHeader().setReorderingAllowed(false) ;
+		scrollPro = new JScrollPane(tableConsulta);
+		buildConstraints(con, 0, 0, 1, 1);
+		grid.setConstraints(scrollPro, con);
+		panelCentral.add(scrollPro);
+		
+		tableConsulta.addMouseListener(control);
+		
+	}
+
+
+	public void initcomponents () {
+		
+		grid = new GridBagLayout();
+		con = new GridBagConstraints();
+		
+		panelCentral = new JPanel();
+		clientes = new Tabla_Clientes_Id();
+		
+		clientes = new Tabla_Clientes_Id ();
+		tableConsulta = new JTable (clientes);
+		tableConsulta.getTableHeader().setReorderingAllowed(false);
+		scrollPro = new JScrollPane(tableConsulta);
+	}
+	
+	public void ventana() {
+		
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.setLocationRelativeTo(null);
+		this.pack();
+		this.setTitle("Consultar Clientes");
+		this.setVisible(true);
+		
+		this.setBounds(600, 300, 500, 150);
+		this.setResizable(false);
+		
+	}
+
+}

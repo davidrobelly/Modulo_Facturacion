@@ -15,19 +15,25 @@ public class Detalle_Factura {
 	
 	public Detalle_Factura(int idfactura, int idproducto, int cantidad, int valor) {
 		super();
-		this.idfactura = idfactura;
-		this.idproducto = idproducto;
-		this.cantidad = cantidad;
-		this.valor = valor;
+		this.setIdfactura(idfactura);
+		this.setIdproducto(idproducto);
+		this.setCantidad(cantidad);
+		this.setValor(valor);
+		conexion = new ConexionDB ();
+	}
+	
+	
+	public Detalle_Factura() {
+		super();
+		conexion = new ConexionDB ();
 	}
 
-	
+
 	public int getIdfactura() {
 		return idfactura;
 	}
 
-	
-	
+
 	public void setIdfactura(int idfactura) {
 		this.idfactura = idfactura;
 	}

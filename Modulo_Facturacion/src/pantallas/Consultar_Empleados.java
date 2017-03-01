@@ -25,7 +25,7 @@ public class Consultar_Empleados extends JFrame{
 	public JTextField txtnombre,txtcedula, txtapellido;
 	public JButton btnnombre,btncedula, btnapellido, btngenrep, btngenerar;
 	public ButtonGroup grupo;
-	public Tabla_Empleados empleados;
+	public Tabla_Empleados_Id empleados;
 	public JTable tableEmpleado;
 	public JScrollPane scrollPro;
 	public JLabel lbltexto;
@@ -140,7 +140,7 @@ public class Consultar_Empleados extends JFrame{
 		con = new GridBagConstraints();
 		
 		lbltexto = new JLabel("Lista de todos los Empleados");
-		empleados = new Tabla_Empleados();
+		empleados = new Tabla_Empleados_Id();
 		contentPane = new JPanel();
 		panelNorte = new JPanel();
 		panelCentro = new JPanel();
@@ -167,7 +167,7 @@ public class Consultar_Empleados extends JFrame{
 		btngenerar = new JButton ("Generar Lista");
 		
 		//esta es la parte de tabla
-		empleados = new Tabla_Empleados ();
+		empleados = new Tabla_Empleados_Id ();
 		tableEmpleado = new JTable (empleados);
 		tableEmpleado.getTableHeader().setReorderingAllowed(false);
 		scrollPro = new JScrollPane(tableEmpleado);

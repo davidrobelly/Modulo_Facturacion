@@ -1,34 +1,52 @@
 package pantallas;
 
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JTextField;
 
 import controles.Control_PPrincipal;
 
 public class Pantalla_Principal extends JFrame {
 	
+	public JPanel PanelCentral;
+	public JLabel lblempleado, lbllocal, lblmodulo;
+	public JTextField txtempleado, txtlocal, txtmodulo;
 	public ImageIcon ico_aplicacion;
 	public JMenuBar barraMenu;
-	public JMenu menuInventario, menuCompras, menuVentas, menuCerrarSesion, menuSalir, menuCliente, menuEmpleado
-					,menuLocal;
+	public JMenu menuInventario, menuCompras, menuVentas, menuCerrarSesion, menuSalir, menuCliente, menuEmpleado,
+					menuLocal;
 	public JMenuItem menuItemParametrosInv, menuItemProcesosInv, menuItemReportesInv,
 					 menuItemParametrosCom, menuItemProcesosCom, menuItemReportesCom,
 					 menuItemParametrosVen, menuItemProcesosVen, menuItemReportesVen,
 					 menuRegCliente, menuConsulCliente, menuModifCliente,
 					 menuRegEmpleado, menuConsulEmpleado, menuModifEmpleado, menuUser,
 					 menuCerrar, menuSalirSistema,
-					 menuRegLocal, menuConsulLocal, menuModifLocal;
+					 menuRegLocal, menuConsulLocal, menuModifLocal,
+					 menuRegFact, menuConsulFact, MenuModifFact;
 					
 	public JSeparator separador;
 	
+	public int idvendedor;
+	
+	public int getIdvendedor() {
+		return idvendedor;
+	}
+
+	public void setIdvendedor(int idvendedor) {
+		this.idvendedor = idvendedor;
+	}
+
 	Control_PPrincipal control;
 	
 	public Pantalla_Principal(){
@@ -40,8 +58,17 @@ public class Pantalla_Principal extends JFrame {
 		
 		//Barra de Menu
 		
-		setIconImage(ico_aplicacion.getImage());
-		setJMenuBar(barraMenu);
+		this.setIconImage(ico_aplicacion.getImage());
+		this.setJMenuBar(barraMenu);
+		
+		this.getContentPane().add(PanelCentral, "East");
+		PanelCentral.setLayout(new GridLayout(0,6));
+		PanelCentral.add(lblempleado);
+		PanelCentral.add(txtempleado);
+		PanelCentral.add(lbllocal);
+		PanelCentral.add(txtlocal);
+		PanelCentral.add(lblmodulo);
+		PanelCentral.add(txtmodulo);
 				
 		//Menu de Inventario
 				
@@ -63,6 +90,7 @@ public class Pantalla_Principal extends JFrame {
 		menuVentas.add(menuItemParametrosVen);
 		menuVentas.add(menuItemProcesosVen);
 		menuVentas.add(menuItemReportesVen);
+		
 				
 		//Menu Cerrar Sesion
 				
@@ -117,6 +145,8 @@ public class Pantalla_Principal extends JFrame {
 		menuModifLocal.addActionListener(control);
 		menuCerrar.addActionListener(control);
 		menuSalirSistema.addActionListener(control);
+		menuItemParametrosVen.addActionListener(control);
+		menuItemProcesosVen.addActionListener(control);
 	}
 	
 	private void initcomponents() {
@@ -126,21 +156,19 @@ public class Pantalla_Principal extends JFrame {
 		barraMenu = new JMenuBar();
 		
 		menuInventario = new JMenu("Inventario");
-		menuInventario.setEnabled(false);
 		menuItemParametrosInv = new JMenuItem("Parametros", KeyEvent.VK_P);
 		menuItemProcesosInv = new JMenuItem("Procesos", KeyEvent.VK_R);
 		menuItemReportesInv = new JMenuItem("Reportes", KeyEvent.VK_E);
 		
 		menuCompras = new JMenu("Compras");
-		menuCompras.setEnabled(false);
 		menuItemParametrosCom = new JMenuItem("Parametros", KeyEvent.VK_P);
 		menuItemProcesosCom = new JMenuItem("Procesos", KeyEvent.VK_R);
 		menuItemReportesCom = new JMenuItem("Reportes", KeyEvent.VK_E);
 		
 		menuVentas = new JMenu("Ventas");
-		menuItemProcesosVen = new JMenuItem("Procesos", KeyEvent.VK_R);
+		menuItemProcesosVen = new JMenuItem("Cotizaciones", KeyEvent.VK_R);
 		menuItemReportesVen = new JMenuItem("Reportes", KeyEvent.VK_E);
-		menuItemParametrosVen = new JMenuItem("Parametros", KeyEvent.VK_P);
+		menuItemParametrosVen = new JMenuItem("Facturas", KeyEvent.VK_P);
 		
 		menuCliente = new JMenu("Clientes");
 		menuRegCliente = new JMenuItem("Registrar", KeyEvent.VK_P);
@@ -163,6 +191,20 @@ public class Pantalla_Principal extends JFrame {
 		menuRegLocal = new JMenuItem ("Registrar Local", KeyEvent.VK_P);
 		menuConsulLocal = new JMenuItem ("Consultar Locales" , KeyEvent.VK_R);
 		menuModifLocal = new JMenuItem ("Modificar Locales" , KeyEvent.VK_E);
+		
+		PanelCentral = new JPanel ();
+		lblempleado = new JLabel ("Empleado: ");
+		lbllocal = new JLabel("Sucursal: ");
+		lblmodulo = new JLabel ("Módulo: ");
+		txtempleado = new JTextField ();
+		txtlocal = new JTextField ();
+		txtmodulo = new JTextField ();
+		txtempleado.setEditable(false);
+		txtempleado.setBorder(null);
+		txtlocal.setEditable(false);
+		txtlocal.setBorder(null);
+		txtmodulo.setEditable(false);
+		txtmodulo.setBorder(null);
 	}
 
 	private void ventana() {

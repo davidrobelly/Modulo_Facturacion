@@ -8,6 +8,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
@@ -21,9 +22,10 @@ public class Ventana_Ingreso_Credenciales extends JFrame{
 	
 	public JPanel PanelCentral, PanelBotones;
 	public JButton btnregistrar, btncancelar, btnborrar;
-	public JLabel lblempleado, lbluser, lblkey, lblestado;  
-	public JTextField txtempleado, txtuser, txtkey;
-	public JComboBox cmbestado;
+	public JLabel lblempleado, lbluser, lblkey, lblestado, lblmodulo;  
+	public JTextField txtempleado, txtuser;
+	public JPasswordField txtkey;
+	public JComboBox cmbestado, cmbmodulo;
 	
 public Ventana_Ingreso_Credenciales () {
 	
@@ -31,7 +33,7 @@ public Ventana_Ingreso_Credenciales () {
 	ventana();
 	control = new Control_Ventana_Registro_Credenciales(this);
 	
-	PanelCentral.setLayout(new GridLayout(4,2));
+	PanelCentral.setLayout(new GridLayout(5,2));
 	PanelBotones.setLayout(new GridLayout(0,3));
 	
 	//panel de Botones
@@ -46,8 +48,11 @@ public Ventana_Ingreso_Credenciales () {
 	PanelCentral.add(txtuser);
 	PanelCentral.add(lblkey);
 	PanelCentral.add(txtkey);
+	PanelCentral.add(lblmodulo);
+	PanelCentral.add(cmbmodulo);
 	PanelCentral.add(lblestado);
 	PanelCentral.add(cmbestado);
+	
 	
 	this.getContentPane().add(PanelCentral, "Center");
 	this.getContentPane().add(PanelBotones, "South");
@@ -89,7 +94,7 @@ private void initcomponents () {
 	btnborrar = new JButton("Borrar");
 	
 	txtuser = new JTextField("");
-	txtkey = new JTextField("");
+	txtkey = new JPasswordField("");
 	txtempleado = new JTextField("");
 	
 	
@@ -98,11 +103,17 @@ private void initcomponents () {
 	cmbestado.addItem("Inactivo");
 	cmbestado.setEnabled(false);
 	
+	cmbmodulo = new JComboBox ();
+	cmbmodulo.addItem("Administrador");
+	cmbmodulo.addItem("Compras");
+	cmbmodulo.addItem("Ventas");
+	cmbmodulo.addItem("Inventario");
 	
 	lblempleado = new JLabel("Empleado: ");
 	lbluser = new JLabel("Usuario: ");
 	lblkey = new JLabel("Clave: ");
 	lblestado = new JLabel ("Estado: ");
+	lblmodulo = new JLabel ("Módulo; ");
 	
 }
 }

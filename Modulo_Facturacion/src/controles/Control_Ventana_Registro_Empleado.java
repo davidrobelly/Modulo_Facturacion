@@ -2,8 +2,11 @@ package controles;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 import pantallas.Ventana_Ingreso_Empleado;
+import modelo_clases.Cliente;
 import modelo_clases.Empleado;
 
 
@@ -38,6 +41,42 @@ public class Control_Ventana_Registro_Empleado implements ActionListener {
 		
 		if (boton == vista.btnregistrar)
 		{	
+			boolean estado = false;
+			empleado = new Empleado();
+			ArrayList<Empleado> lisCliente = empleado.listaEmpleados();
+			
+			for (int i = 0; i < lisCliente.size(); i++) 
+			{
+				if (vista.txtcedula.getText().equals(lisCliente.get(i).getCedula()))
+				{
+					estado = true;
+					
+					JOptionPane.showMessageDialog(null, "Empleado, ya está registrado");
+					vista.txtcedula.setText(lisCliente.get(i).getCedula());
+					vista.txtnombre.setText(lisCliente.get(i).getNombre());
+					vista.txtapellido.setText(lisCliente.get(i).getApellido());
+					vista.txttelefono.setText(lisCliente.get(i).getTelefono());
+					vista.txtdireccion.setText(lisCliente.get(i).getDireccion());
+					vista.txtedad.setText(String.valueOf(lisCliente.get(i).getEdad()));
+					
+					if (lisCliente.get(i).getEstado().equals("Activo"))
+					{
+						vista.cmbestado.setSelectedItem("Activo");
+					}
+						else
+						{
+							vista.cmbestado.setSelectedItem("Inactivo");
+						}
+				
+				if (lisCliente.get(i).getTipo().equals("Administrador"))
+				{
+					vista.cmbtipo.setSelectedItem("Vendedor");
+				}
+					else
+					{
+						vista.cmbtipo.setSelectedItem("Minorista");
+					}
+				}
 
 			if (vista.txtnombre.getText().equals("") || vista.txtdireccion.getText().equals("")
 					|| vista.txttelefono.getText().equals("") || vista.txtcedula.getText().equals("")
@@ -50,7 +89,7 @@ public class Control_Ventana_Registro_Empleado implements ActionListener {
 			
 			if (vista.txtnombre.getText().length() >= 1 && vista.txtapellido.getText().length() >= 1
 					&& vista.txtcedula.getText().length() == 10 && vista.txttelefono.getText().length() <= 10 &&
-					vista.txtdireccion.getText().length() >= 1 ) 
+					vista.txtdireccion.getText().length() >= 1 && estado == false) 
 			{
 				if (Integer.parseInt(vista.txtedad.getText()) >= 18)
 				{
@@ -83,7 +122,5 @@ public class Control_Ventana_Registro_Empleado implements ActionListener {
 		}
 		
 	}
-
-	
-	
+	}
 }

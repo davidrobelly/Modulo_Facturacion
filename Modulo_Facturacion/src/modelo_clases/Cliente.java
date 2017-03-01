@@ -58,7 +58,7 @@ public class Cliente {
 
 	public Cliente() {
 		super();
-		this.conexion = conexion;
+		conexion = new ConexionDB();
 	}
 
 
@@ -338,6 +338,39 @@ public class Cliente {
 
 	 //con id
 	 
+	 public ArrayList<Cliente> listaClientesId(){
+		 ArrayList<Cliente> lista = new ArrayList<>();
+		 conexion = new ConexionDB();
+		 conexion.conectar();
+			try {
+				sentencia = "call consultar_todos_clientes()";
+				procedure = conexion.conn.prepareCall(sentencia);
+				procedure.execute();
+				result = (ResultSet) procedure.executeQuery();
+				 while (result.next()) {
+					 Cliente cliente = new Cliente();
+					 cliente.setIdcliente(result.getInt("idcliente"));
+					 cliente.setNombre(result.getString("nombre"));
+					 cliente.setApellido(result.getString("apellido"));
+					 cliente.setCedula(result.getString("cedula"));
+					 cliente.setTelefono(result.getString("telefono"));
+					 cliente.setCorreo(result.getString("correo"));
+					 cliente.setDireccion(result.getString("direccion"));
+					 cliente.setTipo(result.getString("tipo"));
+					 cliente.setEstado(result.getString("estado"));
+					 if (cliente.getNombre() != null) {
+						 lista.add(cliente);
+					}
+	             }
+				procedure.close();
+				conexion.cerrarConexion();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		 return lista;
+	}
+	 
+	 
 	 public ArrayList<Cliente> listaClientexNombreid(String nombre){
 		 ArrayList<Cliente> lista = new ArrayList<>();
 		 conexion = new ConexionDB();
@@ -435,5 +468,7 @@ public class Cliente {
 				e.printStackTrace();
 			}
 		 return lista;
+	 
+	 
 	 }
 }

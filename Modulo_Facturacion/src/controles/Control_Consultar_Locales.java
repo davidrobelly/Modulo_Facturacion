@@ -13,7 +13,6 @@ import javax.swing.JOptionPane;
 import modelo_clases.Empleado;
 import modelo_clases.Sucursal;
 import pantallas.Consultar_Locales;
-import pantallas.Tabla_Empleados;
 import pantallas.Tabla_Locales;
 import pantallas.Ventana_Ingreso_Clientes;
 import pantallas.Ventana_Ingreso_Sucursal;

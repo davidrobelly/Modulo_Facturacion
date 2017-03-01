@@ -242,6 +242,37 @@ public class Empleado {
 	}
 	
 
+	public ArrayList<Empleado> listaEmpleadosId(){
+		 ArrayList<Empleado> lista = new ArrayList<>();
+		 conexion = new ConexionDB();
+		 conexion.conectar();
+			try {
+				sentencia = "call consultar_todos_empleados()";
+				procedure = conexion.conn.prepareCall(sentencia);
+				procedure.execute();
+				result = (ResultSet) procedure.executeQuery();
+				 while (result.next()) {
+					 Empleado empleado = new Empleado();
+					 empleado.setIdempleado(result.getInt("idempleado"));
+					 empleado.setNombre(result.getString("nombre"));
+					 empleado.setApellido(result.getString("apellido"));
+					 empleado.setCedula(result.getString("cedula"));
+					 empleado.setTelefono(result.getString("telefono"));
+					 empleado.setDireccion(result.getString("direccion"));
+					 empleado.setEdad(result.getInt("edad"));
+					 empleado.setTipo(result.getString("tipo"));
+					 empleado.setEstado(result.getString("estado"));
+					 if (empleado.getNombre() != null) {
+						 lista.add(empleado);
+					}
+	             }
+				procedure.close();
+				conexion.cerrarConexion();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		 return lista;
+	}
 	
 	 
 	 
@@ -430,6 +461,35 @@ public class Empleado {
 						 empleado.setEdad(result.getInt("edad"));
 						 empleado.setTipo(result.getString("tipo"));
 						 empleado.setEstado(result.getString("estado"));
+						if (empleado.getNombre() != null) {
+							lista.add(empleado);
+						}
+		             }
+					procedure.close();
+					conexion.cerrarConexion();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			 return lista;
+		 }
+		 
+		 
+		 
+		 
+		 public ArrayList<Empleado> empleadoxid(int cedula){
+			 ArrayList<Empleado> lista = new ArrayList<>();
+			 conexion = new ConexionDB();
+			 conexion.conectar();
+				try {
+					sentencia = "call empleado_id(?)";
+					procedure = conexion.conn.prepareCall(sentencia);
+					procedure.setInt(1, cedula);
+					procedure.execute();
+					result = (ResultSet) procedure.executeQuery();
+					while (result.next()) {
+						 Empleado empleado = new Empleado();
+						 empleado.setIdempleado(result.getInt("idempleado"));
+						 empleado.setNombre(result.getString("nombre"));
 						if (empleado.getNombre() != null) {
 							lista.add(empleado);
 						}

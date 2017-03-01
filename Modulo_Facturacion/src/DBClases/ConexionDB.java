@@ -25,7 +25,7 @@ public class ConexionDB {
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			conn = DriverManager.getConnection(url,usu,pass);
-			System.out.println("conexion a base de datos exitosa");
+			//System.out.println("conexion a base de datos exitosa");
 		} 
 		
 		catch (SQLException ex) {	
@@ -45,7 +45,7 @@ public class ConexionDB {
 	public void cerrarConexion()  {
 	  	try {
 		   conn.close();
-		   System.out.println ("Conexion cerrada exitosamente.");  
+		   //System.out.println ("Conexion cerrada exitosamente.");  
 		}catch (SQLException  ex) {
 			                                
 		}
@@ -59,8 +59,8 @@ public class ConexionDB {
 		    
 		   //Cargamos el archivo desde la ruta especificada//
 		   
-		   //InputStream pin = getClass().getClassLoader().getResourceAsStream("archivo.properties");
-		   propiedades.load(new FileInputStream("D:/eclipse/Secutel-ERP/Modulo_Facturacion/src/archivo.properties"));
+		   InputStream pin = getClass().getClassLoader().getResourceAsStream("archivo.properties");
+		   propiedades.load(pin);
 		   
 		   //Obtenemos los parametros definidos en el archivo//
 		   usu = propiedades.getProperty("usu");

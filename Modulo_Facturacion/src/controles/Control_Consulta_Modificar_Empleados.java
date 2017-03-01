@@ -14,7 +14,6 @@ import modelo_clases.Empleado;
 import pantallas.Consulta_Modificar_Empleados;
 import pantallas.Consultar_Empleados;
 import pantallas.Modificar_Empleados;
-import pantallas.Tabla_Empleados;
 import pantallas.Tabla_Empleados_Id;
 
 public class Control_Consulta_Modificar_Empleados implements ActionListener,KeyListener,MouseListener{

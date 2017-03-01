@@ -154,6 +154,33 @@ public class Sucursal {
 		 return lista;
 	}
 	
+	public ArrayList<Sucursal> listaSucursalesId(){
+		 ArrayList<Sucursal> lista = new ArrayList<>();
+		 conexion = new ConexionDB();
+		 conexion.conectar();
+			try {
+				sentencia = "call consultar_todos_locales()";
+				procedure = conexion.conn.prepareCall(sentencia);
+				procedure.execute();
+				result = (ResultSet) procedure.executeQuery();
+				 while (result.next()) {
+					 Sucursal cliente = new Sucursal();
+					 cliente.setIdsucursal(result.getInt("idsucursal"));
+					 cliente.setNombre(result.getString("nombre"));
+					 cliente.setDireccion(result.getString("direccion"));
+					 cliente.setCiudad(result.getString("ciudad"));
+					 cliente.setEstado(result.getString("estado"));
+					 if (cliente.getNombre() != null) {
+						 lista.add(cliente);
+					}
+	             }
+				procedure.close();
+				conexion.cerrarConexion();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		 return lista;
+	}
 
 	public void modificarSucursal(int term, Sucursal cliente){
 		 conexion.conectar();
@@ -208,6 +235,35 @@ public class Sucursal {
 		 conexion.conectar();
 			try {
 				sentencia = "call consulta_local_ciudad(?)";
+				procedure = conexion.conn.prepareCall(sentencia);
+				procedure.setString(1, nombre);
+				procedure.execute();
+				result = (ResultSet) procedure.executeQuery();
+				while (result.next()) {
+					Sucursal cliente = new Sucursal();
+					 cliente.setIdsucursal(result.getInt("idsucursal"));
+					 cliente.setNombre(result.getString("nombre"));
+					 cliente.setDireccion(result.getString("direccion"));
+					 cliente.setCiudad(result.getString("ciudad"));
+					 cliente.setEstado(result.getString("estado"));
+					if (cliente.getNombre() != null) {
+						lista.add(cliente);
+					}
+	             }
+				procedure.close();
+				conexion.cerrarConexion();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		 return lista;
+	 }
+	 
+	 public ArrayList<Sucursal> listaLocalxNombreId(String nombre){
+		 ArrayList<Sucursal> lista = new ArrayList<>();
+		 conexion = new ConexionDB();
+		 conexion.conectar();
+			try {
+				sentencia = "call consulta_local_ciudad_nombre(?)";
 				procedure = conexion.conn.prepareCall(sentencia);
 				procedure.setString(1, nombre);
 				procedure.execute();
