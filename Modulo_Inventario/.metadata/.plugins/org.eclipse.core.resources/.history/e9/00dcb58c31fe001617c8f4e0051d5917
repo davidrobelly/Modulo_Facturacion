@@ -1,0 +1,97 @@
+package Vista;
+
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.HashMap;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import Persistencia.Conexion;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
+
+@SuppressWarnings("serial")
+public class Pantalla_Reporte extends JFrame implements ActionListener{
+	
+	public ImageIcon ico_aplicacion;
+	public JLabel lbl_reporte1, lbl_reporte2, lbl_reporte3, lbl_reporte4;
+	public JButton btn_generarReporte1, btn_generarReporte2, btn_generarReporte3, btn_generarReporte4;
+	public JPanel pnl_reportes;
+	
+	Conexion conexion = new Conexion();
+	String nombreReporte = "REPORTE";
+	InputStream rutaJasperContarProducto;
+	JasperReport reporteContarProducto;
+	JasperPrint imprimirContarProducto;
+	JasperViewer vistaReporteContarProducto;
+	
+	Pantalla_Reporte(){
+		
+		super("Reporte - ");
+		setVisible(true);
+		setSize(250, 100);
+		setLocation(500, 200);
+		setResizable(false);
+		
+		pnl_reportes = new JPanel(new GridLayout(1, 2));
+		
+		btn_generarReporte1 = new JButton(new ImageIcon("src/Imagenes/generarReporte.jpeg"));
+		btn_generarReporte1.setBorder(null);
+		btn_generarReporte1.addActionListener(this);
+		
+		btn_generarReporte2 = new JButton(new ImageIcon("src/Imagenes/generarReporte.jpeg"));
+		btn_generarReporte2.setBorder(null);
+		btn_generarReporte2.addActionListener(this);
+		
+		pnl_reportes.add(btn_generarReporte1);
+		pnl_reportes.add(btn_generarReporte2);
+		
+		getContentPane().add(pnl_reportes, BorderLayout.CENTER);
+
+		
+	}
+
+	
+	public void actionPerformed(ActionEvent evento) {
+		
+		if(evento.getSource() == btn_generarReporte1){
+			
+			conexion = new Conexion();			
+			try {
+				rutaJasperContarProducto = new FileInputStream("C:/Users/MCEVALLOS/Documents/GitHub/SECUTEL_ERP/Secutel-ERP/Modulo_Inventario/Modulo_Inventario/src/Reportes/reportContarProducto.jasper");				
+				reporteContarProducto = (JasperReport) JRLoader.loadObject(rutaJasperContarProducto);
+				imprimirContarProducto = JasperFillManager. fillReport(reporteContarProducto, new HashMap<String, Object>(), conexion.getConexion());
+			
+				vistaReporteContarProducto = new JasperViewer(imprimirContarProducto); 
+				vistaReporteContarProducto.setTitle(nombreReporte+".pdf"); 
+				vistaReporteContarProducto.setVisible(true); 
+				JasperExportManager.exportReportToPdfFile(imprimirContarProducto,"archivo.pdf");
+				
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (JRException e) {
+				e.printStackTrace();
+			}
+			
+			
+			
+		}
+		
+	}
+	
+
+}

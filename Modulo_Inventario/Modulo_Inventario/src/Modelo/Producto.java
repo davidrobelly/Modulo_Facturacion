@@ -1,6 +1,6 @@
 package Modelo;
 
-import java.sql.CallableStatement;
+import java.sql.CallableStatement; 
 import java.sql.ResultSet;  
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,7 +18,12 @@ public class Producto {
 	private int minimo;
 	private int maximo;
 	private int existencia;
-	private String estado;
+	private String estadoPro;
+	private int codigoDP;
+	private String serie;
+	private String color;
+	private String detalle;
+	private String estadoDetPro;
 	
 	Conexion conectar;
 	String sentencia;
@@ -65,7 +70,7 @@ public class Producto {
 		this.nombre = nombre;
 		this.marca = marca;
 		this.modelo = modelo;
-		this.estado = estado;
+		this.estadoDetPro = estado;
 	}
 
 	public Producto(int codigo, String nombre, String marca, String modelo, double valor, int minimo, int maximo) {
@@ -107,7 +112,21 @@ public class Producto {
 		conectar = new Conexion();
 	}
 	
-	
+
+	public Producto(String categoria, String nombre, String marca, String modelo, double valor, int minimo, int maximo,
+			String serie, String color) {
+		super();
+		this.categoria = categoria;
+		this.nombre = nombre;
+		this.marca = marca;
+		this.modelo = modelo;
+		this.valor = valor;
+		this.minimo = minimo;
+		this.maximo = maximo;
+		this.serie = serie;
+		this.color = color;
+		conectar = new Conexion();
+	}
 
 	public Producto(int codigo, String categoria, String nombre, String marca, String modelo, double valor, int minimo,
 			int maximo) {
@@ -121,6 +140,33 @@ public class Producto {
 		this.minimo = minimo;
 		this.maximo = maximo;
 		conectar = new Conexion();
+	}
+	
+	
+	
+	public Producto(int codigoDP, String serie, String color, String detalle) {
+		super();
+		this.codigoDP = codigoDP;
+		this.serie = serie;
+		this.color = color;
+		this.detalle = detalle;
+		conectar = new Conexion();
+	}
+
+	public Producto(int codigo, String categoria, String nombre, String marca, String modelo, double valor, int minimo,
+			int maximo, String serie, String color, String detalle) {
+		super();
+		this.codigo = codigo;
+		this.categoria = categoria;
+		this.nombre = nombre;
+		this.marca = marca;
+		this.modelo = modelo;
+		this.valor = valor;
+		this.minimo = minimo;
+		this.maximo = maximo;
+		this.serie = serie;
+		this.color = color;
+		this.detalle = detalle;
 	}
 
 	public int getCodigo() {
@@ -188,14 +234,12 @@ public class Producto {
 	}
 	
 	public String getEstado() {
-		return estado;
+		return estadoDetPro;
 	}
 	
 	public void setEstado(String estado) {
-		this.estado = estado;
+		this.estadoDetPro = estado;
 	}
-	
-	
 	
 	public String getCategoria() {
 		return categoria;
@@ -204,7 +248,55 @@ public class Producto {
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
+	
+	public String getEstadoPro() {
+		return estadoPro;
+	}
 
+	public void setEstadoPro(String estadoPro) {
+		this.estadoPro = estadoPro;
+	}
+
+	public String getSerie() {
+		return serie;
+	}
+
+	public void setSerie(String serie) {
+		this.serie = serie;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public String getEstadoDetPro() {
+		return estadoDetPro;
+	}
+
+	public void setEstadoDetPro(String estadoDetPro) {
+		this.estadoDetPro = estadoDetPro;
+	}
+	
+	public String getDetalle() {
+		return detalle;
+	}
+
+	public void setDetalle(String detalle) {
+		this.detalle = detalle;
+	}
+
+	public int getCodigoDP() {
+		return codigoDP;
+	}
+
+	public void setCodigoDP(int codigoDP) {
+		this.codigoDP = codigoDP;
+	}
+	
 	public void ingresarProducto(Producto producto){		
 		
 		conectar.conectar();
@@ -227,26 +319,26 @@ public class Producto {
 			e.printStackTrace();
 		}
 	}
-	
-//	public void modificarProducto(String categoria,String nombre,String marca,String modelo,double valor,int minimo,int maximo){
-//		 conectar.conectar();
-//			try {
-//				sentencia = "call modificarProveedor(?,?,?,?,?,?,?)";
-//				procedimiento = conectar.conn.prepareCall(sentencia);
-//				procedimiento.setString(1, categoria);
-//				procedimiento.setString(2, nombre);
-//				procedimiento.setString(3, marca);
-//				procedimiento.setString(4, modelo);
-//				procedimiento.setDouble(5, valor);
-//				procedimiento.setInt(6, minimo);
-//				procedimiento.setInt(7, maximo);
-//				procedimiento.execute();
-//				procedimiento.close();
-//				conectar.cerrar();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//	 }
+
+	public void ingresarDetalleProducto(Producto producto){		
+		
+		conectar.conectar();
+		try {
+			sentencia = "call ingresardetprod(?,?,?,?)";
+			
+			procedimiento = conectar.conn.prepareCall(sentencia);
+			procedimiento.setInt(1, producto.getCodigoDP());
+			procedimiento.setString(2, producto.getSerie());
+			procedimiento.setString(3, producto.getColor());
+			procedimiento.setString(4, producto.getDetalle());
+			procedimiento.execute();
+			procedimiento.close();
+			conectar.cerrar();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
     public void modificarProducto(int idproducto, Producto producto){
     	conectar.conectar();
@@ -267,75 +359,29 @@ public class Producto {
 		} catch (SQLException e) {
 		e.printStackTrace();
 		}
-		}
-	
-//	public Producto consultarProdXMarca(String marca){
-//		Producto producto = new Producto();
-//		conectar.conectar();
-//		try {
-//			sentencia = "call consultarproducto(?)";
-//			procedimiento = conectar.conn.prepareCall(sentencia);
-//			procedimiento.setString(1, marca);
-//			procedimiento.execute();
-//			resultado = (ResultSet) procedimiento.executeQuery();
-//			while (resultado.next()) {
-//                 producto.setNombre(resultado.getString("nombre"));
-//                 producto.setMarca(resultado.getString("marca"));
-//                 producto.setModelo(resultado.getString("modelo"));
-//                 producto.setValor(resultado.getDouble("valor"));
-//             }
-//			procedimiento.close();
-//			conectar.cerrar();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return producto; 
-//	 }
-	
-//	public Producto consultarProdXModelo(String modelo){
-//		Producto producto = new Producto();
-//		conectar.conectar();
-//		try {
-//			sentencia = "call consultarproducto(?)";
-//			procedimiento = conectar.conn.prepareCall(sentencia);
-//			procedimiento.setString(1, modelo);
-//			procedimiento.execute();
-//			resultado = (ResultSet) procedimiento.executeQuery();
-//			while (resultado.next()) {
-//                 producto.setNombre(resultado.getString("nombre"));
-//                 producto.setMarca(resultado.getString("marca"));
-//                 producto.setModelo(resultado.getString("modelo"));
-//                 producto.setValor(resultado.getDouble("valor"));
-//             }
-//			procedimiento.close();
-//			conectar.cerrar();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return producto; 
-//	 }
+	}
 	
 	public ArrayList<Producto> listarProductosxMarca(String marca){
 		 ArrayList<Producto> listaProMarca = new ArrayList<>();
 		 conectar.conectar();
 			try {
-				sentencia = "call consultarproducto(?)";
+				sentencia = "call consultarproductoMarca(?)";
 				procedimiento = conectar.conn.prepareCall(sentencia);
 				procedimiento.setString(1, marca);
 				procedimiento.execute();
 				resultado = (ResultSet) procedimiento.executeQuery();
-				while (resultado.next()) {
-					Producto producto = new Producto();
-					producto.setNombre(resultado.getString("nombre"));
-					producto.setMarca(resultado.getString("marca"));
-					producto.setModelo(resultado.getString("modelo"));
-					producto.setValor(resultado.getDouble("valor"));
-					producto.setMinimo(resultado.getInt("minimo"));
-					producto.setMaximo(resultado.getInt("maximo"));
-					if (producto.getNombre() != null) {
-						listaProMarca.add(producto);
+					while (resultado.next()) {
+						Producto producto = new Producto();
+						producto.setNombre(resultado.getString("nombre"));
+						producto.setMarca(resultado.getString("marca"));
+						producto.setModelo(resultado.getString("modelo"));
+						producto.setValor(resultado.getDouble("valor"));
+						producto.setMinimo(resultado.getInt("minimo"));
+						producto.setMaximo(resultado.getInt("maximo"));
+						if (producto.getNombre() != null) {
+							listaProMarca.add(producto);
+						}
 					}
-	             }
 				procedimiento.close();
 				conectar.cerrar();
 			} catch (SQLException e) {
@@ -344,11 +390,69 @@ public class Producto {
 		 return listaProMarca;
 	 }
 	
-	public ArrayList<Producto> listarProductosxMarcaCodigo(String marca){
+	public ArrayList<Producto> listarProductosxModelo(String modelo){
+		 ArrayList<Producto> listaProModelo = new ArrayList<>();
+		 conectar.conectar();
+			try {
+				sentencia = "call consultarproductoMarca(?)";
+				procedimiento = conectar.conn.prepareCall(sentencia);
+				procedimiento.setString(1, modelo);
+				procedimiento.execute();
+				resultado = (ResultSet) procedimiento.executeQuery();
+					while (resultado.next()) {
+						Producto producto = new Producto();
+						producto.setNombre(resultado.getString("nombre"));
+						producto.setMarca(resultado.getString("marca"));
+						producto.setModelo(resultado.getString("modelo"));
+						producto.setValor(resultado.getDouble("valor"));
+						producto.setMinimo(resultado.getInt("minimo"));
+						producto.setMaximo(resultado.getInt("maximo"));
+						if (producto.getModelo() != null) {
+							listaProModelo.add(producto);
+						}
+					}
+				procedimiento.close();
+				conectar.cerrar();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		 return listaProModelo;
+	 }
+	
+	
+	public ArrayList<Producto> listarProductosxSerie(String serie){
+		 ArrayList<Producto> listaProSerie = new ArrayList<>();
+		 conectar.conectar();
+			try {
+				sentencia = "call consultarproductoSerie(?)";
+				procedimiento = conectar.conn.prepareCall(sentencia);
+				procedimiento.setString(1, serie);
+				procedimiento.execute();
+				resultado = (ResultSet) procedimiento.executeQuery();
+					while (resultado.next()) {
+						Producto producto = new Producto();
+						producto.setSerie(resultado.getString("numero_serie"));
+						producto.setNombre(resultado.getString("nombre"));
+						producto.setMarca(resultado.getString("marca"));
+						producto.setModelo(resultado.getString("modelo"));
+						producto.setValor(resultado.getDouble("valor"));
+						if (producto.getNombre() != null) {
+							listaProSerie.add(producto);
+						}
+					}
+				procedimiento.close();
+				conectar.cerrar();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		 return listaProSerie;
+	 }
+	
+	public ArrayList<Producto> listarProductosxMarcaCodigo(String marca){//listarProductosxMarcaCodigo -modificar producto
 		 ArrayList<Producto> listaProMarcaCodigo = new ArrayList<>();
 		 conectar.conectar();
 			try {
-				sentencia = "call consultarproducto(?)";
+				sentencia = "call consultarproductoMarca(?)";
 				procedimiento = conectar.conn.prepareCall(sentencia);
 				procedimiento.setString(1, marca);
 				procedimiento.execute();
@@ -373,6 +477,37 @@ public class Producto {
 				e.printStackTrace();
 			}
 		 return listaProMarcaCodigo;
+	 }
+	
+	public ArrayList<Producto> listarProductosxModeloCodigo(String modelo){
+		 ArrayList<Producto> listaProModeloCodigo = new ArrayList<>();
+		 conectar.conectar();
+			try {
+				sentencia = "call consultarproductoCodModelo(?)";
+				procedimiento = conectar.conn.prepareCall(sentencia);
+				procedimiento.setString(1, modelo);
+				procedimiento.execute();
+				resultado = (ResultSet) procedimiento.executeQuery();
+				while (resultado.next()) {
+					Producto producto = new Producto();
+					producto.setCodigo(resultado.getInt("idproducto"));
+					producto.setCategoria(resultado.getString("categoria"));
+					producto.setNombre(resultado.getString("nombre"));
+					producto.setMarca(resultado.getString("marca"));
+					producto.setModelo(resultado.getString("modelo"));
+					producto.setValor(resultado.getDouble("valor"));
+					producto.setMinimo(resultado.getInt("minimo"));
+					producto.setMaximo(resultado.getInt("maximo"));
+					if (producto.getNombre() != null) {
+						listaProModeloCodigo.add(producto);
+					}
+	             }
+				procedimiento.close();
+				conectar.cerrar();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		 return listaProModeloCodigo;
 	 }
 	
 	public ArrayList<Producto> listarTodosProductos(){
@@ -401,7 +536,6 @@ public class Producto {
 				e.printStackTrace();
 			}
 		 return lista;
-	}
-	
+	}	
 
 }

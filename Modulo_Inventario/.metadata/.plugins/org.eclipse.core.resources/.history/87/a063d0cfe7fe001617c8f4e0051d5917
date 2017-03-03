@@ -1,0 +1,218 @@
+package Vista;
+
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.sql.SQLException;
+import java.util.HashMap;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
+
+import Persistencia.Conexion;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
+
+@SuppressWarnings("serial")
+public class Pantalla_Reporte extends JFrame implements ActionListener{
+	
+	public ImageIcon ico_aplicacion;
+	public JLabel lbl_reporte1, lbl_reporte2, lbl_reporte3, lbl_reporte4;
+	public JButton btn_generarReporte1, btn_generarReporte2, btn_generarReporte3, btn_generarReporte4;
+	public JPanel pnl_reportes;
+	
+	Conexion conexion = new Conexion();
+	String nombreReporte = "REPORTE";
+	InputStream rutaJasperContarProducto, rutaJasperProductoCategoria, rutaJasperMinMax, rutaJasperKardex;
+	JasperReport reporteContarProducto, reporteProductoCategoria, reporteMinMax, reporteKardex;
+	JasperPrint imprimirContarProducto, imprimirProductoCategoria, imprimirMinMax, imprimirKardex;
+	JasperViewer vistaReporteContarProducto, vistaReporteProductoCategoria, vistaReporteMinMax, vistaReporteKardex;
+	
+	Pantalla_Reporte(){
+		
+		super("Reportes");
+		setVisible(true);
+		setSize(400, 300);
+		setLocation(500, 200);
+		setResizable(false);
+		
+		pnl_reportes = new JPanel();
+		pnl_reportes.setBorder(new TitledBorder("Escoja que reporte desea generar"));
+		
+		GridBagLayout gridCentral = new GridBagLayout();
+		pnl_reportes.setLayout(gridCentral);
+		
+		GridBagConstraints gridConCentral = new GridBagConstraints();
+		gridConCentral.fill = GridBagConstraints.BOTH;
+		gridConCentral.insets = new Insets(3, 3, 3, 3);
+		
+		gridConCentral.gridx = 0;
+		gridConCentral.gridy = 0;
+		gridConCentral.gridheight = 1;
+		gridConCentral.gridwidth = 1;
+		lbl_reporte1 = new JLabel("Reporte - Minimos y Maximos de Productos");
+		pnl_reportes.add(lbl_reporte1);
+		gridCentral.setConstraints(lbl_reporte1, gridConCentral);
+	
+		gridConCentral.gridx = 1;
+		gridConCentral.gridy = 0;
+		btn_generarReporte1 = new JButton(new ImageIcon("src/Imagenes/generarReporte.jpeg"));
+		btn_generarReporte1.setBorder(null);
+		btn_generarReporte1.addActionListener(this);
+		pnl_reportes.add(btn_generarReporte1);
+		gridCentral.setConstraints(btn_generarReporte1, gridConCentral);
+		
+		gridConCentral.gridx = 0;
+		gridConCentral.gridy = 1;
+		lbl_reporte2 = new JLabel("Reporte - Productos por Categoria");
+		pnl_reportes.add(lbl_reporte2);
+		gridCentral.setConstraints(lbl_reporte2, gridConCentral);
+		
+		gridConCentral.gridx = 1;
+		gridConCentral.gridy = 1;
+		btn_generarReporte2 = new JButton(new ImageIcon("src/Imagenes/generarReporte.jpeg"));
+		btn_generarReporte2.setBorder(null);
+		btn_generarReporte2.addActionListener(this);
+		pnl_reportes.add(btn_generarReporte2);
+		gridCentral.setConstraints(btn_generarReporte2, gridConCentral);
+		
+		gridConCentral.gridx = 0;
+		gridConCentral.gridy = 2;
+		lbl_reporte3 = new JLabel("Reporte - Contar Productos");
+		pnl_reportes.add(lbl_reporte3);
+		gridCentral.setConstraints(lbl_reporte3, gridConCentral);
+		
+		gridConCentral.gridx = 1;
+		gridConCentral.gridy = 2;
+		btn_generarReporte3 = new JButton(new ImageIcon("src/Imagenes/generarReporte.jpeg"));
+		btn_generarReporte3.setBorder(null);
+		btn_generarReporte3.addActionListener(this);
+		pnl_reportes.add(btn_generarReporte3);
+		gridCentral.setConstraints(btn_generarReporte3, gridConCentral);
+
+		gridConCentral.gridx = 0;
+		gridConCentral.gridy = 3;
+		lbl_reporte4 = new JLabel("Reporte - Ingresos y Salidas de Productos");
+		pnl_reportes.add(lbl_reporte4);
+		gridCentral.setConstraints(lbl_reporte4, gridConCentral);
+		
+		gridConCentral.gridx = 1;
+		gridConCentral.gridy = 3;
+		btn_generarReporte4 = new JButton(new ImageIcon("src/Imagenes/generarReporte.jpeg"));
+		btn_generarReporte4.setBorder(null);
+		btn_generarReporte4.addActionListener(this);
+		pnl_reportes.add(btn_generarReporte4);
+		gridCentral.setConstraints(btn_generarReporte4, gridConCentral);
+		
+		getContentPane().add(pnl_reportes, BorderLayout.CENTER);
+		
+		((JComponent)getContentPane()).setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+	
+	}
+
+	
+	public void actionPerformed(ActionEvent evento) {
+		
+		if(evento.getSource() == btn_generarReporte1){
+			
+			conexion = new Conexion();			
+			try {
+				rutaJasperContarProducto = new FileInputStream("C:/Users/MCEVALLOS/Documents/GitHub/SECUTEL_ERP/Secutel-ERP/Modulo_Inventario/Modulo_Inventario/src/Reportes/reportContarProducto.jasper");				
+				reporteContarProducto = (JasperReport) JRLoader.loadObject(rutaJasperContarProducto);
+				imprimirContarProducto = JasperFillManager. fillReport(reporteContarProducto, new HashMap<String, Object>(), conexion.getConexion());
+			
+				vistaReporteContarProducto = new JasperViewer(imprimirContarProducto, false); 
+				vistaReporteContarProducto.setTitle(nombreReporte+".pdf"); 
+				vistaReporteContarProducto.setVisible(true); 
+				JasperExportManager.exportReportToPdfFile(imprimirContarProducto,"archivo.pdf");
+			conexion.cerrar();	
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (JRException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+		
+		if(evento.getSource() == btn_generarReporte2){
+			
+			conexion = new Conexion();			
+			try {
+				rutaJasperProductoCategoria = new FileInputStream("C:/Users/MCEVALLOS/Documents/GitHub/SECUTEL_ERP/Secutel-ERP/Modulo_Inventario/Modulo_Inventario/src/Reportes/report1Categoria.jasper");				
+				reporteProductoCategoria = (JasperReport) JRLoader.loadObject(rutaJasperProductoCategoria);
+				imprimirProductoCategoria = JasperFillManager. fillReport(reporteProductoCategoria, new HashMap<String, Object>(), conexion.getConexion());
+			
+				vistaReporteProductoCategoria = new JasperViewer(imprimirProductoCategoria, false); 
+				vistaReporteProductoCategoria.setTitle(nombreReporte+".pdf"); 
+				vistaReporteProductoCategoria.setVisible(true); 
+				JasperExportManager.exportReportToPdfFile(imprimirProductoCategoria,"archivo.pdf");
+				
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (JRException e) {
+				e.printStackTrace();
+			}			
+		}
+		
+		if(evento.getSource() == btn_generarReporte3){
+			
+			conexion = new Conexion();			
+			try {
+				rutaJasperMinMax = new FileInputStream("C:/Users/MCEVALLOS/Documents/GitHub/SECUTEL_ERP/Secutel-ERP/Modulo_Inventario/Modulo_Inventario/src/Reportes/reportKardexCantidad.jasper");				
+				reporteMinMax = (JasperReport) JRLoader.loadObject(rutaJasperMinMax);
+				imprimirMinMax = JasperFillManager. fillReport(reporteMinMax, new HashMap<String, Object>(), conexion.getConexion());
+			
+				vistaReporteMinMax = new JasperViewer(imprimirMinMax, false); 
+				vistaReporteMinMax.setTitle(nombreReporte+".pdf"); 
+				vistaReporteMinMax.setVisible(true); 
+				JasperExportManager.exportReportToPdfFile(imprimirMinMax,"archivo.pdf");
+			
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (JRException e) {
+				e.printStackTrace();
+		}		
+	}
+		
+		if(evento.getSource() == btn_generarReporte4){
+			
+			conexion = new Conexion();			
+			try {
+				rutaJasperKardex = new FileInputStream("C:/Users/MCEVALLOS/Documents/GitHub/SECUTEL_ERP/Secutel-ERP/Modulo_Inventario/Modulo_Inventario/src/Reportes/ReportMinMax.jasper");				
+				reporteKardex  = (JasperReport) JRLoader.loadObject(rutaJasperKardex );
+				imprimirKardex  = JasperFillManager. fillReport(reporteKardex , new HashMap<String, Object>(), conexion.getConexion());
+			
+				vistaReporteKardex = new JasperViewer(imprimirKardex, false); 
+				vistaReporteKardex.setTitle(nombreReporte+".pdf"); 
+				vistaReporteKardex.setVisible(true); 
+				JasperExportManager.exportReportToPdfFile(imprimirKardex,"archivo.pdf");
+				
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (JRException e) {
+				e.printStackTrace();
+			}	
+		}
+	}
+	
+
+}

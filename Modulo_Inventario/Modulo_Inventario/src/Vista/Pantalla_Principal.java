@@ -15,11 +15,10 @@ public class Pantalla_Principal extends JFrame implements ActionListener{
 	
 	public ImageIcon ico_aplicacion;
 	public JMenuBar barraMenu;
-	public JMenu menuInventario, menuCompras, menuVentas, menuOpciones, menuProcesosInv, menuReportesInv, menuProcesosCom, menuReportesCom,
+	public JMenu menuInventario, menuCompras, menuVentas, menuOpciones, menuProcesosInv, menuProcesosCom, menuReportesCom,
 				 menuProcesosVen, menuReportesVen;
-	public JMenuItem menuItemProcesoIngPro, menuItemProcesoKardex, menuItemProcesoEstPro, menuItemProcesoModPro, 
-					 menuItemReportCategoria, menuItemReportProProvee, menuItemReportStockPro,
-					 menuItemCerrarSesion, menuItemSalir;
+	public JMenuItem menuItemProcesoIngPro, menuItemProcesoIngDetallePro, menuItemProcesoKardex, menuItemProcesoEstPro, menuItemProcesoModPro, 
+					 menuItemCerrarSesion, menuItemSalir, menuReportesInv;
 	
 	public Pantalla_Principal(){
 		
@@ -52,6 +51,10 @@ public class Pantalla_Principal extends JFrame implements ActionListener{
 		menuProcesosInv.add(menuItemProcesoIngPro);
 		menuItemProcesoIngPro.addActionListener(this);
 		
+		menuItemProcesoIngDetallePro = new JMenuItem("Ingreso de Detalle de Producto", KeyEvent.VK_D);
+		menuProcesosInv.add(menuItemProcesoIngDetallePro);
+		menuItemProcesoIngDetallePro.addActionListener(this);
+		
 		menuItemProcesoModPro = new JMenuItem("Modificacion de Producto", KeyEvent.VK_M);
 		menuProcesosInv.add(menuItemProcesoModPro);
 		menuItemProcesoModPro.addActionListener(this);
@@ -60,24 +63,9 @@ public class Pantalla_Principal extends JFrame implements ActionListener{
 		menuProcesosInv.add(menuItemProcesoKardex);
 		menuItemProcesoKardex.addActionListener(this);
 		
-		menuItemProcesoEstPro = new JMenuItem("Camibio de Estado de Producto", KeyEvent.VK_E);
-		menuProcesosInv.add(menuItemProcesoEstPro);
-		menuItemProcesoEstPro.addActionListener(this);
-		
-		menuReportesInv = new JMenu("Reportes");
+		menuReportesInv = new JMenuItem("Reportes");
+		menuReportesInv.addActionListener(this);
 		menuInventario.add(menuReportesInv);
-		
-		menuItemReportCategoria = new JMenuItem("Reporte - Producto por Categoria", KeyEvent.VK_C);
-		menuReportesInv.add(menuItemReportCategoria);
-		
-		menuItemReportProProvee = new JMenuItem("Reporte - Entrada de Productos", KeyEvent.VK_E);
-		menuReportesInv.add(menuItemReportProProvee);
-		
-		menuItemReportProProvee = new JMenuItem("Reporte - Salida de Productos", KeyEvent.VK_A);
-		menuReportesInv.add(menuItemReportProProvee);
-		
-		menuItemReportStockPro = new JMenuItem("Reporte - Stock de Productos", KeyEvent.VK_S);
-		menuReportesInv.add(menuItemReportStockPro);
 		
 		//Menu Compras
 		menuCompras = new JMenu("Compras");
@@ -121,41 +109,38 @@ public class Pantalla_Principal extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent evento) {
 	
 		if (evento.getSource() == menuItemProcesoIngPro){
-			Pantalla_Producto inventario;
-			inventario = new Pantalla_Producto();
-			inventario.setVisible(true);	
+			Pantalla_Producto producto = new Pantalla_Producto();
+			producto.setVisible(true);	
+		}
+		
+		if (evento.getSource() == menuItemProcesoIngDetallePro){
+			Pantalla_Detalle_Producto detProducto = new Pantalla_Detalle_Producto();
+			detProducto.setVisible(true);	
 		}
 		
 		if (evento.getSource() == menuItemProcesoKardex){
-			Pantalla_Kardex kardex;
-			kardex = new Pantalla_Kardex();
+			Pantalla_Kardex kardex = new Pantalla_Kardex();
 			kardex.setVisible(true);	
 		}
 		
-		if (evento.getSource() == menuItemProcesoEstPro){
-			Pantalla_Cambio_Estado_Producto cambioEstadoPro;
-			cambioEstadoPro = new Pantalla_Cambio_Estado_Producto();
-			cambioEstadoPro.setVisible(true);	
-		}
-		
 		if (evento.getSource() == menuItemProcesoModPro){
-			Pantalla_Modificar_Producto modProducto;
-			modProducto = new Pantalla_Modificar_Producto();
-			modProducto.setVisible(true);	
+			Pantalla_Modificar_Producto modificacion = new Pantalla_Modificar_Producto();
+			modificacion.setVisible(true);	
 		}
 		
-		
+		if (evento.getSource() == menuReportesInv){
+			Pantalla_Reportes reporte = new Pantalla_Reportes();
+			reporte.setVisible(true);
+		}
 		
 		if (evento.getSource() == menuItemCerrarSesion) {
-			Pantalla_Ingreso ingreso;
-			ingreso = new Pantalla_Ingreso();
+			Pantalla_Ingreso ingreso = new Pantalla_Ingreso();
 			ingreso.setVisible(true);	
-			
 			this.setVisible(false);
 		}
 		
 		if (evento.getSource() == menuItemSalir) {
-			this.setVisible(false);		
+			this.dispose();	
 		}
 		
 	}	

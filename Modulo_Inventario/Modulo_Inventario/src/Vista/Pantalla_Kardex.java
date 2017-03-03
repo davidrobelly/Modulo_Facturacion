@@ -1,14 +1,15 @@
 package Vista;
 
-import java.awt.BorderLayout; 
+import java.awt.BorderLayout;     
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.Date;
-import java.util.Calendar;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -20,26 +21,27 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import org.freixas.jcalendar.DateEvent;
-import org.freixas.jcalendar.DateListener;
-import org.freixas.jcalendar.JCalendar;
-
+import Modelo.Kardex;
+import Modelo.Producto;
+import Tablas.Tabla_Producto_Kardex;
 
 @SuppressWarnings("serial")
-public class Pantalla_Kardex extends JFrame implements ActionListener{
+public class Pantalla_Kardex extends JFrame implements ActionListener, MouseListener{
 	
 	public ImageIcon ico_aplicacion;
-	public JPanel pnl_central, pnl_botones;
-	public JLabel lbl_tipo, lbl_fecha, lbl_producto, lbl_cantidad, lbl_preCompra, lbl_detalle, lbl_calendario;
+	public JPanel pnl_central, pnl_botones, pnl_tabla;
+	public JLabel lbl_tipo, lbl_fecha, lbl_producto, lbl_cantidad, lbl_preCompra, lbl_detalle, lbl_calendario, lbl_formato;
 	public JComboBox<String> cbx_tipo;
 	public JTextField txt_fecha, txt_producto, txt_cantidad, txt_preCompra;
 	public JTextArea txta_detalle;;
-	public JButton btn_agregar;
-	public JScrollPane scroll;
-	public JCalendar calendario;
+	public JButton btn_agregar, btn_limpiar, btn_buscarP;
+	public JScrollPane scrollProducto;
+	public Tabla_Producto_Kardex jtproducto;
+	public JTable tabla;
 	
 	
 	public Pantalla_Kardex (){
@@ -47,6 +49,7 @@ public class Pantalla_Kardex extends JFrame implements ActionListener{
 		super("Kardex - Entradas y Salidas");
 		setSize(500, 450);
 		setLocation(400, 25);
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		//Icono de la Aplicacion
@@ -80,17 +83,17 @@ public class Pantalla_Kardex extends JFrame implements ActionListener{
 		pnl_central.add(cbx_tipo);
 		gridCentral.setConstraints(cbx_tipo, gridConCentral);
 		
-//		gridConCentral.gridx = 0;
-//		gridConCentral.gridy = 1;
-//		lbl_fecha = new JLabel("Fecha : ");
-//		pnl_central.add(lbl_fecha);
-//		gridCentral.setConstraints(lbl_fecha, gridConCentral);
-//		
-//		gridConCentral.gridx = 1;
-//		gridConCentral.gridy = 1;
-//		calendario = new JCalendar();		
-//		pnl_central.add(calendario);
-//		gridCentral.setConstraints(calendario, gridConCentral);
+		gridConCentral.gridx = 0;
+		gridConCentral.gridy = 1;
+		lbl_fecha = new JLabel("Fecha : (AAAA-MM-DD)");
+		pnl_central.add(lbl_fecha);
+		gridCentral.setConstraints(lbl_fecha, gridConCentral);
+		
+		gridConCentral.gridx = 1;
+		gridConCentral.gridy = 1;
+		txt_fecha = new JTextField();	
+		pnl_central.add(txt_fecha);
+		gridCentral.setConstraints(txt_fecha, gridConCentral);
 		
 		gridConCentral.gridx = 0;
 		gridConCentral.gridy = 2;
@@ -101,8 +104,17 @@ public class Pantalla_Kardex extends JFrame implements ActionListener{
 		gridConCentral.gridx = 1;
 		gridConCentral.gridy = 2;
 		txt_producto = new JTextField(20);
+		txt_producto.setEditable(false);
 		pnl_central.add(txt_producto);
 		gridCentral.setConstraints(txt_producto, gridConCentral);
+		
+		gridConCentral.gridx = 2;
+		gridConCentral.gridy = 2;
+		btn_buscarP = new JButton(new ImageIcon("src/Imagenes/buscarP.jpeg"));
+		btn_buscarP.setBorder(null);
+		btn_buscarP.addActionListener(this);
+		pnl_central.add(btn_buscarP);
+		gridCentral.setConstraints(btn_buscarP, gridConCentral);
 		
 		gridConCentral.gridx = 0;
 		gridConCentral.gridy = 3;
@@ -118,7 +130,7 @@ public class Pantalla_Kardex extends JFrame implements ActionListener{
 		
 		gridConCentral.gridx = 0;
 		gridConCentral.gridy = 4;
-		lbl_preCompra = new JLabel("Precio de Compra : ");
+		lbl_preCompra = new JLabel("Precio de Compra/Venta : ");
 		pnl_central.add(lbl_preCompra);
 		gridCentral.setConstraints(lbl_preCompra, gridConCentral);
 		
@@ -143,30 +155,47 @@ public class Pantalla_Kardex extends JFrame implements ActionListener{
 		scroll.setViewportView(txta_detalle);		
 		pnl_central.add(scroll);
 		gridCentral.setConstraints(scroll, gridConCentral);
-		
-		gridConCentral.gridx = 0;
-		gridConCentral.gridy = 6;
-		lbl_calendario = new JLabel("Calendario : ");
-		pnl_central.add(lbl_calendario);
-		gridCentral.setConstraints(lbl_calendario, gridConCentral);
-		
-		gridConCentral.gridx = 1;
-		gridConCentral.gridy = 6;
-		calendario = new JCalendar();	
-		pnl_central.add(calendario);
-		gridCentral.setConstraints(calendario, gridConCentral);
 
+		//PAnel de tabla
+		pnl_tabla = new JPanel();
+		
+		jtproducto = new Tabla_Producto_Kardex();
+		tabla  = new JTable(jtproducto);
+		tabla.addMouseListener(this);
+		tabla.getTableHeader().setReorderingAllowed(false);
+		scrollProducto = new JScrollPane(tabla);
+		pnl_tabla.add(scrollProducto, BorderLayout.CENTER);
 		
 		//PANEL BOTONES
-		pnl_botones = new JPanel(new GridLayout(1, 1));
+		pnl_botones = new JPanel();
 		
+		GridBagLayout gridInferior = new GridBagLayout();
+		pnl_botones.setLayout(gridInferior);
+		
+		GridBagConstraints gridConInferior= new GridBagConstraints();
+		gridConInferior.fill = GridBagConstraints.BOTH;
+		gridConInferior.insets = new Insets(3, 3, 3, 3);
+		
+		gridConInferior.gridx = 0;
+		gridConInferior.gridy = 0;
+		gridConInferior.gridheight = 1;
+		gridConInferior.gridwidth = 1;		
 		btn_agregar = new JButton(new ImageIcon("src/Imagenes/agregar.jpeg"));
 		btn_agregar.setBorder(null);
 		btn_agregar.addActionListener(this);
+		pnl_botones.add(btn_agregar);
+		gridInferior.setConstraints(btn_agregar, gridConInferior);	
 		
-		pnl_botones.add(btn_agregar);	
+		gridConInferior.gridx = 1;
+		gridConInferior.gridy = 0;
+		btn_limpiar = new JButton(new ImageIcon("src/Imagenes/limpiar.jpeg"));
+		btn_limpiar.setBorder(null);
+		btn_limpiar.addActionListener(this);
+		pnl_botones.add(btn_limpiar);
+		gridInferior.setConstraints(btn_limpiar, gridConInferior);
 		
-		getContentPane().add(pnl_central, BorderLayout.CENTER);
+		getContentPane().add(pnl_central, BorderLayout.NORTH);
+		getContentPane().add(pnl_tabla, BorderLayout.CENTER);
 		getContentPane().add(pnl_botones, BorderLayout.SOUTH);
 		
 		((JComponent)getContentPane()).setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -174,14 +203,40 @@ public class Pantalla_Kardex extends JFrame implements ActionListener{
 	
 	public void limpiarPantalla(){
 		
+		cbx_tipo.setSelectedItem(null);
 		txt_fecha.setText("");
 		txt_producto.setText("");
 		txt_cantidad.setText("");
 		txt_preCompra.setText("");
 		txta_detalle.setText("");
+		tabla.setModel(jtproducto);
 		
 	}
 
+	public void mouseClicked(MouseEvent evento) {
+		
+		int fila = tabla.rowAtPoint(evento.getPoint());
+        txt_producto.setText(tabla.getValueAt(fila, 0).toString());	
+	}
+
+	public void mouseEntered(MouseEvent e) {
+		
+	}
+
+	public void mouseExited(MouseEvent e) {
+		
+	}
+
+	public void mousePressed(MouseEvent e) {
+		
+	}
+
+	public void mouseReleased(MouseEvent e) {
+		
+	}
+
+	
+	
 	public void actionPerformed(ActionEvent evento) {
 		
 		if(evento.getSource() == btn_agregar){	
@@ -189,45 +244,48 @@ public class Pantalla_Kardex extends JFrame implements ActionListener{
 			String tipo, detalle;
 			Date fecha;
 			double valor;
-			int producto, cantidad;
+			int idproducto, cantidad;
 			
 			tipo = (String) cbx_tipo.getSelectedItem();
-			producto = Integer.parseInt(txt_producto.getText());
+			fecha = Date.valueOf(txt_fecha.getText());
+			idproducto = Integer.parseInt(txt_producto.getText());
 			cantidad = Integer.parseInt(txt_cantidad.getText());
 			valor = Double.parseDouble(txt_preCompra.getText());
 			detalle = txta_detalle.getText();			
 			
-//			Kardex kardexIE = new Kardex(tipo, producto, cantidad, valor, detalle);
+			Kardex kardexIE = new Kardex(tipo, fecha, idproducto, cantidad, valor, detalle);
 
-//			kardexIE.ingresarKardex(kardexIE);
+			kardexIE.ingresarKardex(kardexIE);
 			JOptionPane.showMessageDialog(null, "Registro exitoso");			
+			limpiarPantalla();
+
+			
+		}
+		
+		if(evento.getSource() == btn_buscarP){
+			
+			Kardex kardeIO = new Kardex();				
+			ArrayList<Producto> listaProductoMarca = kardeIO.listarProductos();
+			Tabla_Producto_Kardex tablaProMarca = new Tabla_Producto_Kardex(listaProductoMarca);
+			tabla.removeAll();
+			tabla.setModel(tablaProMarca);
+			tabla.updateUI();
+			
+		}
+		
+		if(evento.getSource() == btn_limpiar){
+			
 			limpiarPantalla();
 			
 		}
 		
+		
 	}
+		
 	
-	@SuppressWarnings("unused")
-	private class MyDateListener implements DateListener {
-
-		@Override
-		public void dateChanged(DateEvent evento) {
-
-			Calendar c = evento.getSelectedDate();
-			  if (c != null) {
-				System.out.println(c.getTime());
-			  }
-			  else {
-				System.out.println("No selecciono fecha");
-			  }
-			
-		}
-
-}
 
 
 	
-
 }
 
 

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportContarProducto" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8e946997-647e-4a29-9454-379faa31ef73">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     producto.`idproducto` AS producto_idproducto,
+     producto.`categoria` AS producto_categoria,
+     producto.`nombre` AS producto_nombre,
+     producto.`marca` AS producto_marca,
+     producto.`modelo` AS producto_modelo,
+     producto.`valor` AS producto_valor,
+     producto.`minimo` AS producto_minimo,
+     producto.`maximo` AS producto_maximo,
+     producto.`existencia` AS producto_existencia,
+     producto.`estado` AS producto_estado,
+     detalle_producto.`iddetalle_producto` AS detalle_producto_iddetalle_producto,
+     detalle_producto.`idproducto` AS detalle_producto_idproducto,
+     detalle_producto.`numero_serie` AS detalle_producto_numero_serie,
+     detalle_producto.`color` AS detalle_producto_color,
+     detalle_producto.`estado` AS detalle_producto_estado,
+     kardex.`idkardex` AS kardex_idkardex,
+     kardex.`idproducto` AS kardex_idproducto,
+     kardex.`fecha` AS kardex_fecha,
+     kardex.`cantidad` AS kardex_cantidad,
+     kardex.`vcompra` AS kardex_vcompra,
+     kardex.`tipo` AS kardex_tipo,
+     kardex.`detalle` AS kardex_detalle
+FROM
+     `producto` producto INNER JOIN `detalle_producto` detalle_producto ON producto.`idproducto` = detalle_producto.`idproducto`
+     INNER JOIN `kardex` kardex ON producto.`idproducto` = kardex.`idproducto`]]>
+	</queryString>
+	<field name="producto_idproducto" class="java.lang.Integer"/>
+	<field name="producto_categoria" class="java.lang.String"/>
+	<field name="producto_nombre" class="java.lang.String"/>
+	<field name="producto_marca" class="java.lang.String"/>
+	<field name="producto_modelo" class="java.lang.String"/>
+	<field name="producto_valor" class="java.math.BigDecimal"/>
+	<field name="producto_minimo" class="java.lang.Integer"/>
+	<field name="producto_maximo" class="java.lang.Integer"/>
+	<field name="producto_existencia" class="java.lang.Integer"/>
+	<field name="producto_estado" class="java.lang.String"/>
+	<field name="detalle_producto_iddetalle_producto" class="java.lang.Integer"/>
+	<field name="detalle_producto_idproducto" class="java.lang.Integer"/>
+	<field name="detalle_producto_numero_serie" class="java.lang.String"/>
+	<field name="detalle_producto_color" class="java.lang.String"/>
+	<field name="detalle_producto_estado" class="java.lang.String"/>
+	<field name="kardex_idkardex" class="java.lang.Integer"/>
+	<field name="kardex_idproducto" class="java.lang.Integer"/>
+	<field name="kardex_fecha" class="java.sql.Date"/>
+	<field name="kardex_cantidad" class="java.lang.Integer"/>
+	<field name="kardex_vcompra" class="java.lang.Double"/>
+	<field name="kardex_tipo" class="java.lang.String"/>
+	<field name="kardex_detalle" class="java.lang.String"/>
+	<group name="producto_marca">
+		<groupExpression><![CDATA[$F{producto_marca}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="91" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="29" width="267" height="28" uuid="8ac41538-e437-43e7-a44b-0ed7dc5fc3d3"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de Productos]]></text>
+			</staticText>
+			<line>
+				<reportElement x="8" y="75" width="547" height="1" uuid="e23f681a-a48f-427e-a025-b41d2196d5f8"/>
+			</line>
+			<image>
+				<reportElement x="338" y="0" width="169" height="72" uuid="e64b6648-b136-44cb-9a19-8b967d863870"/>
+				<imageExpression><![CDATA["C:\\Users\\MCEVALLOS\\Documents\\GitHub\\SECUTEL_ERP\\Secutel-ERP\\Modulo_Inventario\\Modulo_Inventario\\src\\Reportes\\13237826_1226535424065882_5854207165714114482_n.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="7872c327-19f2-4742-b314-278807077007"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Marca]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="20" uuid="69063148-8c80-49ed-ae01-17caf5f250b1"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Modelo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="376" y="0" width="67" height="20" uuid="7d4f4614-3286-4c9e-8dc8-308720488188"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Stock Min.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="467" y="0" width="60" height="20" uuid="dcc2565d-53d2-4548-adec-0afb84fba57d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Stock Max.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="100" height="20" uuid="1eca4466-bdec-4073-b8a7-318acd27acbc"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Producto]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="36" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="ae1370a6-220e-4967-a7e7-43db9fb6021d"/>
+				<textFieldExpression><![CDATA[$F{producto_marca}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="20" uuid="0d18e102-1983-432a-bf02-e33dbeaa2f36"/>
+				<textFieldExpression><![CDATA[$F{producto_modelo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="376" y="0" width="67" height="20" uuid="5c1e517d-ef34-4888-b405-1e81530e54ef"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{producto_minimo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="467" y="0" width="60" height="20" uuid="b515d7d9-d0e2-4848-9906-476648f6b107"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{producto_maximo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="100" height="20" uuid="0d177f60-13e9-416c-86ab-10e7b45ff347"/>
+				<textFieldExpression><![CDATA[$F{producto_nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

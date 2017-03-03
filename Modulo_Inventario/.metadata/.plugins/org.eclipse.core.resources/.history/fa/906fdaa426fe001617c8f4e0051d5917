@@ -1,0 +1,86 @@
+package Vista;
+
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.HashMap;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import Persistencia.Conexion;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+
+@SuppressWarnings("serial")
+public class Pantalla_Reporte extends JFrame implements ActionListener{
+	
+	public ImageIcon ico_aplicacion;
+	public JButton btn_generarReporte, btn_exportarPDF;
+	public JPanel pnl_botones;
+	
+	public Pantalla_Reporte(){
+		
+		super("Reporte - ");
+		setVisible(true);
+		setSize(250, 100);
+		setLocation(500, 200);
+		setResizable(false);
+		
+		pnl_botones = new JPanel(new GridLayout(1, 2));
+		
+		btn_generarReporte = new JButton(new ImageIcon("src/Imagenes/generarReporte.jpeg"));
+		btn_generarReporte.setBorder(null);
+		btn_generarReporte.addActionListener(this);
+		
+		btn_exportarPDF = new JButton(new ImageIcon("src/Imagenes/imprimir.jpeg"));
+		btn_exportarPDF.setBorder(null);
+		btn_exportarPDF.addActionListener(this);
+		
+		pnl_botones.add(btn_generarReporte);
+		pnl_botones.add(btn_exportarPDF);
+		
+		getContentPane().add(pnl_botones, BorderLayout.CENTER);
+
+		
+	}
+
+	
+	public void actionPerformed(ActionEvent evento) {
+		
+		if(evento.getSource() == btn_generarReporte){
+			
+			Conexion conn = new Conexion();
+			
+			
+			try {
+				InputStream jasper = new FileInputStream("C:/Users/MCEVALLOS/Documents/GitHub/SECUTEL_ERP/Secutel-ERP/Modulo_Inventario/Modulo_Inventario/src/Reportes/reportContarProducto.jasper");
+				JasperReport reporte = (JasperReport) JRLoader.loadObject(jasper);
+				
+				JasperPrint imprimir = JasperFillManager. fillReport(reporte, new HashMap<String, Object>(), conn.getConexion());
+				
+				JasperExportManager.exportReportToPdfFile(imprimir, "archivo.pdf");
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (JRException e) {
+				e.printStackTrace();
+			}
+			
+			
+			
+		}
+		
+	}
+	
+
+}

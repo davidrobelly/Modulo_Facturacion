@@ -1,0 +1,20 @@
+package Modelo;
+
+import Persistencia.Conexion;
+
+public abstract class Reporte {
+	
+	
+	
+	public static void crearReporte(Conexion conexion, String ruta){
+		
+	}
+	
+	public static void verReporte(){
+		
+	}
+	
+	public static void exportarPDF(String rutaDestino){
+		
+	}
+}

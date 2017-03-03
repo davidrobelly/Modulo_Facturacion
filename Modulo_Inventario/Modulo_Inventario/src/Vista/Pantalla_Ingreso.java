@@ -31,7 +31,7 @@ public class Pantalla_Ingreso extends JFrame implements ActionListener{
 		
 		super("Ingreso");
 		setVisible(true);
-		setSize(400, 155);
+		setSize(400, 165);
 		setLocation(500, 200);
 		setResizable(false);
 		
@@ -54,10 +54,12 @@ public class Pantalla_Ingreso extends JFrame implements ActionListener{
 		txt_usuario = new JTextField(5);
 		txt_contraseña = new JTextField(5);
 		
-		btn_ingresar = new JButton("Ingresar");
+		btn_ingresar = new JButton(new ImageIcon("src/Imagenes/ingresar.jpeg"));
+		btn_ingresar.setBorder(null);
 		btn_ingresar.addActionListener(this);
 		
-		btn_cancelar = new JButton("Cancelar");
+		btn_cancelar = new JButton(new ImageIcon("src/Imagenes/salir.jpeg"));
+		btn_cancelar.setBorder(null);
 		btn_cancelar.addActionListener(this);
 		
 		pnl_logo.add(lbl_logo);

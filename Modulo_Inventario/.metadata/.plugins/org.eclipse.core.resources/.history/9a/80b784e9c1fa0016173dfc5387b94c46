@@ -1,0 +1,26 @@
+package Principal;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
+import javax.print.DocFlavor.INPUT_STREAM;
+
+import Vista.Pantalla_Ingreso;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+
+public class Principal {
+
+	public static void main(String[] args) throws FileNotFoundException, JRException {
+		
+		new Pantalla_Ingreso();
+		
+		InputStream jasper = new FileInputStream("C:/Users/MCEVALLOS/Documents/GitHub/SECUTEL_ERP/Secutel-ERP/Modulo_Inventario/Modulo_Inventario/src/Reportes/reportContarProducto.jasper");
+		
+		JasperReport reporte = (JasperReport) JRLoader.loadObject(jasper);
+
+	}
+
+}

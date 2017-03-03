@@ -1,0 +1,36 @@
+package Vista;
+
+import java.io.InputStream;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+
+import Persistencia.Conexion;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.swing.JRViewer;
+
+@SuppressWarnings("serial")
+public class Pantalla_Reporte_Producto extends JFrame{
+	
+	public ImageIcon ico_aplicacion;
+	Conexion conexion = new Conexion();
+	InputStream rutaJasperContarProducto, rutaJasperProductoCategoria, rutaJasperMinMax, rutaJasperKardex;
+	JasperReport reporteContarProducto, reporteProductoCategoria, reporteMinMax, reporteKardex;
+	JasperPrint imprimirContarProducto, imprimirProductoCategoria, imprimirMinMax, imprimirKardex;
+	JRViewer vistaReporteContarProducto, vistaReporteProductoCategoria, vistaReporteMinMax, vistaReporteKardex;
+	
+	public Pantalla_Reporte_Producto(){
+		
+		super("Reporte");
+		setVisible(true);
+		setSize(900, 400);
+		setLocation(200, 100);
+		setResizable(false);
+		
+		ico_aplicacion = new ImageIcon("src/Imagenes/icono.gif");
+		setIconImage(ico_aplicacion.getImage());
+		
+	}
+
+}

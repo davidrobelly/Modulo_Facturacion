@@ -1,0 +1,21 @@
+package Principal;
+
+import java.io.IOException;
+import Vista.Pantalla_Ingreso;
+import net.sf.jasperreports.engine.JRException;
+
+public class Principal {
+
+	public static void main(String[] args) throws JRException, IOException {
+		
+		new Pantalla_Ingreso();
+//		
+//		Conexion conn = new Conexion();
+//		InputStream jasper = new FileInputStream("C:/Users/MCEVALLOS/Documents/GitHub/SECUTEL_ERP/Secutel-ERP/Modulo_Inventario/Modulo_Inventario/src/Reportes/reportContarProducto.jasper");
+//		JasperReport reporte = (JasperReport) JRLoader.loadObject(jasper);
+//		JasperPrint imprimir = JasperFillManager. fillReport(reporte, new HashMap<String, Object>(), conn.getConexion());
+//		JasperExportManager.exportReportToPdfFile(imprimir,"archivo.pdf");
+
+	}
+
+}

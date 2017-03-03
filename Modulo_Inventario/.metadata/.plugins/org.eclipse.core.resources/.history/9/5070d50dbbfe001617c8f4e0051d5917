@@ -1,0 +1,152 @@
+package Vista;
+
+import java.awt.event.ActionEvent; 
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+
+@SuppressWarnings("serial")
+public class Pantalla_Principal extends JFrame implements ActionListener{
+	
+	public ImageIcon ico_aplicacion;
+	public JMenuBar barraMenu;
+	public JMenu menuInventario, menuCompras, menuVentas, menuOpciones, menuProcesosInv, menuProcesosCom, menuReportesCom,
+				 menuProcesosVen, menuReportesVen;
+	public JMenuItem menuItemProcesoIngPro, menuItemProcesoIngDetallePro, menuItemProcesoKardex, menuItemProcesoEstPro, menuItemProcesoModPro, 
+					 menuItemCerrarSesion, menuItemSalir, menuReportesInv;
+	
+	public Pantalla_Principal(){
+		
+		super("Secutel - ERP");
+		setSize(1000, 70);
+		setLocation(100, 0);
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		ico_aplicacion = new ImageIcon("src/Imagenes/icono.gif");
+		setIconImage(ico_aplicacion.getImage());
+		
+		crearMenu();
+		
+	}
+	
+	public void crearMenu(){	
+		//Barra de Menu
+		barraMenu = new JMenuBar();
+		setJMenuBar(barraMenu);
+		
+		//Menu de Inventario
+		menuInventario = new JMenu("Inventario");
+		menuInventario.setMnemonic(KeyEvent.VK_I);
+		
+		menuProcesosInv = new JMenu("Procesos");
+		menuInventario.add(menuProcesosInv);
+		
+		menuItemProcesoIngPro = new JMenuItem("Ingreso de Producto", KeyEvent.VK_I);
+		menuProcesosInv.add(menuItemProcesoIngPro);
+		menuItemProcesoIngPro.addActionListener(this);
+		
+		menuItemProcesoIngDetallePro = new JMenuItem("Ingreso de Detalle de Producto", KeyEvent.VK_D);
+		menuProcesosInv.add(menuItemProcesoIngDetallePro);
+		menuItemProcesoIngDetallePro.addActionListener(this);
+		
+		menuItemProcesoModPro = new JMenuItem("Modificacion de Producto", KeyEvent.VK_M);
+		menuProcesosInv.add(menuItemProcesoModPro);
+		menuItemProcesoModPro.addActionListener(this);
+		
+		menuItemProcesoKardex = new JMenuItem("Kardex - Entradas y Salidas", KeyEvent.VK_K);
+		menuProcesosInv.add(menuItemProcesoKardex);
+		menuItemProcesoKardex.addActionListener(this);
+		
+		menuReportesInv = new JMenuItem("Reportes");
+		menuReportesInv.addActionListener(this);
+		menuInventario.add(menuReportesInv);
+		
+		//Menu Compras
+		menuCompras = new JMenu("Compras");
+		menuCompras.setMnemonic(KeyEvent.VK_C);
+		
+		menuProcesosCom = new JMenu("Procesos");
+		menuCompras.add(menuProcesosCom);
+		
+		menuReportesCom = new JMenu("Reportes");
+		menuCompras.add(menuReportesCom);
+		
+		//Menu de Ventas
+		menuVentas = new JMenu("Ventas");
+		menuVentas.setMnemonic(KeyEvent.VK_V);
+		
+		menuProcesosVen = new JMenu("Procesos");
+		menuVentas.add(menuProcesosVen);
+		
+		menuReportesVen = new JMenu("Reportes");
+		menuVentas.add(menuReportesVen);
+		
+		//Menu Opciones
+		menuOpciones = new JMenu("Opciones");
+		menuOpciones.setMnemonic(KeyEvent.VK_O);
+		
+		menuItemCerrarSesion = new JMenuItem("Cerrar Sesion", KeyEvent.VK_C);
+		menuOpciones.add(menuItemCerrarSesion);		
+		menuItemCerrarSesion.addActionListener(this);
+		
+		menuItemSalir = new JMenuItem("Salir", KeyEvent.VK_S);
+		menuOpciones.add(menuItemSalir);
+		menuItemSalir.addActionListener(this);
+
+		//Adicion de Menus
+		barraMenu.add(menuInventario);
+		barraMenu.add(menuCompras);
+		barraMenu.add(menuVentas);
+		barraMenu.add(menuOpciones);
+	}
+
+	public void actionPerformed(ActionEvent evento) {
+	
+		if (evento.getSource() == menuItemProcesoIngDetallePro){
+			Pantalla_Producto inventario;
+			inventario = new Pantalla_Producto();
+			inventario.setVisible(true);	
+		}
+		
+		if (evento.getSource() == menuItemProcesoKardex){
+			Pantalla_Kardex kardex;
+			kardex = new Pantalla_Kardex();
+			kardex.setVisible(true);	
+		}
+		
+		if (evento.getSource() == menuItemProcesoModPro){
+			Pantalla_Modificar_Producto modificacion;
+			modificacion = new Pantalla_Modificar_Producto();
+			modificacion.setVisible(true);	
+		}
+		
+		if (evento.getSource() == menuReportesInv){
+			Pantalla_Reporte reporte = new Pantalla_Reporte();
+			reporte.setVisible(true);
+		}
+		
+		
+		
+		if (evento.getSource() == menuItemCerrarSesion) {
+			Pantalla_Ingreso ingreso;
+			ingreso = new Pantalla_Ingreso();
+			ingreso.setVisible(true);	
+			
+			this.setVisible(false);
+		}
+		
+		if (evento.getSource() == menuItemSalir) {
+			this.dispose();	
+		}
+		
+	}	
+	
+	
+
+}

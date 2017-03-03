@@ -43,6 +43,7 @@ import javax.swing.table.AbstractTableModel;
 
 		public Object getValueAt(int x, int y) {
 			switch (y) {
+				
 			case 0:
 				return listaProductos.get(x).getNombre();
 			case 1:

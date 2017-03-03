@@ -2,6 +2,7 @@ package Modelo;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 
 import Persistencia.Conexion;
@@ -43,7 +44,9 @@ public class Kardex extends Conexion{
 		this.cantidad = cantidad;
 		this.valorCompra = valorCompra;
 		this.detalle = detalle;
+		conectar = new Conexion();
 	}
+
 
 	public int getCodigo() {
 		return codigo;
@@ -105,7 +108,7 @@ public class Kardex extends Conexion{
 			
 			conectar.conectar();
 			try {
-				sentencia = "call ingresarproducto(?,?,?,?,?,?,?)";
+				sentencia = "call ingresarKardex(?,?,?,?,?,?)";
 				
 				procedimiento = conectar.conn.prepareCall(sentencia);
 				procedimiento.setString(1, kardex.getTipo());
@@ -121,5 +124,31 @@ public class Kardex extends Conexion{
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}
+	}
+	
+	public ArrayList<Producto> listarProductos(){
+		 ArrayList<Producto> lista = new ArrayList<>();
+		 conectar = new Conexion();
+		 conectar.conectar();
+			try {
+				sentencia = "call buscarproducto()";
+				procedimiento = conectar.conn.prepareCall(sentencia);
+				procedimiento.execute();
+				resultado = (ResultSet) procedimiento.executeQuery();
+					while (resultado.next()) {
+						Producto producto = new Producto();
+						producto.setCodigo(resultado.getInt("idproducto"));
+						producto.setNombre(resultado.getString("nombre"));
+						if (producto.getNombre() != null) {
+							lista.add(producto);
+						}
+					}
+				procedimiento.close();
+				conectar.cerrar();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return lista;
+	 }
+	
 }

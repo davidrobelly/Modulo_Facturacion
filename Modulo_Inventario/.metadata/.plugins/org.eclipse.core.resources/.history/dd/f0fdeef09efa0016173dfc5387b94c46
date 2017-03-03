@@ -1,0 +1,36 @@
+package Vista;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+@SuppressWarnings("serial")
+public class Pantalla_Reporte extends JFrame implements ActionListener{
+	
+	public ImageIcon ico_aplicacion;
+	public JButton btn_generarReporte;
+	
+	public Pantalla_Reporte(){
+		
+		super("Reporte");
+		setVisible(true);
+		setSize(200, 100);
+		setLocation(500, 200);
+		setResizable(false);
+		
+		btn_generarReporte = new JButton(new ImageIcon("src/Imagenes/generarReporte.jpeg"));
+		btn_generarReporte.setBorder(null);
+		btn_generarReporte.addActionListener(this);
+		
+	}
+
+	
+	public void actionPerformed(ActionEvent arg0) {
+		
+	}
+	
+
+}

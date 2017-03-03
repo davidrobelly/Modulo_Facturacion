@@ -1,0 +1,210 @@
+package Vista;
+
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
+
+import Tablas.Tabla_Producto_Consulta;
+import Tablas.Tabla_Producto_Serie;
+
+@SuppressWarnings("serial")
+public class Pantalla_Producto extends JFrame implements ActionListener, MouseListener{
+	
+	public ImageIcon ico_aplicacion;
+	public JPanel pnl_datos, pnl_tabla, pnl_botones;
+	public JLabel lbl_categoria, lbl_nombre, lbl_marca, lbl_modelo, lbl_valor,
+				  lbl_minimo, lbl_maximo, lbl_existencia;
+	public JComboBox<String> cbx_categoria;
+	public JTextField txt_nombre, txt_marca, txt_modelo, txt_valor, txt_minimo, 
+					  txt_maximo, txt_existencia;
+	public JButton btn_agregar, btn_limpiar, btn_salir, btn_buscarMarca, btn_buscarModelo;
+	public Tabla_Producto_Consulta jtproducto;
+	public JTable tabla;
+	public JScrollPane scrollProducto;
+	
+	public Pantalla_Producto (){
+		
+		super("Ingreso de Productos");
+		setSize(400,500);
+		setLocation(400,25);
+		this.setResizable(false);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		
+		//Icono de la Aplicacion
+		ico_aplicacion = new ImageIcon("src/Imagenes/icono.gif");
+		setIconImage(ico_aplicacion.getImage());
+		
+		//Panel de datos
+		pnl_datos = new JPanel();
+		pnl_datos.setBorder(new TitledBorder("Datos Generales del Producto"));
+		
+		GridBagLayout gridSuperior = new GridBagLayout();
+		pnl_datos.setLayout(gridSuperior);
+		
+		GridBagConstraints gridConSuperior = new GridBagConstraints();
+		gridConSuperior.fill = GridBagConstraints.BOTH;
+		gridConSuperior.insets = new Insets(3, 3, 3, 3);
+		
+		gridConSuperior.gridx = 0;
+		gridConSuperior.gridy = 0;
+		gridConSuperior.gridheight = 1;
+		gridConSuperior.gridwidth = 1;
+		lbl_categoria = new JLabel("Categoria :");
+		pnl_datos.add(lbl_categoria);
+		gridSuperior.setConstraints(lbl_categoria, gridConSuperior);
+	
+		gridConSuperior.gridx = 1;
+		gridConSuperior.gridy = 0;
+		cbx_categoria = new JComboBox<String>();
+		cbx_categoria.addItem("CIRCUITO CERRADO TV");
+		cbx_categoria.addItem("ALARMA CONTRAINCENDIO");
+		cbx_categoria.addItem("CABLES");
+		cbx_categoria.addItem("ACCESORIOS");
+		pnl_datos.add(cbx_categoria);
+		gridSuperior.setConstraints(cbx_categoria, gridConSuperior);
+		
+		gridConSuperior.gridx = 0;
+		gridConSuperior.gridy = 1;
+		lbl_nombre = new JLabel("Nombre :");
+		pnl_datos.add(lbl_nombre);
+		gridSuperior.setConstraints(lbl_nombre, gridConSuperior);
+		
+		gridConSuperior.gridx = 1;
+		gridConSuperior.gridy = 1;
+		txt_nombre = new JTextField(20);
+		pnl_datos.add(txt_nombre);
+		gridSuperior.setConstraints(txt_nombre, gridConSuperior);
+		
+		gridConSuperior.gridx = 0;
+		gridConSuperior.gridy = 2;
+		lbl_marca = new JLabel("Marca : ");
+		pnl_datos.add(lbl_marca);
+		gridSuperior.setConstraints(lbl_marca, gridConSuperior);
+		
+		gridConSuperior.gridx = 1;
+		gridConSuperior.gridy = 2;
+		txt_marca = new JTextField(20);
+		pnl_datos.add(txt_marca);
+		gridSuperior.setConstraints(txt_marca, gridConSuperior);
+
+		gridConSuperior.gridx = 2;
+		gridConSuperior.gridy = 2;
+		btn_buscarMarca = new JButton(new ImageIcon("src/Imagenes/buscarP.jpeg"));
+		btn_buscarMarca.setBorder(null);
+		btn_buscarMarca.addActionListener(this);
+		pnl_datos.add(btn_buscarMarca);
+		gridSuperior.setConstraints(btn_buscarMarca, gridConSuperior);
+		
+		gridConSuperior.gridx = 0;
+		gridConSuperior.gridy = 3;
+		lbl_modelo = new JLabel("Modelo : ");
+		pnl_datos.add(lbl_modelo);
+		gridSuperior.setConstraints(lbl_modelo, gridConSuperior);
+		
+		gridConSuperior.gridx = 1;
+		gridConSuperior.gridy = 3;
+		txt_modelo = new JTextField(20);
+		pnl_datos.add(txt_modelo);
+		gridSuperior.setConstraints(txt_modelo, gridConSuperior);
+
+		gridConSuperior.gridx = 2;
+		gridConSuperior.gridy = 3;
+		btn_buscarModelo = new JButton(new ImageIcon("src/Imagenes/buscarP.jpeg"));
+		btn_buscarModelo.setBorder(null);
+		btn_buscarModelo.addActionListener(this);
+		pnl_datos.add(btn_buscarModelo);
+		gridSuperior.setConstraints(btn_buscarModelo, gridConSuperior);
+		
+		gridConSuperior.gridx = 0;
+		gridConSuperior.gridy = 4;
+		lbl_valor = new JLabel("P. V. P : ");
+		pnl_datos.add(lbl_valor);
+		gridSuperior.setConstraints(lbl_valor, gridConSuperior);
+		
+		gridConSuperior.gridx = 1;
+		gridConSuperior.gridy = 4;
+		txt_valor = new JTextField(20);
+		pnl_datos.add(txt_valor);
+		gridSuperior.setConstraints(txt_valor, gridConSuperior);
+		
+		gridConSuperior.gridx = 0;
+		gridConSuperior.gridy = 5;
+		lbl_minimo = new JLabel("Minimo : ");
+		pnl_datos.add(lbl_minimo);
+		gridSuperior.setConstraints(lbl_minimo, gridConSuperior);
+		
+		gridConSuperior.gridx = 1;
+		gridConSuperior.gridy = 5;
+		txt_minimo = new JTextField(20);
+		pnl_datos.add(txt_minimo);
+		gridSuperior.setConstraints(txt_minimo, gridConSuperior);
+		
+		gridConSuperior.gridx = 0;
+		gridConSuperior.gridy = 6;
+		lbl_maximo = new JLabel("Maximo : ");
+		pnl_datos.add(lbl_maximo);
+		gridSuperior.setConstraints(lbl_maximo, gridConSuperior);
+		
+		gridConSuperior.gridx = 1;
+		gridConSuperior.gridy = 6;
+		txt_maximo = new JTextField(20);
+		pnl_datos.add(txt_maximo);
+		gridSuperior.setConstraints(txt_maximo, gridConSuperior);
+
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

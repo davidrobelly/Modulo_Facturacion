@@ -16,6 +16,27 @@ public class Conexion {
 	private String bd;
 	private String url;
 	
+	public Connection getConexion()
+	{
+		leerArchivo();
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			conn = DriverManager.getConnection(url,usu,pass);
+			return conn;
+		} 
+		catch (SQLException ex) {
+			System.out.println("hubo un problema al intentar conectarse a la base de datos: "+bd);
+		}
+		catch (ClassNotFoundException ex) {
+			ex.printStackTrace();
+		}
+		catch (Exception ex) {
+			System.err.println(ex.getMessage());
+		}
+		return null;
+	}
+	
+	
 	public void conectar () {
 		leerArchivo();
 		try {
@@ -33,9 +54,13 @@ public class Conexion {
 			System.err.println(ex.getMessage());
 		}
 	}
+	
+	
 	public void cerrar() throws SQLException{
 		conn.close();
 	}
+	
+	
 	private void leerArchivo() {
 		  try {
 		   Properties propiedades = new Properties();

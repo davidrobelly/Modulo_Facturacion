@@ -4,5 +4,17 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="lib" path="C:/mysql-connector-java-5.1.22-bin.jar"/>
 	<classpathentry kind="lib" path="C:/Users/MCEVALLOS/Downloads/jcalendar.jar"/>
+	<classpathentry kind="lib" path="C:/Users/MCEVALLOS/Desktop/Librerias Jasper/commons.collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/MCEVALLOS/Desktop/Librerias Jasper/groovy-all-2.4.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/MCEVALLOS/Desktop/Librerias Jasper/jasperreports-6.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/MCEVALLOS/Desktop/Librerias Jasper/jasperreports-fonts-6.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/MCEVALLOS/Desktop/Librerias Jasper/jasperreports-functions-6.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/MCEVALLOS/Desktop/Librerias Jasper/jasperreports-javaflow-6.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/MCEVALLOS/Desktop/Librerias Jasper/full-site/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar"/>
+	<classpathentry kind="lib" path="C:/Users/MCEVALLOS/Downloads/commons-javaflow.jar.zip"/>
+	<classpathentry kind="lib" path="C:/Users/MCEVALLOS/Downloads/Digester/commons-digester.jar"/>
+	<classpathentry kind="lib" path="C:/Users/MCEVALLOS/Desktop/Librerias Jasper/full-site/plugins/joda-time_2.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/MCEVALLOS/Downloads/commons-beanutils-1.9.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/MCEVALLOS/Downloads/com.lowagie.text-2.1.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

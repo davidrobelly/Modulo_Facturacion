@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportKardexCantidad" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a271327a-e96e-47b4-ad91-9fa3873a8d1a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     producto.`idproducto` AS producto_idproducto,
+     producto.`categoria` AS producto_categoria,
+     producto.`nombre` AS producto_nombre,
+     producto.`marca` AS producto_marca,
+     producto.`modelo` AS producto_modelo,
+     producto.`valor` AS producto_valor,
+     producto.`minimo` AS producto_minimo,
+     producto.`maximo` AS producto_maximo,
+     producto.`existencia` AS producto_existencia,
+     producto.`estado` AS producto_estado,
+     kardex.`idkardex` AS kardex_idkardex,
+     kardex.`idproducto` AS kardex_idproducto,
+     kardex.`fecha` AS kardex_fecha,
+     kardex.`cantidad` AS kardex_cantidad,
+     kardex.`vcompra` AS kardex_vcompra,
+     kardex.`tipo` AS kardex_tipo,
+     kardex.`detalle` AS kardex_detalle
+FROM
+     `producto` producto INNER JOIN `kardex` kardex ON producto.`idproducto` = kardex.`idproducto`]]>
+	</queryString>
+	<field name="producto_idproducto" class="java.lang.Integer"/>
+	<field name="producto_categoria" class="java.lang.String"/>
+	<field name="producto_nombre" class="java.lang.String"/>
+	<field name="producto_marca" class="java.lang.String"/>
+	<field name="producto_modelo" class="java.lang.String"/>
+	<field name="producto_valor" class="java.math.BigDecimal"/>
+	<field name="producto_minimo" class="java.lang.Integer"/>
+	<field name="producto_maximo" class="java.lang.Integer"/>
+	<field name="producto_existencia" class="java.lang.Integer"/>
+	<field name="producto_estado" class="java.lang.String"/>
+	<field name="kardex_idkardex" class="java.lang.Integer"/>
+	<field name="kardex_idproducto" class="java.lang.Integer"/>
+	<field name="kardex_fecha" class="java.sql.Date"/>
+	<field name="kardex_cantidad" class="java.lang.Integer"/>
+	<field name="kardex_vcompra" class="java.lang.Double"/>
+	<field name="kardex_tipo" class="java.lang.String"/>
+	<field name="kardex_detalle" class="java.lang.String"/>
+	<group name="producto_marca">
+		<groupExpression><![CDATA[$F{producto_marca}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="39" y="35" width="278" height="44" uuid="51eec5ea-fb66-4cc2-8f35-1d202c92b515"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte
+Valor de Compra Valor VS Valor Venta]]></text>
+			</staticText>
+			<image>
+				<reportElement x="367" y="7" width="169" height="72" uuid="148fc5dd-456b-4e8c-a143-a333c1495440"/>
+				<imageExpression><![CDATA["C:\\Users\\MCEVALLOS\\Documents\\GitHub\\SECUTEL_ERP\\Secutel-ERP\\Modulo_Inventario\\Modulo_Inventario\\src\\Reportes\\13237826_1226535424065882_5854207165714114482_n.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="91" height="20" uuid="523bd486-df56-4a7c-9431-d68b6e1c0800"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="91" y="0" width="69" height="20" uuid="df4d02a7-f140-4262-a219-901c2c288856"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Marca]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="0" width="69" height="20" uuid="3dea2ffe-e12e-4639-8ca8-215d7155f7bc"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Modelo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="298" y="0" width="69" height="33" uuid="f4fd50ad-396d-49e9-ba4b-5cbf2a9392de"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor
+Compra]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="229" y="0" width="69" height="33" uuid="77ac799f-f8bc-4244-a18f-d7bb49b4ccaa"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="367" y="0" width="69" height="33" uuid="b10a612b-73d5-46aa-a91b-7e8621484a97"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor
+Venta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="459" y="0" width="69" height="20" uuid="a177433c-87d7-40e3-913a-882befc9389a"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Detalle Transaccion]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="33" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="91" height="20" uuid="c281aaf1-7b9f-4065-aed8-f9fea076a2b2"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{producto_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="91" y="0" width="69" height="20" uuid="69995bf9-8b91-466f-a552-9ba08db84e95"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{producto_marca}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="160" y="0" width="69" height="20" uuid="6418c586-e875-41c1-9499-7fda1d17528a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{producto_modelo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="303" y="0" width="52" height="20" uuid="86efc692-97a0-44e1-8a41-c3868d7962f8"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{producto_valor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="241" y="0" width="35" height="20" uuid="e3b3b2d9-68a1-4fbe-ab9a-82492b509a11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{kardex_cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="393" y="0" width="29" height="20" uuid="fbbee072-041c-4c3b-9815-fe7573c44293"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{kardex_vcompra}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="459" y="0" width="96" height="20" uuid="eaa0e64e-7f8b-40cc-9abd-9d75f26a7459"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{kardex_detalle}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

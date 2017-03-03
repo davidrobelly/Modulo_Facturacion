@@ -1,0 +1,57 @@
+package Tablas;
+
+import java.util.ArrayList;
+
+import javax.swing.table.AbstractTableModel;
+
+import Modelo.Producto;
+
+@SuppressWarnings("serial")
+public class Tabla_Producto_Kardex extends AbstractTableModel{
+	
+	private final String[] titulo = {"Codigo", "Nombre"};
+	
+	ArrayList<Producto> listaProductos = new ArrayList<>();
+	
+	public Tabla_Producto_Kardex() {
+		super();
+	}
+
+	public Tabla_Producto_Kardex(ArrayList<Producto> lista) {
+		super();
+		this.listaProductos = lista;
+	}
+	
+	public int getColumnCount() {
+		return titulo.length;
+	}
+	
+	public String getColumnName(int column) {
+		return titulo[column];
+	}
+	
+	public int getRowCount() {
+		return listaProductos.size();
+	}
+
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
+		return false;
+	}
+	
+	public Class<?> getColumnClass(int columnIndex) {
+		return getValueAt(0, columnIndex).getClass();
+	}
+
+	public Object getValueAt(int x, int y) {
+		switch (y) {
+			
+		case 0:
+			return listaProductos.get(x).getCodigo();
+		case 1:
+			return listaProductos.get(x).getNombre();
+		default:
+			return null;
+		}
+	}
+
+}

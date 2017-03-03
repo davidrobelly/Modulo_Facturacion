@@ -11,3 +11,12 @@
 1487866120972	Delete element
 1487866132861	Copy compilation units
 1487866163856	Delete elements
+1487879925614	Delete element
+1487880123472	Encapsulate field 'estadoPro'
+1487880130880	Encapsulate field 'serie'
+1487880139503	Encapsulate field 'color'
+1487880150297	Encapsulate field 'estadoDetPro'
+1487913356271	Delete element
+1487913507025	Delete element
+1487913514472	Rename type 'Tabla_Producto_Estado'
+1487955716363	Encapsulate field 'detalle'

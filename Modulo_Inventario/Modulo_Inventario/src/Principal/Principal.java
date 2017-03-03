@@ -1,13 +1,14 @@
 package Principal;
 
+import java.io.IOException;
 import Vista.Pantalla_Ingreso;
+import net.sf.jasperreports.engine.JRException;
 
 public class Principal {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws JRException, IOException {
 		
 		new Pantalla_Ingreso();
-		
 
 	}
 
